@@ -1,0 +1,153 @@
+/*Page Styles*/
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	color: #4c4c4c;
+	padding-top: 4%;
+}
+.logo {
+	width: 48px;
+	height: 15%;
+
+
+}
+.title{
+      font-family: 'Open Sans', sans-serif;
+	font-size: 14px;
+	color: #4c4c4c;
+}
+h1 {
+	font-size: 32px;
+	font-weight: 300;
+	color: #4c4c4c;
+	text-align: center;
+	padding-top: 10px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+.header {
+	width: 100%;
+	height: 70px;
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+	align-items: center;
+	/*background: url(../images/header-background.jpg);*/
+	margin-bottom: 15px;
+
+}
+.button {
+	padding: 8px 12px;
+	background: #6b9cb2;
+	display: block;
+	width: 120px;
+	margin-left: 95px;
+	border-radius: 3px;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	text-align: center;
+	font-size: 0.8em;
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
+	-moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
+	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
+}
+
+
+.split {
+	height: 100%;
+	width: 30%;
+	position: fixed;
+	z-index: 2;
+	overflow-x: hidden;
+	top: 68px;
+}
+.split2 {
+	height: 100%;
+	width: 70%;
+	position: fixed;
+	z-index: 2;
+	overflow-x: hidden;
+	top: 68px;
+}
+/* Control the left side */
+
+.left {
+	left: 0;
+	background-color: #ffffff;
+}
+/* Control the right side */
+
+.right  {
+	right: 0;
+	background-color: #4844ff;
+    background: url(../images/concordia1.PNG);
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+.signUpHeading{
+    !important; text-align: left;
+    padding-left: 30pt;
+    font-size: 27pt;
+    font-family: 'Open Sans', sans-serif;
+}
+.signUpForm{
+   padding-top: 7%;
+    padding-left: 20px;
+}
+.signUpLabel{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 200px;
+    text-align: right;
+    padding-left: 5px;
+    padding-right: 30px;
+    padding-top: 7px;
+    padding-bottom: 10px;
+    font-size: 16pt;
+    font-family: 'Open Sans', sans-serif;
+}
+.form-control{
+
+    margin-bottom: 10px;
+    margin-top: 12px;
+   padding: 8pt 60pt 8pt 60pt;
+}
+#btnSignUp{
+    text-align: center;
+    padding: 8pt 140pt 8pt 140pt;
+    margin-top: 15pt;
+    margin-left: 75px;
+
+}
+.loginSignUp{
+    padding-left:30px ;
+}
+.useEmail{
+    font-size: 12pt;
+    padding-left: 30pt;
+    padding-right: 30pt;
+}
+.future{
+    padding-left: 30pt;
+    font-size: 12pt;
+}
+.headerColor{
+  background-color: #0f6dfd;
+    opacity: .75;
+    color: black;
+}
+.w3-top{
+    font-size: 14pt;
+    color: black;
+    display: inline-block;
+
+
+}
+a{
+    text-decoration: none;
+}
