@@ -137,9 +137,8 @@ h1 {
     font-size: 12pt;
 }
 .headerColor{
-  background-color: #0f6dfd;
-    opacity: .75;
-    color: black;
+ background-color: #0A2E50;
+    color: white;
 }
 .w3-top{
     font-size: 14pt;
@@ -150,4 +149,18 @@ h1 {
 }
 a{
     text-decoration: none;
+}
+.indexBackground{
+	margin-top: -5pt;
+	background: url(../images/concordiaGOLD.jpg);
+    background-position: center center;
+    background-size: cover;
+	height:100vh;
+    background-repeat: no-repeat;
+    overflow: hidden;
+
+}
+#footer{
+    !important;background-color: #0A2E50;
+    color: white;
 }
