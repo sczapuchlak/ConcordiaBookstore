@@ -155,7 +155,8 @@ a{
 	background: url(../images/concordiaGOLD.jpg);
     background-position: center center;
     background-size: cover;
-	height:100vh;
+	height:60vh;
+    width: 100%;
     background-repeat: no-repeat;
     overflow: hidden;
 
@@ -163,4 +164,19 @@ a{
 #footer{
     !important;background-color: #0A2E50;
     color: white;
+}
+.gotosignup{
+    background-color:midnightblue ;
+}
+.textbooks{
+    width: 80%;
+    height: 80%;
+}
+.indexContent{
+   margin-top: 15px;
+}
+.textbookBio{
+    margin-left: 15pt;
+    font-size: 12pt;
+    line-height: 200%;
 }
