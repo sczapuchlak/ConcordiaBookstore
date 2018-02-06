@@ -94,6 +94,13 @@ class SignUpForm(Form):
 
 
 
+@app.route('/login.html', methods=['GET'])
+def login():
+    return render_template('login.html')
+
+@app.route('/about.html', methods=['GET'])
+def about():
+    return render_template('about.html')
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
