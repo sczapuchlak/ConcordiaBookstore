@@ -7,10 +7,9 @@ from wtforms import Form, StringField, PasswordField, validators
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "root",
-                           db = "bookexchange")
+                           passwd = "yannique16",
+                           db = "bookexchange2")
 
-   # app.conig['MYSQL CURSORCLASS'] = 'DictCursor'
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -24,13 +23,21 @@ app = Flask(__name__, '/static', static_folder='static',
 # this is so the templates always reload when there are changes made
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+class SignUpForm(Form):
+
+    firstname = StringField('First Name', [validators.DataRequired()])
+    lastname= StringField('Last Name', [validators.DataRequired()])
+    email = StringField('Email Address', [validators.DataRequired(), validators.Email()])
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirmpassword', message='Passwords must match')
+    ])
+    confirmpassword = PasswordField('Re-enter Password')
 
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
-
-
 
 @app.route('/signup.html', methods=["GET", "POST"])
 def signup():
@@ -44,7 +51,7 @@ def signup():
         #create connection
         c, conn = connection()
 
-        result = c.execute("SELECT * FROM student WHERE  STU_EMail = %s", (email,))
+        result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
 
         if int(result) > 0:
             error = "Email exist. Please use a different email";
@@ -54,9 +61,9 @@ def signup():
         else:
 
             c.execute('''
-                                                                    INSERT INTO student( STU_FName, STU_LName, STU_EMail, STU_Password)
+                                                                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
                                                                     VALUES(%s, %s, %s, %s)''',
-                  (firstname, lastname, email, password))
+                      (password, email, firstname, lastname))
 
             conn.commit()
             flash("Thanks for registering!")
@@ -67,36 +74,9 @@ def signup():
         return redirect(url_for('login', flash=flash))
     return render_template('signup.html', form=form)
 
-
-
-
 @app.route('/login.html', methods=["GET", "POST"])
 def login():
     return render_template("login.html")
-
-
-
-class SignUpForm(Form):
-
-    firstname = StringField('First Name', [validators.DataRequired()])
-    lastname= StringField('Last Name', [validators.DataRequired()])
-    email = StringField('Email Address', [validators.DataRequired(), validators.Email()])
-    password = PasswordField('Password', [
-        validators.DataRequired(),
-        validators.EqualTo('confirmpassword', message='Passwords must match')
-    ])
-    confirmpassword = PasswordField('Re-enter Password')
-
-
-
-
-
-
-
-
-@app.route('/login.html', methods=['GET'])
-def login():
-    return render_template('login.html')
 
 @app.route('/about.html', methods=['GET'])
 def about():
