@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,82 +16,47 @@
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
   </head>
+<body class="signInBack">
 
+{% include "header.html" %}
+<div class="container">
 
-  	{% include "header.html" %}
- <body class="text-center">
+  <div class="row" id="pwd-container">
+    <div class="col-md-4"></div>
 
+    <div class="col-md-4">
+      <section class="login-form">
+        <form method="POST" role="login" action="login.html" >
+          <img src="static/images/concordia.png" class="img-responsive" alt="" />
+          <center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
 
-    <form class="form-signin"  method="POST" action="login.html">
-<center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-      <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control" name = "email" value="{{request.form.email}}" placeholder="Email address" required autofocus >
-      <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" value="{{request.form.password}}" placeholder="Password" required >
-      <div class="checkbox mb-3">
-        <label>
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
+          <input type="email" id="inputEmail" name="email" placeholder="yourname@csp.edu" required class="form-control input-lg" value="{{request.form.email}}"required autofocus/>
+
+          <input type="password" class="form-control input-lg" id="password" placeholder="Password" required="" value="{{request.form.password}}"/>
+
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
+          <div>
+            {#I added reset password on here as a placeholder , since he talked about this for the future maybe#}
+              <a class="links" href="signUp.html">Create account</a> or <a class="links" href="#">reset password</a>
+            
+                
+          </div>
+
+        </form>
+
+      </section>
       </div>
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-    </form>
-  </body>
 
-<style>
-html,
-body {
-    height: 100%;
-}
-
-body {
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    -ms-flex-align: center;
-    -ms-flex-pack: center;
-    -webkit-box-align: center;
-    align-items: center;
-    -webkit-box-pack: center;
-    justify-content: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    background-color: #f5f5f5;
-}
-
-.form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
-}
-.form-signin .checkbox {
-    font-weight: 400;
-}
-.form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-.form-signin .form-control:focus {
-    z-index: 2;
-}
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-</style>
+      <div class="col-md-4"></div>
 
 
-
+  </div>
+</div>
+</body>
 </html>
+
+
+
+
+
+
