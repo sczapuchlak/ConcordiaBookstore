@@ -39,6 +39,12 @@ class SignUpForm(Form):
 def index():
     return render_template('index.html')
 
+
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+
 @app.route('/signup.html', methods=["GET", "POST"])
 def signup():
     form = SignUpForm(request.form)
