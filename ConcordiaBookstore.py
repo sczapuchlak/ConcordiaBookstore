@@ -1,6 +1,6 @@
 import MySQLdb
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
-from flask_mysqldb import MySQL
+# from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
 
