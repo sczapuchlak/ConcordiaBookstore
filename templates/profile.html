@@ -6,7 +6,7 @@
 
     <meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 <body>
@@ -18,7 +18,7 @@
        <center><div class="userFlash"> <h4> You are logged in with email {{session.user_email}} </h4></div></center><br>
        <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
        <div class="vertical-menu">
-          <a href="profile.html">Profile</a>
+          <a href="#">Profile</a>
           <a href="newpost.html">Create New Post</a>
 
         </div>
@@ -26,15 +26,6 @@
    </div>
    <div class="homeRight">
        <div style="overflow-x:auto;">
-
-           {% for row in rows %}
-                <tr>
-                    <td>{{ row.idnum }}</td>
-                    <td>{{ row.userfirst }} + {{ row.userlast }}</td>
-                    <td>{{ row.titleofpost }} </td>
-
-                </tr>
-    {% endfor %}
   <table>
 
   </table>
