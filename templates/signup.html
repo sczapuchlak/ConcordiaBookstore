@@ -7,7 +7,6 @@
 <body>
 	{% include "header.html" %}
 	{% block body %}
-
 	<div class="container">
 		<div class="left split">
 
@@ -15,22 +14,19 @@
             <p class="useEmail">Please enter your Concordia email address. Currently, the Concordia Student Bookstore is only available to the St.Paul campus in Minnesota. </p>
               <p class="future">Stop by in the future to see if your campus has been added.</p>
 
+			<center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
 		<form class="signUpForm" method="POST" action="signup.html">
-		    <label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="form-control" id="first-name" name="firstname" value = "{{request.form.firstname }}"placeholder="First Name" required="" type="text"><br><br>
+		    <label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="form-control" id="first-name" name="firstname" value = "{{request.form.firstname }}" class="LV_valid_field" placeholder="First Name" type="text"><br><br>
          				<label class="signUpLabel" for="last-name">Last Name</label><input autofocus="" class="form-control" id="last-name" name="lastname" value = "{{request.form.lastname }}"placeholder="Last Name" required="" type="text"> <br><br>
-
          				<label class="signUpLabel" for="inputEmail">Email address</label><input autofocus="" class="form-control" id="email" name="email" value = "{{request.form.email }}"placeholder="yourname@csp.edu" required="" type="email"> <br><br>
-         				<label class="signUpLabel" for="inputPassword">Password</label><input class="form-control" id="password" name="password" value = "{{request.form.email }}"placeholder="Password" required="" type="password"> <br><br>
+         				<label class="signUpLabel" for="inputPassword">Password</label><input class="form-control" id="password" name="password" value = "{{request.form.password }}"placeholder="Password" required="" type="password"> <br><br>
          				<label class="signUpLabel" for="inputPassword">Re-enter Password</label><input class="form-control" id="password" name="confirmpassword" value = "{{request.form.confirmpassword }}"placeholder="Password" required="" type="password"> <br><br>
 
-           <button id="btnSignUp" type="submit" value="submit">Sign up</button>
+            <button id="btnSignUp" type="submit" value="submit"><a href="signup.html"> Sign up</a></button>
 
 		</form>
 
-
 			<center><p ><a href="login.html"> Already a member? Sign in <a href="login.html">here.</a> </a></p></center>
-			      <center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
-
 
 
 		</div>
@@ -47,3 +43,31 @@
 
 </html>
 
+<script>
+
+var validatedObj = new LiveValidation('first-name', { validMessage: "Valid!"});
+
+
+</script>
+
+<style>
+/* validation.css file */
+.LV_valid_field {
+    border: 1px solid rgba(0, 180, 0, 0.75);
+}
+.LV_invalid_field {
+    border: 1px solid rgba(240, 0, 0, 0.75);
+}
+
+/* validation.css */
+.LV_valid {
+    color:rgba(0, 180, 0, 0.75);
+}
+.LV_invalid {
+    color:rgba(240, 0, 0, 0.75);
+}
+.LV_validation_message{
+    margin:0 0 0 2px;
+}
+
+</style>
