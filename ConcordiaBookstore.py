@@ -8,7 +8,7 @@ from functools import wraps
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "gikQr6kn",
+                           passwd = "password",
                            db = "bookexchange")
 
 
