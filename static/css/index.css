@@ -180,3 +180,185 @@ a{
     font-size: 12pt;
     line-height: 200%;
 }
+* {
+    -webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
+	outline: none;
+}
+
+    .form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+		@include box-sizing(border-box);
+		}
+
+
+.signInBack{
+    background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-form {
+	margin-top: 60px;
+}
+
+form[role=login] {
+	color: #5d5d5d;
+	background: #f2f2f2;
+	padding: 26px;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+	form[role=login] img {
+		display: block;
+		margin: 0 auto;
+		margin-bottom: 35px;
+	}
+	form[role=login] input{
+        font-size: 18px;
+        width: 350px;
+		margin: 16px 0;
+      border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+    }
+	form[role=login] button {
+		font-size: 18px;
+		margin: 16px 0;
+        background: dodgerblue;
+        color: white;
+        border-radius: 10px;
+	    -moz-border-radius: 10px;
+	    -webkit-border-radius: 10px;
+        width: 345px;
+        height: 60px;
+	}
+	form[role=login] > div {
+		text-align: center;
+	}
+
+.form-links {
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 50px;
+}
+	a.links {
+		color: #2f46ff;
+	}
+    .login-form{
+        width: 400px;
+        height: 100px;
+        position: fixed;
+        top: 20%;
+        left: 38%;
+    }
+	/* validation.css file */
+.LV_valid_field {
+    border: 1px solid rgba(0, 180, 0, 0.75);
+}
+.LV_invalid_field {
+    border: 1px solid rgba(240, 0, 0, 0.75);
+}
+/* validation.css */
+.LV_valid {
+    color:rgba(0, 180, 0, 0.75);
+}
+.LV_invalid {
+    color:rgba(240, 0, 0, 0.75);
+}
+.LV_validation_message{
+    margin:0 0 0 2px;
+}
+/* this is for the homepage*/
+.homeLeft{
+    float:left;
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 53pt;
+    left: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    color: white;
+background: rgba(11,45,77,1);
+background: -moz-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(11,45,77,1)), color-stop(16%, rgba(10,46,80,0.99)), color-stop(42%, rgba(43,66,87,0.98)), color-stop(87%, rgba(214,214,214,0.96)), color-stop(100%, rgba(245,247,250,0.95)));
+background: -webkit-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
+background: -o-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
+background: -ms-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
+background: linear-gradient(135deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1 );
+
+}
+.homeRight{
+    float:right;
+    margin-left: 160px; /* Same as the width of the sidenav */
+    font-size: 28px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+}
+.homeLeft a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+}
+
+.homeLeft a:hover {
+    color: #f1f1f1;
+}
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+/* Search bar and vertical menu*/
+#searchBar {
+width: 190px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: white;
+    background-image: url(../images/search.png);
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding: 12px 20px 12px 40px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    margin-left: 20px;
+}
+
+/* When the input field gets focus, change its width to 100% */
+#searchBar:focus {
+    width: 90%;
+}
+.vertical-menu {
+    width: 100%;
+}
+
+.vertical-menu a {
+
+    color: #ffffff; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+    background-color: #ccc; /* Dark grey background on mouse-over */
+}
+
+.userFlash {
+    background-color: #bd8f13; /* Add a green color to the "active/current" link */
+    color: white;
+    padding-top: 10pt;
+    padding-bottom: 10pt;
+}

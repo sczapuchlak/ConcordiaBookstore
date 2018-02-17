@@ -1,6 +1,5 @@
 import MySQLdb
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
-from flask_mysqldb import MySQL
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
@@ -9,8 +8,8 @@ from functools import wraps
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "yannique16",
-                           db = "bookexchange2")
+                           passwd = "gikQr6kn",
+                           db = "bookexchange")
 
 
     # Create a Cursor object to execute queries.
@@ -144,7 +143,10 @@ def login():
 
             #flash("You are now logged in")
             msg = "You are now logged in"
-            return render_template("home1.html", msg=msg)
+
+
+            return render_template("home.html", msg=msg)
+
             #return redirect(url_for("login"))
 
         else:
@@ -183,10 +185,29 @@ def logout():
 def home():
      return render_template("home1.html")
 
+@app.route('/home.html', methods=["GET", "POST"])
+@require_logged_in
+def home():
+    # rows = bookForum.query.all()
+    return render_template("home.html",
+                           title='Overview')
+                           # ,rows=rows)
+
+
+@app.route('/profile.html', methods=["GET", "POST"])
+@require_logged_in
+def profile():
+     return render_template("profile.html")
+
+@app.route('/newpost.html', methods=["GET", "POST"])
+@require_logged_in
+def newpost():
+     return render_template("newpost.html")
+
+
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
     app.run(debug=True)
-
 
 

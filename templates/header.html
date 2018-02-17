@@ -12,11 +12,21 @@
 			  <!-- Float links to the right. Hide them on small screens -->
 			<div class="w3-right w3-hide-small" style="padding-top: 7pt;">
 			{% if session.logged_in %}
+
 			 <a class="w3-bar-item w3-button">Profile</a>
              <a class="w3-bar-item w3-button" href="/logout">Sign Out</a>
              {% else %}
              <a class="w3-bar-item w3-button" href="signup.html">Sign Up</a>
              <a class="w3-bar-item w3-button" href="login.html">Login</a>
+=======
+             <a class="w3-bar-item w3-button" href="home.html">Books</a>
+                <a class="w3-bar-item w3-button" href="/logout">Sign Out</a>
+
+             {% else %}
+             <a class="w3-bar-item w3-button" href="signup.html">Sign Up</a>
+             <a class="w3-bar-item w3-button" href="login.html">Login</a>
+                <a class="w3-bar-item w3-button" href="home.html">Home Test</a>
+
              {% endif %}
 
 			</div>
@@ -25,4 +35,3 @@
 
 
 </body>
-
