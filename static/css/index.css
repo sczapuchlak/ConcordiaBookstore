@@ -365,7 +365,7 @@ width: 190px;
 /* This is the styling for the submit new listing page */
 
 .form-style-5{
-    max-width: 500px;
+    max-width: 80%;
     padding: 10px 20px;
     background: #f4f7f8;
     margin: 10px auto;
@@ -378,7 +378,7 @@ width: 190px;
     border: none;
 }
 .form-style-5 legend {
-    font-size: 1.4em;
+    font-size: 1em;
     margin-bottom: 10px;
 }
 .form-style-5 label {
@@ -403,7 +403,7 @@ width: 190px;
     margin: 0;
     outline: 0;
     padding: 7px;
-    width: 100%;
+    width: 60%;
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -431,7 +431,7 @@ width: 190px;
     height:35px;
 }
 .form-style-5 .number {
-    background: #1abc9c;
+    background: #17005b;
     color: #fff;
     height: 30px;
     width: 30px;
@@ -452,17 +452,21 @@ width: 190px;
     padding: 19px 39px 18px 39px;
     color: #FFF;
     margin: 0 auto;
-    background: #1abc9c;
+    background: #17005b;
     font-size: 18px;
     text-align: center;
     font-style: normal;
     width: 100%;
-    border: 1px solid #16a085;
+    border: 1px solid #17005b;
     border-width: 1px 1px 3px;
     margin-bottom: 10px;
 }
 .form-style-5 input[type="submit"]:hover,
 .form-style-5 input[type="button"]:hover
 {
-    background: #109177;
+    background: rgba(23, 0, 91, 0.63);
+}
+.picSub{
+    font-size:14pt;
+    width:30%
 }
