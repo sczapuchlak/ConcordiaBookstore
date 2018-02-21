@@ -183,8 +183,9 @@ def home():
 
     # c, conn = connection()
     #
-    # rows = c.execute("SELECT userid, first_name, last_name from userTable")
-
+    # results = c.execute("SELECT userid, first_name, last_name, post_title from userTable")
+    # rows = results.fetchall()
+    # return rows
     return render_template("home.html",
                            title='Listing Homepage')
                            # ,rows=listings)
