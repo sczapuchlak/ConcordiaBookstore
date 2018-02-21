@@ -8,7 +8,7 @@ from functools import wraps
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "password",
+                           passwd = "gikQr6kn",
                            db = "bookexchange")
 
 
@@ -180,10 +180,14 @@ def logout():
 @app.route('/home.html', methods=["GET", "POST"])
 @require_logged_in
 def home():
-    # rows = bookForum.query.all()
+
+    # c, conn = connection()
+    #
+    # rows = c.execute("SELECT userid, first_name, last_name from userTable")
+
     return render_template("home.html",
-                           title='Overview')
-                           # ,rows=rows)
+                           title='Listing Homepage')
+                           # ,rows=listings)
 
 
 @app.route('/profile.html', methods=["GET", "POST"])

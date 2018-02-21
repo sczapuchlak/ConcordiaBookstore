@@ -27,12 +27,11 @@
    <div class="homeRight">
        <div style="overflow-x:auto;">
 
-           {% for row in rows %}
+           {% for listing in listings %}
                 <tr>
-                    <td>{{ row.idnum }}</td>
-                    <td>{{ row.userfirst }} + {{ row.userlast }}</td>
-                    <td>{{ row.titleofpost }} </td>
-
+                    <td>{{ listing.idnum }}</td>
+                    <td>{{ listing.userfirst }} + {{ listing.userlast }}</td>
+                    <td>{{ listing.titleofpost }} </td>
                 </tr>
     {% endfor %}
   <table>
