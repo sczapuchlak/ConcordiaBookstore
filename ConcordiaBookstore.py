@@ -185,7 +185,7 @@ def home():
     #
     # results = c.execute("SELECT userid, first_name, last_name, post_title from userTable order by date desc")
     # rows = results.fetchall()
-    # return rows
+
     return render_template("home.html",
                            title='Listing Homepage')
                            # ,rows=listings)
