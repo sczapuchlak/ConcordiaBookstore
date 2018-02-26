@@ -18,23 +18,50 @@
 			{% include "sideNav.html" %}
         </div>
             <div class="homeRight">
-			<div class="listing" style="overflow-x:auto;">
-                <div class="titleListing"></div>
-                <div class="pictureListing"></div>
-                <div class="sellersoldListing">
-                    <div class="seller"></div>
-                    <div class="sold"></div>
-                    <div class="avgRating"></div>
-                    <div class="ratingStars"></div>
-                </div>
-                <div class="descriptionListing"></div>
-                <div class="commentSection">
-                    <div class="commentaddListing"></div>
-                    <div class="commentdisplayListing"></div>
-                </div>
-			</div>
-		</div>
-	</div>
+                <div class="listing" style="overflow-x:auto;">
+                    <div class="titleListing">
+                        {{ listing.title }}
+
+                    </div>
+                    <div class="pictureListing">
+                        {{ listing.picture }}
+
+                    </div>
+                    <div class="sellersoldListing">
+                        <div class="seller">
+                        {{ listing.seller }}
+
+                        </div>
+                        <div class="sold">
+                        {{ listing.sold }}
+
+                        </div>
+                        <div class="avgRating">
+                        {{ listing.avgrating }}
+
+                        </div>
+                        <div class="ratingStars">
+                        {{ listing.starRating }}
+
+                        </div>
+                    </div>
+                    <div class="descriptionListing">
+                        {{ listing.description}}
+
+                    </div>
+                    <div class="commentSection">
+                        <div class="commentaddListing">
+                        {{ comment.addListing }}
+
+                        </div>
+                        <div class="commentdisplayListing">
+                        {{ comment.displayComment }}
+
+                        </div>
+                    </div>
+			    </div>
+		    </div>
+	    </div>
 	<div style="clear:both"></div>
 </body>
 </html>
