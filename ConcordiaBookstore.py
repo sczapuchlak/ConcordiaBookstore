@@ -195,7 +195,10 @@ def profile():
 def newpost():
      return render_template("newpost.html")
 
-
+@app.route('/listing.html', methods=["GET", "POST"])
+@require_logged_in
+def listing():
+     return render_template("listing.html")
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
