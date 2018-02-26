@@ -111,12 +111,6 @@ def signup():
     #return render_template('signup.html', form=form)
 
 
-
-@app.route('/about.html', methods=['GET'])
-def about():
-    return render_template('about.html')
-
-
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
 
@@ -183,7 +177,8 @@ def home():
 
     # c, conn = connection()
     #
-    # rows = c.execute("SELECT userid, first_name, last_name from userTable")
+    # results = c.execute("SELECT userid, first_name, last_name, post_title from userTable order by date desc")
+    # rows = results.fetchall()
 
     return render_template("home.html",
                            title='Listing Homepage')

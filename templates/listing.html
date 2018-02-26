@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>CSP Student Bookstore Forum</title>
+	<title>CSP Student Bookstore Listing</title>
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -15,24 +15,24 @@
 	</div>
 	<div style="width: 100%;">
 		<div class="homeLeft">
-			{% include "sideNav.html" %}
+			<center>
+				<div class="userFlash">
+					<h4>You are logged in with email {{session.user_email}}</h4>
+				</div>
+			</center><br>
+			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
+			<br>
+			<br>
+			<div class="vertical-menu">
+				<a href="#">Profile</a> <a href="newpost.html">Create New Post</a>
+			</div>
 		</div>
-	</div>
-	<div class="homeRight">
-		<div style="overflow-x:auto;">
-			<div class="holdsListings">
-				<table>
-                {% for listing in listings %}
-					<tr>
-						<td>{{ listing.idnum }}</td>
-						<td>{{ listing.userfirst }} + {{ listing.userlast }}</td>
-						<td>{{ listing.titleofpost }}</td>
-					</tr>
-                {% endfor %}
-                </table>
+		<div class="homeRight">
+			<div style="overflow-x:auto;">
+				<table></table>
 			</div>
 		</div>
 	</div>
-	<div class="style="></div>
+	<div style="clear:both"></div>
 </body>
 </html>

@@ -5,30 +5,33 @@
 	<title>Concordia Student Bookstore Signup</title>
 </head>
 <body>
-	{% include "header.html" %}
-	{% block body %}
+	{% include "header.html" %} {% block body %}
 	<div class="container">
 		<div class="left split">
-
 			<h1 class="signUpHeading">Sign up</h1>
-            <p class="useEmail">Please enter your Concordia email address. Currently, the Concordia Student Bookstore is only available to the St.Paul campus in Minnesota. </p>
-              <p class="future">Stop by in the future to see if your campus has been added.</p>
-
-			<center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
-		<form class="signUpForm" method="POST" action="signup.html">
-		    <label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="form-control" id="first-name" name="firstname" value = "{{request.form.firstname }}" class="LV_valid_field" placeholder="First Name" type="text"><br><br>
-         				<label class="signUpLabel" for="last-name">Last Name</label><input autofocus="" class="form-control" id="last-name" name="lastname" value = "{{request.form.lastname }}"placeholder="Last Name" required="" type="text"> <br><br>
-         				<label class="signUpLabel" for="inputEmail">Email address</label><input autofocus="" class="form-control" id="email" name="email" value = "{{request.form.email }}"placeholder="yourname@csp.edu" required="" type="email"> <br><br>
-         				<label class="signUpLabel" for="inputPassword">Password</label><input class="form-control" id="password" name="password" value = "{{request.form.password }}"placeholder="Password" required="" type="password"> <br><br>
-         				<label class="signUpLabel" for="inputPassword">Re-enter Password</label><input class="form-control" id="password" name="confirmpassword" value = "{{request.form.confirmpassword }}"placeholder="Password" required="" type="password"> <br><br>
-
-            <button id="btnSignUp" type="submit" value="submit"><a href="signup.html"> Sign up</a></button>
-
-		</form>
-
-			<center><p ><a href="login.html"> Already a member? Sign in <a href="login.html">here.</a> </a></p></center>
-
-
+			<p class="useEmail">Please enter your Concordia email address. Currently, the Concordia Student Bookstore is only available to the St.Paul campus in Minnesota.</p>
+			<p class="future">Stop by in the future to see if your campus has been added.</p>
+			<center>
+				<div>
+					<h4>{% include "flash_message.html" %}</h4>
+				</div>
+			</center>
+			<form action="signup.html" class="signUpForm" method="post">
+				<label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="LV_valid_field" id="first-name" name="firstname" placeholder="First Name" type="text" value="{{request.form.firstname }}"><br>
+				<br>
+				<label class="signUpLabel" for="last-name">Last Name</label><input autofocus="" class="form-control" id="last-name" name="lastname" placeholder="Last Name" required="" type="text" value="{{request.form.lastname }}"><br>
+				<br>
+				<label class="signUpLabel" for="inputEmail">Email address</label><input autofocus="" class="form-control" id="email" name="email" placeholder="yourname@csp.edu" required="" type="email" value="{{request.form.email }}"><br>
+				<br>
+				<label class="signUpLabel" for="inputPassword">Password</label><input class="form-control" id="password" name="password" placeholder="Password" required="" type="password" value="{{request.form.password }}"><br>
+				<br>
+				<label class="signUpLabel" for="inputPassword">Re-enter Password</label><input class="form-control" id="password" name="confirmpassword" placeholder="Password" required="" type="password" value="{{request.form.confirmpassword }}"><br>
+				<br>
+				<button id="btnSignUp" type="submit" value="submit"><a href="signup.html">Sign up</a></button>
+			</form>
+			<center>
+				<p><a href="login.html">Already a member? Sign in</a> <a href="login.html">here.</a></p>
+			</center>
 		</div>
 		<div class="right split2"></div>
 	</div>
@@ -36,13 +39,6 @@
 </body>
      {% endblock %}
 </html>
-
-</div>
-</body>
-
-
-</html>
-
-<script>
-var validatedObj = new LiveValidation('first-name', { validMessage: "Valid!"});
-</script>
+	<script>
+	var validatedObj = new LiveValidation('first-name', { validMessage: "Valid!"});
+	</script>
