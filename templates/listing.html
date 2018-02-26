@@ -15,24 +15,26 @@
 	</div>
 	<div style="width: 100%;">
 		<div class="homeLeft">
-			<center>
-				<div class="userFlash">
-					<h4>You are logged in with email {{session.user_email}}</h4>
-				</div>
-			</center><br>
-			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
-			<br>
-			<br>
-			<div class="vertical-menu">
-				<a href="#">Profile</a> <a href="newpost.html">Create New Post</a>
-			</div>
-		</div>
+			{% include "sideNav.html" %}
 		<div class="homeRight">
-			<div style="overflow-x:auto;">
-				<table></table>
+			<div class="listing" style="overflow-x:auto;">
+                <div class="titleListing"></div>
+                <div class="pictureListing"></div>
+                <div class="sellersoldListing">
+                    <div class="seller"></div>
+                    <div class="sold"></div>
+                    <div class="avgRating"></div>
+                    <div class="ratingStars"></div>
+                </div>
+                <div class="descriptionListing"></div>
+                <div class="commentSection">
+                    <div class="commentaddListing"></div>
+                    <div class="commentdisplayListing"></div>
+                </div>
 			</div>
 		</div>
 	</div>
+</div>
 	<div style="clear:both"></div>
 </body>
 </html>
