@@ -24,6 +24,7 @@
 				<table id="listingTable">
                 {% for listing in listings %}
 					<tr>
+                        <a href={url_for("listing.html", id)}></a>
 						<td>{{ listing.idnum }}</td>
 						<td>{{ listing.userfirst }} + {{ listing.userlast }}</td>
 						<td>{{ listing.titleofpost }}</td>
