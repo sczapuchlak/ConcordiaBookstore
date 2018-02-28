@@ -51,8 +51,11 @@
                     </div>
                     <div class="commentSection">
                         <div class="commentaddListing">
-                        {{ comment.addListing }}
-
+                        <form>
+{#                            {{ comment.addListing }}#}
+                            <textarea maxlength="2000"></textarea><br>
+                            <input type="submit"></input>
+                        </form>
                         </div>
                         <div class="commentdisplayListing">
                         {{ comment.displayComment }}

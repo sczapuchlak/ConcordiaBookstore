@@ -195,10 +195,19 @@ def profile():
 def newpost():
      return render_template("newpost.html")
 
-@app.route('/listing.html', methods=["GET", "POST"])
-@require_logged_in
-def listing():
-     return render_template("listing.html")
+# @app.route('/listing.html/<id>', methods=["GET", "POST"])
+# @require_logged_in
+# def listing(id):
+#     # create connection
+#     c, conn = connection()
+#
+#     # get data from db
+#     result = c.execute("SELECT * FROM user WHERE  LIST_ID = %s", (id,))
+#
+#     # get data from db
+#     details = c.fetchall()
+#
+#     return render_template("listing.html", id=id)
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
