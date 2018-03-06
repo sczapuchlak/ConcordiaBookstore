@@ -31,11 +31,13 @@
        <div style="overflow-x:auto;">
 
           {% for x in data %}
+              {# Will need to add the id to the end of lsiting#}
+              <a href="listing.html">
                 <tr>
-
-                    <td>{{ firstname }} + {{ lastname}}</td>
+                    <td>{{ firstname }}  {{ lastname}}</td>
                     <td>{{ listtitle }} </td>
                 </tr>
+              </a>
     {% endfor %}
 
   <table>
