@@ -90,12 +90,6 @@ def signup():
     #return render_template('signup.html', form=form)
 
 
-
-@app.route('/about.html', methods=['GET'])
-def about():
-    return render_template('about.html')
-
-
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
 
@@ -175,6 +169,7 @@ def logout():
 @app.route('/home.html', methods=["GET", "POST"])
 @require_logged_in
 def home():
+
     c, conn = connection()
 
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title "
@@ -204,6 +199,7 @@ def home():
     return render_template("home.html",
                            title='Overview')
     # ,rows=rows)
+
 
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
