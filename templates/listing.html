@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Listing</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+</head>
+<body>
+	{% include "header.html" %}
+	<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+	<div style="width: 100%;">
+        <div class="homeLeft">
+			{% include "sideNav.html" %}
+        </div>
+            <div class="homeRight">
+                <div class="listing" style="overflow-x:auto;">
+                    <div class="titleListing">
+                        {{ listing.title }}
+
+                    </div>
+                    <div class="pictureListing">
+                        {{ listing.picture }}
+
+                    </div>
+                    <div class="sellersoldListing">
+                        <div class="seller">
+                        {{ listing.seller }}
+
+                        </div>
+                        <div class="sold">
+                        {{ listing.sold }}
+
+                        </div>
+                        <div class="avgRating">
+                        {{ listing.avgrating }}
+
+                        </div>
+                        <div class="ratingStars">
+                        {{ listing.starRating }}
+
+                        </div>
+                    </div>
+                    <div class="descriptionListing">
+                        {{ listing.description}}
+
+                    </div>
+                    <div class="commentSection">
+                        <div class="commentaddListing">
+                        <form>
+{#                            {{ comment.addListing }}#}
+                            <textarea maxlength="2000"></textarea><br>
+                            <input type="submit"></input>
+                        </form>
+                        </div>
+                        <div class="commentdisplayListing">
+                        {{ comment.displayComment }}
+
+                        </div>
+                    </div>
+			    </div>
+		    </div>
+	    </div>
+	<div style="clear:both"></div>
+</body>
+</html>

@@ -15,7 +15,10 @@
 <div> <h4>{% include "flash_message.html" %} </h4></div>
 <div style="width: 100%;">
    <div class="homeLeft">
-       <center><div class="userFlash"> <h4> You are logged in with email {{session.user_email}} </h4></div></center><br>
+       <center><div class="userFlash">
+       <h6> <b>Welcome {{session.fullname}} </b></h6>
+       <h6> You are currently logged in </h6>
+       </div></center><br>
        <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
        <div class="vertical-menu">
           <a href="profile.html">Profile</a>
@@ -27,14 +30,14 @@
    <div class="homeRight">
        <div style="overflow-x:auto;">
 
-           {% for row in rows %}
+          {% for x in data %}
                 <tr>
-                    <td>{{ row.idnum }}</td>
-                    <td>{{ row.userfirst }} + {{ row.userlast }}</td>
-                    <td>{{ row.titleofpost }} </td>
-
+                    <td>{{ x }}</td>
+                    <td>{{ firstname }} + {{ lastname}}</td>
+                    <td>{{ listtitle }} </td>
                 </tr>
     {% endfor %}
+
   <table>
 
   </table>
