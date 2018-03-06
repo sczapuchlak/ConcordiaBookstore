@@ -293,16 +293,16 @@ def newpost():
         conn.commit()
 
         c.execute('''
-                             INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
-                             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+                 INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
+                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
                   (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN, book_Author,
                    book_Edition))
         course_id = conn.insert_id()
         conn.commit()
 
         c.execute('''
-                                                                                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
-                                                                                VALUES(%s,%s,%s,%s)''',
+                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
+                VALUES(%s,%s,%s,%s)''',
                   (sale_type, listing_title, [course_id], user_id))
         conn.commit()
 
