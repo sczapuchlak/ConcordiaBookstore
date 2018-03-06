@@ -11,27 +11,38 @@
 	<link href="signin.css" rel="stylesheet">
 </head>
 <body class="signInBack">
-	{% include "header.html" %}
-	<div class="container">
-		<div class="row" id="pwd-container">
-			<div class="col-md-4"></div>
-			<div class="col-md-4">
-				<section class="login-form">
-					<form action="login.html" method="post" role="login">
-						<img alt="" class="img-responsive" src="static/images/concordia.png">
-						<center>
-							<div>
-								<h4>{% include "flash_message.html" %}</h4>
-							</div>
-						</center><input class="form-control input-lg" id="inputEmail" name="email" placeholder="yourname@csp.edu" type="email" value="email"> <input class="form-control input-lg" id="password" name="password" placeholder="Password" required="" type="password" value="password"> <button class="btn btn-lg btn-primary btn-block" name="go" type="submit">Sign in</button>
-						<div>
-							{#I added reset password on here as a placeholder , since he talked about this for the future maybe#} <a class="links" href="signup.html">Create account</a> or <a class="links" href="#">reset password</a>
-						</div>
-					</form>
-				</section>
-			</div>
-			<div class="col-md-4"></div>
-		</div>
-	</div>
+
+
+{% include "header.html" %}
+<div class="container">
+
+  <div class="row" id="pwd-container">
+    <div class="col-md-4"></div>
+
+    <div class="col-md-4">
+      <section class="login-form">
+        <form method="POST" role="login" action="login.html" >
+          <img src="static/images/concordia.png" class="img-responsive" alt="" />
+          <center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
+          <input type="email" id="inputEmail" name="email" placeholder="yourname@csp.edu" class="form-control input-lg" value= ""/>
+          <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password" required="" value=""/>
+          <button type="submit" name="go" class="btn btn-lg btn-primary btn-block"> Sign in</button>
+          <div>
+            {#I added reset password on here as a placeholder , since he talked about this for the future maybe#}
+              <a class="links" href="signup.html">Create account</a> or <a class="links" href="#">reset password</a>
+
+          </div>
+
+        </form>
+
+      </section>
+      </div>
+
+      <div class="col-md-4"></div>
+
+
+  </div>
+</div>
+
 </body>
 </html>

@@ -9,31 +9,44 @@
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 <body>
-	{% include "header.html" %}
-	<div>
-		<h4>{% include "flash_message.html" %}</h4>
-	</div>
-	<div style="width: 100%;">
-		<div class="homeLeft">
-			{% include "sideNav.html" %}
-		</div>
-	</div>
-	<div class="homeRight">
-		<div style="overflow-x:auto;">
-			<div class="holdsListings">
-				<table id="listingTable">
-                {% for listing in listings %}
-					<tr>
-                        <a href={url_for("listing.html", id)}></a>
-						<td>{{ listing.idnum }}</td>
-						<td>{{ listing.userfirst }} + {{ listing.userlast }}</td>
-						<td>{{ listing.titleofpost }}</td>
-					</tr>
-                {% endfor %}
-                </table>
-			</div>
-		</div>
-	</div>
-	<div class="style="></div>
+
+{% include "header.html" %}
+
+<div> <h4>{% include "flash_message.html" %} </h4></div>
+<div style="width: 100%;">
+   <div class="homeLeft">
+       <center><div class="userFlash">
+       <h6> <b>Welcome {{session.fullname}} </b></h6>
+       <h6> You are currently logged in </h6>
+       </div></center><br>
+       <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
+       <div class="vertical-menu">
+          <a href="profile.html">Profile</a>
+          <a href="newpost.html">Create New Post</a>
+
+        </div>
+
+   </div>
+   <div class="homeRight">
+       <div style="overflow-x:auto;">
+
+          {% for x in data %}
+                <tr>
+                    <td>{{ x }}</td>
+                    <td>{{ firstname }} + {{ lastname}}</td>
+                    <td>{{ listtitle }} </td>
+                </tr>
+    {% endfor %}
+
+  <table>
+
+  </table>
+</div>
+   </div>
+</div>
+<div style="clear:both"></div>
+
+
+
 </body>
 </html>
