@@ -9,8 +9,8 @@ from random import *
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "yannique16",
-                           db = "bookexchange9")
+                           passwd = "gikQr6kn",
+                           db = "bookexchange")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -66,17 +66,17 @@ def signup():
         else:
 
             c.execute('''
-                                                                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
-                                                                    VALUES(%s, %s, %s, %s)''',
+                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
+                    VALUES(%s, %s, %s, %s)''',
                       (password, email, firstname, lastname))
             user_id = conn.insert_id()
             print(user_id)
             conn.commit()
 
             c.execute('''
-                                                                              INSERT INTO student(USER_ID)
-                                                                              VALUES(%s)''',
-                      ([user_id]))
+                      INSERT INTO student(USER_ID)
+                      VALUES(%s)''',
+            ([user_id]))
             conn.commit()
 
             conn.commit()
@@ -221,8 +221,8 @@ def get_images():
         c, conn = connection()
 
         c.execute('''
-                                                                     INSERT INTO photo( PHT_Image)
-                                                                     VALUES(%s)''',
+                 INSERT INTO photo( PHT_Image)
+                 VALUES(%s)''',
                   [newFile])
         conn.commit()
 
@@ -278,15 +278,15 @@ def newpost():
         conn.commit()
 
         c.execute('''
-                                                  INSERT INTO course (CRS_ID, CRS_Name )
-                                                  VALUES(%s,%s)''',
+                  INSERT INTO course (CRS_ID, CRS_Name )
+                  VALUES(%s,%s)''',
                   (course_Number, course_Title,))
         conn.commit()
 
 
         c.execute('''
-                                                                     INSERT INTO photo(PHT_Image)
-                                                                     VALUES(%s)''',
+                 INSERT INTO photo(PHT_Image)
+                 VALUES(%s)''',
                   [newFile])
         photo_id = conn.insert_id()
         print(photo_id)
