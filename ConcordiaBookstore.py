@@ -130,8 +130,9 @@ def login():
                     #print(fullname)
 
                 #flash("You are now logged in")
-                msg = "You are now logged"
-                return render_template("home.html", msg=msg)
+                msg = "You are now logged in"
+                # return render_template("home.html", msg=msg)
+                return redirect("home.html")
                 #return redirect(url_for("login"))
 
 
@@ -172,33 +173,33 @@ def home():
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title "
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType "
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
     # get Listing table
     list = c.fetchall()
-    for data in list:
-        firtsname = data[0]
-        lastname = data[1]
-        listID = data[2]
-        listtitle = data[3]
-        fullname = firtsname +" "+ lastname
+    return render_template('home.html', data=list)
 
-        #for testing only
-        print(fullname)
-        #print(firtsname)
-        #print(lastname)
-        print(listID)
-        print(listtitle)
-        print(data)
-    #get
-    return render_template("home.html", data=list, firstname=data)
+    # for data in list:
+        # firtsname = data[0]
+        # lastname = data[1]
+        # listID = data[2]
+        # listtitle = data[3]
 
-    # rows = bookForum.query.all()
-    return render_template("home.html",
-                           title='Overview')
-    # ,rows=rows)
+        # fullname = firtsname +" "+ lastname
+    #
+    #     #for testing only
+    #     print(fullname)
+    #     #print(firtsname)
+    #     #print(lastname)
+    #     print(listID)
+    #     print(listtitle)
+    #     print(data)
+    # #get
+    # return render_template("home.html", data=list)
+
+
 
 
 @app.route('/profile.html', methods=["GET", "POST"])
