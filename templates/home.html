@@ -16,7 +16,7 @@
 <div style="width: 100%;">
    <div class="homeLeft">
        <center><div class="userFlash">
-       <h6> <b>Welcome {{session.fullname}} </b></h6>
+       <h6> <b>Welcome {{session.firstname}} </b></h6>
        <h6> You are currently logged in </h6>
        </div></center><br>
        <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
@@ -27,22 +27,31 @@
         </div>
 
    </div>
-   <div class="homeRight">
-       <div style="overflow-x:auto;">
+   <div class="homeRight" id="listtt">
+       <div style="overflow-x:auto; ">
+        <form>
+            <table class="listingHold">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title of Post</th>
+                        <th>Sell Type</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-          {% for x in data %}
-              {# Will need to add the id to the end of lsiting#}
-              <a href="listing.html">
-                <tr>
-                    <td>{{ firstname }}  {{ lastname}}</td>
-                    <td>{{ listtitle }} </td>
-                </tr>
-              </a>
-    {% endfor %}
+                {% for d in data %}
+<tr>
+<a href= "{{ '/listing.html' }}">
+    <td>{{ d[0] }} {{ d[1] }}</td>
+    <td >    {{ d[3] }}</td>
+    <td >    {{ d[4] }}</td>
+</a>
+</tr>
+{% endfor %}
+</tbody>
+            </table></form><br/>
 
-  <table>
-
-  </table>
 </div>
    </div>
 </div>

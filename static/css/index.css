@@ -6,6 +6,9 @@ body {
 	color: #4c4c4c;
 	padding-top: 4%;
 }
+a{
+    !important;text-decoration: none;
+}
 .logo {
 	width: 48px;
 	height: 15%;
@@ -441,4 +444,15 @@ a.links {
 .picSub {
 	font-size: 14pt;
 	width: 30%
+}
+#listtt.homeRight{
+    float: left;
+    padding-left: 150pt;
+}
+th, td
+{
+    padding:0 15px 0 15px;
+}
+td{
+    font-size: 14pt;
 }
