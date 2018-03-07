@@ -173,13 +173,20 @@ def home():
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType "
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date "
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
     # get Listing table
     list = c.fetchall()
     return render_template('home.html', data=list)
+    string
+
+    listingdate = data[5]
+    value = str(listingdate)
+    print(value)
+
+
 
     # for data in list:
         # firtsname = data[0]
@@ -252,6 +259,10 @@ def newpost():
         book_Edition = request.form['field8']
         #book_back_photo = request.form['field9']
         book_Comments = request.form['field10']
+        listing_date = request.form['todaysdate']
+        value = str(listing_date)
+        print(value)
+
 
         # Course Information
         course_Title = request.form['field11']
@@ -305,6 +316,16 @@ def newpost():
                 INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
                 VALUES(%s,%s,%s,%s)''',
                   (sale_type, listing_title, [course_id], user_id))
+        conn.commit()
+
+        # now=datetime.datetime(2009,5,5)
+        # c.execute(""
+        #                   INSERT INTO listing (LST_Date)
+        #                   VALUES('%s'),
+        #           (listing_date))"
+
+
+        c.execute('''INSERT INTO listing (LST_Date)VALUES (%s)''', (listing_date,))
         conn.commit()
 
     return render_template("newpost.html")
