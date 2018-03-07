@@ -1,4 +1,5 @@
 import MySQLdb
+from datetime import datetime
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
@@ -173,13 +174,20 @@ def home():
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType "
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date "
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
     # get Listing table
     list = c.fetchall()
     return render_template('home.html', data=list)
+    string
+
+    listingdate = data[5]
+    value = str(listingdate)
+    print(value)
+
+
 
     # for data in list:
         # firtsname = data[0]
@@ -252,6 +260,10 @@ def newpost():
         book_Edition = request.form['field8']
         #book_back_photo = request.form['field9']
         book_Comments = request.form['field10']
+        #listing_date = request.form['todaysdate']
+      # value = str(listing_date)
+        #print(value)
+
 
         # Course Information
         course_Title = request.form['field11']
@@ -301,11 +313,17 @@ def newpost():
         course_id = conn.insert_id()
         conn.commit()
 
+        c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
+
+        now = datetime.now()
+        print(now)
+
         c.execute('''
-                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
-                VALUES(%s,%s,%s,%s)''',
-                  (sale_type, listing_title, [course_id], user_id))
+                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID,LST_Date)
+                VALUES(%s,%s,%s,%s,%s)''',
+                  (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
+
 
     return render_template("newpost.html")
 
