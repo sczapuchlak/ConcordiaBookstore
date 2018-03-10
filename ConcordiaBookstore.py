@@ -72,6 +72,7 @@ def signup():
                       (password, email, firstname, lastname))
             user_id = conn.insert_id()
             print(user_id)
+
             conn.commit()
 
             c.execute('''
@@ -326,6 +327,19 @@ def newpost():
 
 
     return render_template("newpost.html")
+
+@app.route('/listing.html', methods=["GET", "POST"])
+#@require_logged_in
+def listing():
+
+    c, conn = connection()
+
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date "
+              "FROM user,listing, book, photo "
+              "WHERE user.USER_ID = listing.LST_USER_ID")
+
+
+    return render_template("listing.html")
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'

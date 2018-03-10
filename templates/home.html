@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CSP Student Bookstore Forum</title>
-
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Forum</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 <body>
+
 {% include "header.html" %}
 
 <div> <h4>{% include "flash_message.html" %} </h4></div>
 <div style="width: 100%;">
    <div class="homeLeft">
        <center><div class="userFlash">
-       <h6> <b>Welcome {{session.fullname}} </b></h6>
+       <h6> <b>Welcome {{session.firstname}} </b></h6>
        <h6> You are currently logged in </h6>
        </div></center><br>
        <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
@@ -27,24 +27,36 @@
         </div>
 
    </div>
-   <div class="homeRight">
-       <div style="overflow-x:auto;">
+   <div class="homeRight" id="listtt">
+       <div style="overflow-x:auto; ">
+        <form>
+            <table class="listingHold">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Title of Post</th>
+                        <th>Sell Type</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-          {% for x in data %}
-                <tr>
-                    <td>{{ x }}</td>
-                    <td>{{ firstname }} + {{ lastname}}</td>
-                    <td>{{ listtitle }} </td>
-                </tr>
-    {% endfor %}
+                {% for d in data %}
+<tr>
+<a href= "{{ '/listing.html' }}">
+    <td>{{ d[0] }} {{ d[1] }}</td>
+    <td >    {{ d[3] }}</td>
+    <td >    {{ d[4] }}</td>
+</a>
+</tr>
+{% endfor %}
+</tbody>
+            </table></form><br/>
 
-  <table>
-
-  </table>
 </div>
    </div>
 </div>
 <div style="clear:both"></div>
+
 
 
 </body>
