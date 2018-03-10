@@ -211,6 +211,7 @@ def home():
 
 
 
+
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
 def profile():

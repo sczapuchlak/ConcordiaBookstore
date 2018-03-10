@@ -9,11 +9,9 @@ body {
 .logo {
 	width: 48px;
 	height: 15%;
-
-
 }
-.title{
-      font-family: 'Open Sans', sans-serif;
+.title {
+	font-family: 'Open Sans', sans-serif;
 	font-size: 14px;
 	color: #4c4c4c;
 }
@@ -35,7 +33,6 @@ h1 {
 	align-items: center;
 	/*background: url(../images/header-background.jpg);*/
 	margin-bottom: 15px;
-
 }
 .button {
 	padding: 8px 12px;
@@ -53,8 +50,6 @@ h1 {
 	-moz-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
 	-webkit-box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.10);
 }
-
-
 .split {
 	height: 100%;
 	width: 30%;
@@ -79,135 +74,127 @@ h1 {
 }
 /* Control the right side */
 
-.right  {
+.right {
 	right: 0;
 	background-color: #4844ff;
-    background: url(../images/concordia1.PNG);
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    overflow: hidden;
+	background: url(../images/concordia1.PNG);
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	overflow: hidden;
 }
-.signUpHeading{
-    !important; text-align: left;
-    padding-left: 30pt;
-    font-size: 27pt;
-    font-family: 'Open Sans', sans-serif;
+.signUpHeading {
+	!important;
+	text-align: left;
+	padding-left: 30pt;
+	font-size: 27pt;
+	font-family: 'Open Sans', sans-serif;
 }
-.signUpForm{
-   padding-top: 7%;
-    padding-left: 20px;
+.signUpForm {
+	padding-top: 7%;
+	padding-left: 20px;
 }
-.signUpLabel{
-    display: inline-block;
-    float: left;
-    clear: left;
-    width: 200px;
-    text-align: right;
-    padding-left: 5px;
-    padding-right: 30px;
-    padding-top: 7px;
-    padding-bottom: 10px;
-    font-size: 16pt;
-    font-family: 'Open Sans', sans-serif;
+.signUpLabel {
+	display: inline-block;
+	float: left;
+	clear: left;
+	width: 200px;
+	text-align: right;
+	padding-left: 5px;
+	padding-right: 30px;
+	padding-top: 7px;
+	padding-bottom: 10px;
+	font-size: 16pt;
+	font-family: 'Open Sans', sans-serif;
 }
-.form-control{
-
-    margin-bottom: 10px;
-    margin-top: 12px;
-   padding: 8pt 60pt 8pt 60pt;
+.form-control {
+	margin-bottom: 10px;
+	margin-top: 12px;
+	padding: 8pt 60pt 8pt 60pt;
 }
-#btnSignUp{
-    text-align: center;
-    padding: 8pt 140pt 8pt 140pt;
-    margin-top: 15pt;
-    margin-left: 75px;
-
+#btnSignUp {
+	text-align: center;
+	padding: 8pt 140pt 8pt 140pt;
+	margin-top: 15pt;
+	margin-left: 75px;
 }
-.loginSignUp{
-    padding-left:30px ;
+.loginSignUp {
+	padding-left: 30px;
 }
-.useEmail{
-    font-size: 12pt;
-    padding-left: 30pt;
-    padding-right: 30pt;
+.useEmail {
+	font-size: 12pt;
+	padding-left: 30pt;
+	padding-right: 30pt;
 }
-.future{
-    padding-left: 30pt;
-    font-size: 12pt;
+.future {
+	padding-left: 30pt;
+	font-size: 12pt;
 }
-.headerColor{
- background-color: #0A2E50;
-    color: white;
+.headerColor {
+	background-color: #0A2E50;
+	color: white;
 }
-.w3-top{
-    font-size: 14pt;
-    color: black;
-    display: inline-block;
-
-
+.w3-top {
+	font-size: 14pt;
+	color: black;
+	display: inline-block;
 }
-a{
-    text-decoration: none;
+a {
+	text-decoration: none;
 }
-.indexBackground{
+.indexBackground {
 	margin-top: -5pt;
 	background: url(../images/concordiaGOLD.jpg);
-    background-position: center center;
-    background-size: cover;
-	height:60vh;
-    width: 100%;
-    background-repeat: no-repeat;
-    overflow: hidden;
-
+	background-position: center center;
+	background-size: cover;
+	height: 60vh;
+	width: 100%;
+	background-repeat: no-repeat;
+	overflow: hidden;
 }
-#footer{
-    !important;background-color: #0A2E50;
-    color: white;
+#footer {
+	!important;
+	background-color: #0A2E50;
+	color: white;
 }
-.gotosignup{
-    background-color:midnightblue ;
+.gotosignup {
+	background-color: midnightblue;
 }
-.textbooks{
-    width: 80%;
-    height: 80%;
+.textbooks {
+	width: 80%;
+	height: 80%;
 }
-.indexContent{
-   margin-top: 15px;
+.indexContent {
+	margin-top: 15px;
 }
-.textbookBio{
-    margin-left: 15pt;
-    font-size: 12pt;
-    line-height: 200%;
+.textbookBio {
+	margin-left: 15pt;
+	font-size: 12pt;
+	line-height: 200%;
 }
 * {
-    -webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-	        box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 	outline: none;
 }
-
-    .form-control {
-	  position: relative;
-	  font-size: 16px;
-	  height: auto;
-	  padding: 10px;
-		@include box-sizing(border-box);
-		}
-
-
-.signInBack{
-    background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+.form-control {
+	position: relative;
+	font-size: 16px;
+	height: auto;
+	padding: 10px;
+	@include box-sizing(border-box);
 }
-
+.signInBack {
+	background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
 .login-form {
 	margin-top: 60px;
 }
-
 form[role=login] {
 	color: #5d5d5d;
 	background: #f2f2f2;
@@ -216,149 +203,242 @@ form[role=login] {
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 }
-	form[role=login] img {
-		display: block;
-		margin: 0 auto;
-		margin-bottom: 35px;
-	}
-	form[role=login] input{
-        font-size: 18px;
-        width: 350px;
-		margin: 16px 0;
-      border-radius: 10px;
+form[role=login] img {
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 35px;
+}
+form[role=login] input {
+	font-size: 18px;
+	width: 350px;
+	margin: 16px 0;
+	border-radius: 10px;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
-    }
-	form[role=login] button {
-		font-size: 18px;
-		margin: 16px 0;
-        background: dodgerblue;
-        color: white;
-        border-radius: 10px;
-	    -moz-border-radius: 10px;
-	    -webkit-border-radius: 10px;
-        width: 345px;
-        height: 60px;
-	}
-	form[role=login] > div {
-		text-align: center;
-	}
-
+}
+form[role=login] button {
+	font-size: 18px;
+	margin: 16px 0;
+	background: dodgerblue;
+	color: white;
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	width: 345px;
+	height: 60px;
+}
+form[role=login]>div {
+	text-align: center;
+}
 .form-links {
 	text-align: center;
 	margin-top: 1em;
 	margin-bottom: 50px;
 }
-	a.links {
-		color: #2f46ff;
-	}
-    .login-form{
-        width: 400px;
-        height: 100px;
-        position: fixed;
-        top: 20%;
-        left: 38%;
-    }
-	/* validation.css file */
+a.links {
+	color: #2f46ff;
+}
+.login-form {
+	width: 400px;
+	height: 100px;
+	position: fixed;
+	top: 20%;
+	left: 38%;
+}
+/* validation.css file */
+
 .LV_valid_field {
-    border: 1px solid rgba(0, 180, 0, 0.75);
+	border: 1px solid rgba(0, 180, 0, 0.75);
 }
 .LV_invalid_field {
-    border: 1px solid rgba(240, 0, 0, 0.75);
+	border: 1px solid rgba(240, 0, 0, 0.75);
 }
 /* validation.css */
+
 .LV_valid {
-    color:rgba(0, 180, 0, 0.75);
+	color: rgba(0, 180, 0, 0.75);
 }
 .LV_invalid {
-    color:rgba(240, 0, 0, 0.75);
+	color: rgba(240, 0, 0, 0.75);
 }
-.LV_validation_message{
-    margin:0 0 0 2px;
+.LV_validation_message {
+	margin: 0 0 0 2px;
 }
 /* this is for the homepage*/
-.homeLeft{
-    float:left;
-    height: 100%;
-    width: 20%;
-    position: fixed;
-    z-index: 1;
-    top: 53pt;
-    left: 0;
-    overflow-x: hidden;
-    padding-top: 20px;
-    color: white;
-background: rgba(11,45,77,1);
-background: -moz-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
-background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(11,45,77,1)), color-stop(16%, rgba(10,46,80,0.99)), color-stop(42%, rgba(43,66,87,0.98)), color-stop(87%, rgba(214,214,214,0.96)), color-stop(100%, rgba(245,247,250,0.95)));
-background: -webkit-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
-background: -o-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
-background: -ms-linear-gradient(-45deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
-background: linear-gradient(135deg, rgba(11,45,77,1) 0%, rgba(10,46,80,0.99) 16%, rgba(43,66,87,0.98) 42%, rgba(214,214,214,0.96) 87%, rgba(245,247,250,0.95) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1 );
 
+.homeLeft {
+	float: left;
+	height: 100%;
+	width: 20%;
+	position: fixed;
+	z-index: 1;
+	top: 53pt;
+	left: 0;
+	overflow-x: hidden;
+	padding-top: 20px;
+	color: white;
+	background: rgba(11, 45, 77, 1);
+	background: -moz-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+	background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(11, 45, 77, 1)), color-stop(16%, rgba(10, 46, 80, 0.99)), color-stop(42%, rgba(43, 66, 87, 0.98)), color-stop(87%, rgba(214, 214, 214, 0.96)), color-stop(100%, rgba(245, 247, 250, 0.95)));
+	background: -webkit-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+	background: -o-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+	background: -ms-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+	background: linear-gradient(135deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1);
 }
-.homeRight{
-    float:right;
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
+.homeRight {
+	float: right;
+	margin-left: 160px;
+	/* Same as the width of the sidenav */
+	font-size: 28px;
+	/* Increased text to enable scrolling */
+	padding: 0px 10px;
 }
 .homeLeft a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
 }
-
 .homeLeft a:hover {
-    color: #f1f1f1;
+	color: #f1f1f1;
 }
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
 }
 /* Search bar and vertical menu*/
-#searchBar {
-width: 190px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white;
-    background-image: url(../images/search.png);
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
-    margin-left: 20px;
-}
 
+#searchBar {
+	width: 190px;
+	box-sizing: border-box;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+	background-color: white;
+	background-image: url(../images/search.png);
+	background-position: 10px 10px;
+	background-repeat: no-repeat;
+	padding: 12px 20px 12px 40px;
+	-webkit-transition: width 0.4s ease-in-out;
+	transition: width 0.4s ease-in-out;
+	margin-left: 20px;
+}
 /* When the input field gets focus, change its width to 100% */
+
 #searchBar:focus {
-    width: 90%;
+	width: 90%;
 }
 .vertical-menu {
-    width: 100%;
+	width: 100%;
 }
-
 .vertical-menu a {
-
-    color: #ffffff; /* Black text color */
-    display: block; /* Make the links appear below each other */
-    padding: 12px; /* Add some padding */
-    text-decoration: none; /* Remove underline from links */
+	color: #ffffff;
+	/* Black text color */
+	display: block;
+	/* Make the links appear below each other */
+	padding: 12px;
+	/* Add some padding */
+	text-decoration: none;
+	/* Remove underline from links */
 }
-
 .vertical-menu a:hover {
-    background-color: #ccc; /* Dark grey background on mouse-over */
+	background-color: #ccc;
+	/* Dark grey background on mouse-over */
 }
-
 .userFlash {
-    background-color: #bd8f13; /* Add a green color to the "active/current" link */
-    color: white;
-    padding-top: 10pt;
-    padding-bottom: 10pt;
+	background-color: #bd8f13;
+	/* Add a green color to the "active/current" link */
+	color: white;
+	padding-top: 10pt;
+	padding-bottom: 10pt;
+}
+/* This is the styling for the submit new listing page */
+
+.form-style-5 {
+	max-width: 80%;
+	padding: 10px 20px;
+	background: #f4f7f8;
+	margin: 10px auto;
+	padding: 20px;
+	background: #f4f7f8;
+	border-radius: 8px;
+	font-family: Georgia, "Times New Roman", Times, serif;
+}
+.form-style-5 fieldset {
+	border: none;
+}
+.form-style-5 legend {
+	font-size: 1em;
+	margin-bottom: 10px;
+}
+.form-style-5 label {
+	display: block;
+	margin-bottom: 8px;
+}
+.form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	background: rgba(255, 255, 255, .1);
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	margin: 0;
+	outline: 0;
+	padding: 7px;
+	width: 60%;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	background-color: #e8eeef;
+	color: #8a97a0;
+	-webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+	margin-bottom: 30px;
+}
+.form-style-5 input[type="text"]:focus, .form-style-5 input[type="date"]:focus, .form-style-5 input[type="datetime"]:focus, .form-style-5 input[type="email"]:focus, .form-style-5 input[type="number"]:focus, .form-style-5 input[type="search"]:focus, .form-style-5 input[type="time"]:focus, .form-style-5 input[type="url"]:focus, .form-style-5 textarea:focus, .form-style-5 select:focus {
+	background: #d2d9dd;
+}
+.form-style-5 select {
+	-webkit-appearance: menulist-button;
+	height: 35px;
+}
+.form-style-5 .number {
+	background: #17005b;
+	color: #fff;
+	height: 30px;
+	width: 30px;
+	display: inline-block;
+	font-size: 0.8em;
+	margin-right: 4px;
+	line-height: 30px;
+	text-align: center;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+	border-radius: 15px 15px 15px 0px;
+}
+.form-style-5 input[class="submitlisting"], .form-style-5 input[type="button"] {
+	position: relative;
+	display: block;
+	padding: 19px 39px 18px 39px;
+	color: #FFF;
+	margin: 0 auto;
+	background: #17005b;
+	font-size: 18px;
+	text-align: center;
+	font-style: normal;
+	width: 100%;
+	border: 1px solid #17005b;
+	border-width: 1px 1px 3px;
+	margin-bottom: 10px;
+}
+.form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
+	background: rgba(23, 0, 91, 0.63);
+}
+.picSub {
+	font-size: 14pt;
+	width: 30%
 }
