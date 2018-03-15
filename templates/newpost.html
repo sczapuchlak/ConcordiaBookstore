@@ -26,7 +26,6 @@
 					<fieldset>
 						<legend><span class="number">1</span> Personal Information</legend>
                         <input name="field3" placeholder="Title of Listing *" type="text">
-                        <input type="hidden" name="todaysdate" id="todaysdate"/>
 					</fieldset>
 					<fieldset>
 						<legend><span class="number">2</span> Book Information</legend>
@@ -62,27 +61,11 @@
 						</select>
 					</fieldset>
 
-					<input class="submitlisting" type="submit"  value="Post Book" > <a href="newpost.html"> </a>
+					<input class="submitlisting" type="submit"  value="Apply"> <a href="newpost.html"> </a>
 
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
-<script type="text/javascript">
-function getDate()
-{
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){dd='0'+dd} if(mm<10){mm='0'+mm}
-    today = yyyy+""+mm+""+dd;
-
-    document.getElementById("todayDate").value = today;
-}
-
-//call getDate() when loading the page
-getDate();
-</script>
 </html>

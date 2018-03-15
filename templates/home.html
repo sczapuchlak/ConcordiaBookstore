@@ -37,21 +37,28 @@
                         <th>Title of Post</th>
                         <th>Sell Type</th>
                         <th>Date Listed</th>
+                        <th>ID</th>
+
                     </tr>
                 </thead>
                 <tbody>
+                <center>
 
                 {% for d in data %}
 
 <tr style="outline: 2px solid #00a6cd!important;">
-    <td><a href="home.html" style="display:block;text-decoration: none; height: 50pt; padding-top: 15pt;">{{ d[0] }} {{ d[1] }}</a></td>
-    <td ><a href="home.html" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
-    <td ><a href="home.html" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
-    <td > <a href="home.html" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
-    <td > <a href="home.html" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[6] }}</a></td>
+
+    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[0] }} {{ d[1]}}</a></td>
+    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
+        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
+        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
+        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[6] }}</a></td>
 
 </tr>
 {% endfor %}
+
+</center>
+</a></p>
 </tbody>
             </table></form><br/>
 

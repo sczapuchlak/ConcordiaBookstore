@@ -17,48 +17,22 @@
         <div class="homeLeft">
 			{% include "sideNav.html" %}
         </div>
-            <div class="homeRight">
-                <div class="listing" style="overflow-x:auto;">
-                    <div class="titleListing">
-                        {{ listing.title }}
+            <div class="homeCenter">
+              	<form method="POST" action="/listing" enctype="multipart/form-data">
 
-                    </div>
-                    <div class="pictureListing">
-                        {{ listing.picture }}
+              	<center>Hello</center>
+              	<br><br>
+                         <center><a>
 
-                    </div>
-                    <div class="sellersoldListing">
-                        <div class="seller">
-                        {{ listing.seller }}
+                            <p>{{firstname}}</p>
+                            <p>{{lastname}}</p>
+                            <p>{{listID}}</p>
+                            <p>{{listtitle}}</p>
 
-                        </div>
-                        <div class="sold">
-                        {{ listing.sold }}
 
-                        </div>
-                        <div class="avgRating">
-                        {{ listing.avgrating }}
+                         </a></center>
 
-                        </div>
-                        <div class="ratingStars">
-                        {{ listing.starRating }}
-
-                        </div>
-                    </div>
-                    <div class="descriptionListing">
-                        {{ listing.description}}
-
-                    </div>
-                    <div class="commentSection">
-                        <div class="commentaddListing">
-                        <form>
-{#                            {{ comment.addListing }}#}
-                            <textarea maxlength="2000"></textarea><br>
-                            <input type="submit"></input>
-                        </form>
-                        </div>
-                        <div class="commentdisplayListing">
-                        {{ comment.displayComment }}
+              	</form>
 
                         </div>
                     </div>
