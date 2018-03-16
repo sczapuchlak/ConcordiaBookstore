@@ -10,7 +10,7 @@ from random import *
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "gikQr6kn",
+                           passwd = "AMH12bmh#$",
                            db = "bookexchange")
 
     # Create a Cursor object to execute queries.
