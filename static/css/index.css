@@ -20,7 +20,7 @@ a{
 }
 h1 {
 	font-size: 32px;
-	font-weight: 300;
+	font-weight: 700;
 	color: #4c4c4c;
 	text-align: center;
 	padding-top: 10px;
@@ -362,6 +362,15 @@ a.links {
 	padding-bottom: 10pt;
 }
 /* This is the styling for the submit new listing page */
+
+#info {
+    width: 100%;
+    background-color: #f4f7f8;
+    border-radius: 8px;
+    padding: 5px 20px;
+    margin: 10px auto;
+    font-family: Georgia, "Times New Roman", Times, serif;
+}
 
 .form-style-5 {
 	max-width: 80%;
