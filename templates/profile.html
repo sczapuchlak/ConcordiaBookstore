@@ -21,17 +21,23 @@
 	<div class="homeRight">
 		<div style="overflow-x:auto;">
 			<div style="overflow-x:auto;">
-				<div class="holdsListings">
-{#				   <table>#}
-{#                  {% for listing in listings %}                #}
-{#                      <tr>#}
-    {#                    <td>{{ listing.idnum }}</td>#}
-    {#                    <td>{{ listing.userfirst }} + {{ listing.userlast }}</td>#}
-    {#                    <td>{{ listing.titleofpost }} </td>#}
-    {#                </tr>#}
-{#                  {% endfor %}#}
-{#               </table>#}
-                </div>
+                <h1 id="userInfo">User Information:</h1>
+                <p align="center">
+                    Name: <br />
+                    {# place SQL query here #}
+                </p>
+                <p align="center">
+                    Email Address: <br />
+                    {# place SQL query here #}
+                </p>
+                <p align="center">
+                    Phone Number: <br />
+                    {# place SQL query here #}
+                </p>
+                <p align="center">
+                    Average User Rating: <br />
+                    {# place SQL query here #}
+                </p>
 			</div>
 		</div>
 	</div>
