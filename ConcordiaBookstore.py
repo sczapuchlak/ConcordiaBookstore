@@ -213,8 +213,24 @@ def home():
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
 def profile():
-    return render_template("profile.html")
 
+    c, conn = connection()
+
+    c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
+              "FROM user,student "
+              "WHERE user.USER_ID = student.USER_ID")
+
+    prof = c.fetchall()
+
+    for data in prof:
+        proFName = data[0]
+        proLName = data[1]
+        proEmail = data[2]
+        proRating = data[3]
+        proPhone = data[4]
+        proName = proFName + " " + proLName
+
+    return render_template("profile.html", data=prof)
 
 @app.route('/upload', methods=["POST"])
 def get_images():
