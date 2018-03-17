@@ -40,6 +40,7 @@ def signup():
     if request.method == "POST":
         firstname = request.form['firstname']
         lastname = request.form['lastname']
+        studnumber = request.form['studentnumber']
         email = request.form['email']
         password = sha256_crypt.encrypt((str(request.form['password'])))
 
@@ -50,6 +51,10 @@ def signup():
 
         if int(result) > 0:
             error = "Email exist. Please use a different email";
+            return render_template("signup.html", error=error)
+
+        elif len(request.form['studentnumber']) < 1:
+            error = "Your L number is less than 8 characters long";
             return render_template("signup.html", error=error)
 
         elif email[-8:] != test:
@@ -75,9 +80,9 @@ def signup():
             conn.commit()
 
             c.execute('''
-                      INSERT INTO student(USER_ID)
-                      VALUES(%s)''',
-            ([user_id]))
+                      INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
+                      VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
+            (studnumber, [user_id]))
             conn.commit()
 
             conn.commit()
@@ -216,27 +221,15 @@ def profile():
 
     c, conn = connection()
 
-    #c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
-    #          "FROM user,student "
-    #          "WHERE user.USER_ID = student.USER_ID")
-
     email = session['user_email']
 
-    c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
+    # get User information with JOIN to get User's Phone number
+    c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, "
+              "STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID "
               "FROM user JOIN student ON user.USER_ID=student.USER_ID "
               "WHERE USER_Email = %s", (email,))
 
-    #details = c.fetchall()
-    #for data in details:
-    #    user_id = data[0]
-    #    u_email = data[2]
-
-        # print(data)
-    #    print(user_id)
-    #    print(u_email)
-
-    #print(user_id)
-
+    # assign from SQL statement to an array named prof
     prof = c.fetchall()
 
     for data in prof:
@@ -244,7 +237,13 @@ def profile():
         proLName = data[1]
         proEmail = data[2]
         proRating = data[3]
-        proPhone = data[4]
+        proID = data[10]
+        studId = data[4]
+        proAddy = data[5]
+        proCity = data[6]
+        proState = data[7]
+        proZip = data[8]
+        proPhone = data[9]
         proName = proFName + " " + proLName
 
     print(prof)
