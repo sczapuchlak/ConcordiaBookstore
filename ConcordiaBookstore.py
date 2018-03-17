@@ -216,9 +216,26 @@ def profile():
 
     c, conn = connection()
 
+    #c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
+    #          "FROM user,student "
+    #          "WHERE user.USER_ID = student.USER_ID")
+
+    email = session['user_email']
+
     c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
-              "FROM user,student "
-              "WHERE user.USER_ID = student.USER_ID")
+              "FROM user JOIN student ON user.USER_ID=student.USER_ID "
+              "WHERE USER_Email = %s", (email,))
+
+    #details = c.fetchall()
+    #for data in details:
+    #    user_id = data[0]
+    #    u_email = data[2]
+
+        # print(data)
+    #    print(user_id)
+    #    print(u_email)
+
+    #print(user_id)
 
     prof = c.fetchall()
 
@@ -229,6 +246,10 @@ def profile():
         proRating = data[3]
         proPhone = data[4]
         proName = proFName + " " + proLName
+
+    print(prof)
+
+    conn.commit()
 
     return render_template("profile.html", data=prof)
 
