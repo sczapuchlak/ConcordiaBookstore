@@ -60,7 +60,7 @@ def signup():
             return render_template("signup.html", error=error)
 
         elif len(request.form['password']) < 8:
-            error = "Password must be more than 8 charecters";
+            error = "Password must be more than 8 characters";
             return render_template("signup.html", error=error)
 
         elif request.form['password'] != request.form['confirmpassword']:
@@ -348,6 +348,28 @@ def listing(list_id=None):
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
+    if request.method == "POST":
+        password = sha256_crypt.encrypt((str(request.form['newPassword'])))
+
+        # # create connection
+        # c, conn = connection()
+        #
+        # result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
+
+        if len(request.form['newPassword']) < 8:
+            error = "Password must be more than 8 characters"
+            return render_template("changepassword.html", error=error)
+
+        elif request.form['newPassword'] != request.form['confirmPassword']:
+            error = "Password doesn't match"
+            return render_template("changepassword.html", error=error)
+
+        elif request.form['newPassword'] == request.form['oldPassword']:
+            error = "Old password cannot match new password"
+            return render_template("signup.html", error=error)
+
+
+
     return render_template("changepassword.html")
 
 if __name__ == '__main__':
