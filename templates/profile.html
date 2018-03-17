@@ -9,31 +9,26 @@
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 <body>
-	{% include "header.html" %}
-	<div>
+{% include "header.html" %}
+
+<div style="width: 100%;" class="container">
+   <div class="homeLeft">
+<div>
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
-	<div style="width: 100%;">
-		<div class="homeLeft">
-			{% include "sideNav.html" %}
+			<h1>{% include "sideNav.html" %}</h1>
 		</div>
 	</div>
-	<div class="homeRight">
+
+	<div class="homeRight" style="float: left ;width:80%">
 		<div style="overflow-x:auto;">
 			<div style="overflow-x:auto;">
-				<div class="holdsListings">
-{#				   <table>#}
-{#                  {% for listing in listings %}                #}
-{#                      <tr>#}
-    {#                    <td>{{ listing.idnum }}</td>#}
-    {#                    <td>{{ listing.userfirst }} + {{ listing.userlast }}</td>#}
-    {#                    <td>{{ listing.titleofpost }} </td>#}
-    {#                </tr>#}
-{#                  {% endfor %}#}
-{#               </table>#}
+				<div>
+			  <p> ahahbfdkjdhsbfjk</p>
 			</div>
 		</div>
 	</div>
+    </div>
 	<div style="clear:both"></div>
 </body>
-</html></html>
+</html>

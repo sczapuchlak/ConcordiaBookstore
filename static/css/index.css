@@ -5,9 +5,11 @@ body {
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
+    font-weight: 300;
 }
 a{
     !important;text-decoration: none;
+    font-weight: 300;
 }
 .logo {
 	width: 48px;

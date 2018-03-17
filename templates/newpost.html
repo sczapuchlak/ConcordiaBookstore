@@ -10,13 +10,14 @@
 </head>
 <body>
 	{% include "header.html" %}
-	<div>
+<div style="width: 100%;" class="container">
+   <div class="homeLeft">
+<div>
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
-	<div style="width: 100%;">
-		<div class="homeLeft">
-			{% include "sideNav.html" %}
+			<h1>{% include "sideNav.html" %}</h1>
 		</div>
+	</div>
 
 	<div class="homeRight">
     		<div style="overflow-x:auto;">

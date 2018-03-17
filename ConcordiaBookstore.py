@@ -318,7 +318,7 @@ def newpost():
 
     return render_template("newpost.html")
 
-@app.route('/listing/ <list_id>', methods=["GET", "POST"])
+@app.route('/listing/<list_id>', methods=["GET", "POST"])
 #@require_logged_in
 def listing(list_id=None):
 
@@ -342,6 +342,13 @@ def listing(list_id=None):
 
 
     return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle)
+
+
+
+@app.route('/changepassword.html', methods=["GET", "POST"])
+@require_logged_in
+def changepassword():
+    return render_template("changepassword.html")
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
