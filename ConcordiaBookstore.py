@@ -354,7 +354,7 @@ def changepassword():
         # # create connection
         # c, conn = connection()
         #
-        # result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
+        # result = c.execute("UPDATE password FROM user WHERE  USER_Email = %s", (email,))
 
         if len(request.form['newPassword']) < 8:
             error = "Password must be more than 8 characters"
