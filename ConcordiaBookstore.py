@@ -1,3 +1,5 @@
+import base64
+from base64 import b64encode
 import MySQLdb
 from datetime import datetime
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
@@ -6,6 +8,7 @@ from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
 from random import *
 
+global userID
 
 def connection():
     conn = MySQLdb.connect(host="localhost",
@@ -77,6 +80,7 @@ def signup():
                       (password, email, firstname, lastname))
             user_id = conn.insert_id()
             print(user_id)
+
             conn.commit()
 
             c.execute('''
@@ -179,19 +183,16 @@ def home():
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date "
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
+
     # get Listing table
     list = c.fetchall()
+
+    #print(list)
     return render_template('home.html', data=list)
-    string
-
-    listingdate = data[5]
-    value = str(listingdate)
-    print(value)
-
 
 
     # for data in list:
@@ -211,6 +212,7 @@ def home():
     #     print(data)
     # #get
     # return render_template("home.html", data=list)
+
 
 
 
@@ -252,28 +254,7 @@ def profile():
 
     return render_template("profile.html", data=prof)
 
-@app.route('/upload', methods=["POST"])
-def get_images():
-    if request.method == "POST":
-        file = request.files['pic']
-        #file.save(file.filename)
 
-        newFile = file.read()
-
-        print(file)
-        print(newFile)
-
-        c, conn = connection()
-
-        c.execute('''
-                 INSERT INTO photo( PHT_Image)
-                 VALUES(%s)''',
-                  [newFile])
-        conn.commit()
-
-        c.close()
-        conn.close()
-        return render_template("newpost.html")
 
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
@@ -282,8 +263,18 @@ def newpost():
     if request.method == "POST":
 
         file = request.files['pic']
+
+        #image = open(file, 'rb')  # open binary file in read mode
+        #image_read = file.read()
+        #newFile = base64.encode(image_read)
+        #newFile = base64.b64encode(image_read)
+
         # file.save(file.filename)
         newFile = file.read()
+
+        #newFile = base64.encodestring(newFile1)
+
+        #newFile1 = newFile.encode("base64")
 
         #print(file)
         #print(newFile)
@@ -362,6 +353,31 @@ def newpost():
 
 
     return render_template("newpost.html")
+
+@app.route('/listing/ <list_id>', methods=["GET", "POST"])
+#@require_logged_in
+def listing(list_id=None):
+
+    c, conn = connection()
+
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+              "FROM user,listing "
+              "WHERE LST_ID = %s", [list_id])
+
+    conn.commit()
+
+    result = c.fetchall()
+    for data in result:
+        firstname = data[0]
+        #print(data[1])
+        lastname = data[1]
+        listID = data[2]
+        listtitle = data[3]
+        print(data)
+
+
+
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle)
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
