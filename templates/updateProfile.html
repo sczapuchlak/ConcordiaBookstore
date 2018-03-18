@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Profile Update</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+</head>
+<body>
+	{% include "header.html" %}
+	<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+	<div style="width: 100%;">
+		<div class="homeLeft">
+			{% include "sideNav.html" %}
+        </div>
+    </div>
+
+	<div class="homeRight">
+        <div style="overflow-x:auto;">
+            <div class="form-style-5">
+            <form method="POST" action="updateProfile.html" enctype="multipart/form-data">
+                <h1>Please update your personal information</h1>
+                <h2 align="center">(all fields are required)</h2>
+                <fieldset>
+                    <legend><span class="number">1</span>Name:</legend>
+                    <input name="field1" placeholder="First Name*" type="text" required>
+                    <input name="field2" placeholder="Last Name*" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <legend><span class="number">2</span>Student ID (number following "L"):</legend>
+                    <input name="field3" placeholder='Student "L" Number*' type="number" required>
+                </fieldset>
+                <fieldset>
+                    <legend><span class="number">3</span>Address:</legend>
+                    <input name="field4" placeholder="Street Address*" type="text" required>
+                    <input name="field5" placeholder="City*"  type="text" required>
+                    <input name="field6" placeholder="State*" type="text" required>
+                    <input name="field7" placeholder="Zip Code*" type="text" required>
+                </fieldset>
+                <fieldset>
+                    <legend><span class="number">4</span>Telephone Number:</legend>
+                    <input name="field8" placeholder="(123)456-7890*" type="text">
+                </fieldset>
+
+                <input class="submitlisting" type="submit"  value="Submit Changes"> <a href="{{ url_for('updateProfile')}}"> </a>
+
+            </form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
