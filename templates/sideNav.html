@@ -8,5 +8,9 @@
 <br>
 <br>
 <div class="vertical-menu">
-    <a href="profile.html">Profile</a> <a href="newpost.html">Create New Post</a>
+    <a href="{{ url_for('profile')}}">Profile</a>
+
+    <a href="{{ url_for('newpost')}}">Create New Listing </a>
+
+    <a href="{{ url_for('changepassword')}}">Change Password </a>
 </div>
