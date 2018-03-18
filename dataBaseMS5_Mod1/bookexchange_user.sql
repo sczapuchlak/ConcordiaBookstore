@@ -29,6 +29,8 @@ CREATE TABLE `user` (
   `USER_FName` varchar(20) DEFAULT NULL,
   `USER_LName` varchar(30) DEFAULT NULL,
   `USER_Cnfrm` tinyint(4) DEFAULT NULL,
+  `USER_Rating` int(11) DEFAULT NULL,
+  `USER_Num_Rating` int(11) DEFAULT NULL,
   PRIMARY KEY (`USER_ID`),
   UNIQUE KEY `USER_ID_UNIQUE` (`USER_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -40,7 +42,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'$5$rounds=535000$bmiUom.x8TT232Jo$urcCwZBrrEkQQVmuQwarNkooxCLMVT6fArwiebWbh05','hallg2@csp.edu','Gary','Hall',NULL),(2,'$5$rounds=535000$EFQBT0LGpuD/tvQ/$SEG.22DZECdz3QdqAav750X4tzg0cwmoUX321oPipHA','hallgary@csp.edu','Gary','Hall',NULL);
+INSERT INTO `user` VALUES (1,'$5$rounds=535000$bmiUom.x8TT232Jo$urcCwZBrrEkQQVmuQwarNkooxCLMVT6fArwiebWbh05','hallg2@csp.edu','Gary','Hall',NULL,NULL,NULL),(2,'$5$rounds=535000$EFQBT0LGpuD/tvQ/$SEG.22DZECdz3QdqAav750X4tzg0cwmoUX321oPipHA','hallgary@csp.edu','Gary','Hall',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-10 16:15:37
+-- Dump completed on 2018-03-17 12:13:45

@@ -16,28 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `message`
+-- Table structure for table `course`
 --
 
-DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `course`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `message` (
-  `MSG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MSG_Date` date DEFAULT NULL,
-  `MSG_Body` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`MSG_ID`),
-  UNIQUE KEY `MSG_ID_UNIQUE` (`MSG_ID`)
+CREATE TABLE `course` (
+  `CRS_ID` varchar(20) NOT NULL,
+  `CRS_Name` varchar(60) DEFAULT NULL,
+  PRIMARY KEY (`CRS_ID`),
+  UNIQUE KEY `CRS_ID_UNIQUE` (`CRS_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `message`
+-- Dumping data for table `course`
 --
 
-LOCK TABLES `message` WRITE;
-/*!40000 ALTER TABLE `message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+LOCK TABLES `course` WRITE;
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+INSERT INTO `course` VALUES ('',''),('ABC 123','ABCs'),('FPR 100','Underwater Fire Prevention'),('HWK 125','Hawkanomics'),('MAT','Math 101');
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-10 16:15:37
+-- Dump completed on 2018-03-17 12:13:44

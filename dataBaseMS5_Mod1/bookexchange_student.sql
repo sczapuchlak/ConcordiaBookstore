@@ -16,28 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `course`
+-- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `course`;
+DROP TABLE IF EXISTS `student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `course` (
-  `CRS_ID` varchar(20) NOT NULL,
-  `CRS_Name` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`CRS_ID`),
-  UNIQUE KEY `CRS_ID_UNIQUE` (`CRS_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `student` (
+  `STU_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `STU_Address` varchar(45) DEFAULT NULL,
+  `STU_City` varchar(45) DEFAULT NULL,
+  `STU_State` varchar(45) DEFAULT NULL,
+  `STU_Zip` varchar(45) DEFAULT NULL,
+  `STU_Phone` varchar(45) DEFAULT NULL,
+  `USER_ID` int(11) NOT NULL,
+  PRIMARY KEY (`STU_ID`),
+  UNIQUE KEY `STU_ID_UNIQUE` (`STU_ID`),
+  KEY `USER_ID_idx` (`USER_ID`),
+  CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=374059 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `student`
 --
 
-LOCK TABLES `course` WRITE;
-/*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('',''),('ABC 123','ABCs'),('FPR 100','Underwater Fire Prevention'),('HWK 125','Hawkanomics');
-/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (374058,'12210 Wise St.','Bear Lake','Michigan',NULL,'(123)456-7890',2);
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-10 16:15:37
+-- Dump completed on 2018-03-17 12:13:45
