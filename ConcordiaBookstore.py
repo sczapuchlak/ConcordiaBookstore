@@ -254,7 +254,88 @@ def profile():
 
     return render_template("profile.html", data=prof)
 
+@app.route('/updateProfile.html', methods=["GET", "POST"])
+@require_logged_in
+def updateProfile():
 
+    if request.method == "POST":
+
+        profFName = request.form['field1']
+        profLName = request.form['field2']
+        profStuID = request.form['field3']
+        profAddy = request.form['field4']
+        profCity = request.form['field5']
+        profState = request.form['field6']
+        profZip = request.form['field7']
+        profPhone = request.form['field8']
+
+        c, conn = connection()
+
+        email = session['user_email']
+
+        # get User information with JOIN to get User's information
+        c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, "
+                  "STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID "
+                  "FROM user JOIN student ON user.USER_ID=student.USER_ID "
+                  "WHERE USER_Email = %s", (email,))
+
+        pro = c.fetchall()
+
+        for data in pro:
+            proFName = data[0]
+            proLName = data[1]
+            proEmail = data[2]
+            proRating = data[3]
+            proID = data[10]
+            studId = data[4]
+            proAddy = data[5]
+            proCity = data[6]
+            proState = data[7]
+            proZip = data[8]
+            proPhone = data[9]
+            proName = proFName + " " + proLName
+
+        print(pro)
+
+        c.execute('''
+                  UPDATE student
+                  SET STU_ID = %s, STU_Address = %s,
+                  STU_City = %s, STU_State = %s,
+                  STU_Zip = %s, STU_Phone = %s
+                  WHERE student.USER_ID = %s''',
+                  (profStuID, profAddy, profCity, profState, profZip, profPhone, proID, ))
+        conn.commit()
+
+        c.execute('''
+                  UPDATE user SET USER_FName = %s, USER_LName = %s
+                  WHERE USER_Email = %s''',
+                  (profFName, profLName, email, ))
+        conn.commit()
+        # get User information with JOIN to get User's information
+        c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, "
+                  "STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID "
+                  "FROM user JOIN student ON user.USER_ID=student.USER_ID "
+                  "WHERE USER_Email = %s", (email,))
+
+        prot = c.fetchall()
+
+        for data in prot:
+            proFName = data[0]
+            proLName = data[1]
+            proEmail = data[2]
+            proRating = data[3]
+            proID = data[10]
+            studId = data[4]
+            proAddy = data[5]
+            proCity = data[6]
+            proState = data[7]
+            proZip = data[8]
+            proPhone = data[9]
+            proName = proFName + " " + proLName
+
+        print(prot)
+
+    return render_template("updateProfile.html")
 
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
