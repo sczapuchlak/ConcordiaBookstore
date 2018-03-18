@@ -10,9 +10,15 @@
 <body>
 	<div class="w3-top">
 		<div class="headerColor w3-padding w3-card-2">
-			<a href="./"><img class="logo" src="static/images/concordia.png">&nbsp; &nbsp;CSP Student Bookstore</a> <!-- Float links to the right. Hide them on small screens -->
+			<a href="{{ url_for('home')}}"><img class="logo" src="static/images/concordia.png">&nbsp; &nbsp;CSP Student Bookstore</a> <!-- Float links to the right. Hide them on small screens -->
 			<div class="w3-right w3-hide-small" style="padding-top: 7pt;">
-				{% if session.logged_in %} <a class="w3-bar-item w3-button" href="home.html">Books</a> <a class="w3-bar-item w3-button" href="/logout">Sign Out</a> {% else %} <a class="w3-bar-item w3-button" href="signup.html">Sign Up</a> <a class="w3-bar-item w3-button" href="login.html">Login</a> <a class="w3-bar-item w3-button" href="home.html">Home Test</a> {% endif %}
+				{% if session.logged_in %} <a class="w3-bar-item w3-button" href="home.html">Books</a>
+                    <a class="w3-bar-item w3-button" href="{{ url_for('logout')}}">Sign Out</a>
+
+                     {% else %}
+                    <a class="w3-bar-item w3-button" href="{{ url_for('signup')}}">Sign Up</a>
+                    <a class="w3-bar-item w3-button" href="{{ url_for('login')}}">Login</a>
+                    {% endif %}
 			</div>
 		</div>
 	</div>
