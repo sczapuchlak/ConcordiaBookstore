@@ -5,13 +5,18 @@ body {
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
+    font-weight: 300;
 }
 a{
     !important;text-decoration: none;
+    font-weight: 300;
 }
 .logo {
 	width: 48px;
 	height: 15%;
+}
+h1,h2,h3,h4,h5,h6{
+font-family: 'Open Sans', sans-serif;
 }
 .title {
 	font-family: 'Open Sans', sans-serif;
@@ -270,15 +275,15 @@ a.links {
 /* this is for the homepage*/
 
 .homeLeft {
-	float: left;
 	height: 100%;
-	width: 20%;
-	position: fixed;
-	z-index: 1;
-	top: 53pt;
-	left: 0;
-	overflow-x: hidden;
-	padding-top: 20px;
+    width: 400px;
+    position: fixed;
+    z-index: 1;
+    top: 69px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
 	color: white;
 	background: rgba(11, 45, 77, 1);
 	background: -moz-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
@@ -290,19 +295,14 @@ a.links {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1);
 }
 .homeRight {
-	float: right;
-	margin-left: 160px;
-	/* Same as the width of the sidenav */
-	font-size: 28px;
-	/* Increased text to enable scrolling */
-	padding: 0px 10px;
+    margin-left: 410px; /* Same as the width of the sidenav */
 }
 .homeLeft a {
-	padding: 6px 8px 6px 16px;
-	text-decoration: none;
-	font-size: 25px;
-	color: #818181;
-	display: block;
+	   padding: 6px 6px 6px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
 }
 .homeLeft a:hover {
 	color: #f1f1f1;
@@ -391,6 +391,7 @@ a.links {
 }
 .form-style-5 label {
 	display: block;
+	!important;font-size: 14pt;
 	margin-bottom: 8px;
 }
 .form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
@@ -420,7 +421,7 @@ a.links {
 	height: 35px;
 }
 .form-style-5 .number {
-	background: #17005b;
+	background: #1B3A56;
 	color: #fff;
 	height: 30px;
 	width: 30px;
@@ -454,10 +455,7 @@ a.links {
 	font-size: 14pt;
 	width: 30%
 }
-#listtt.homeRight{
-    float: left;
-    padding-left: 120pt;
-}
+
 th, td
 {
     padding:0 10px 0 15px;
@@ -476,4 +474,7 @@ td{
 }
 a{
     text-decoration: none;
+}
+.labelPass{
+	font-size: 18pt;
 }
