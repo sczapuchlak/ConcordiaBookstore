@@ -364,7 +364,7 @@ a.links {
 /* This is the styling for the submit new listing page */
 
 #info {
-    width: 100%;
+    max-width: 80%;
     background-color: #f4f7f8;
     border-radius: 8px;
     padding: 5px 20px;
