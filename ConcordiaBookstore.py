@@ -10,16 +10,19 @@ from random import *
 
 global userID
 
+
 def connection():
     conn = MySQLdb.connect(host="localhost",
-                           user = "root",
-                           passwd = "AMH12bmh#$",
-                           db = "bookexchange")
+                           user="root",
+                           # passwd = "AMH12bmh#$",
+                           passwd="mysql",
+                           db="bookexchange")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
 
     return c, conn
+
 
 # set up the application with Flask
 app = Flask(__name__, '/static', static_folder='static',
@@ -28,25 +31,25 @@ app = Flask(__name__, '/static', static_folder='static',
 # this is so the templates always reload when there are changes made
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
 
 
-
 @app.route('/signup.html', methods=["GET", "POST"])
 def signup():
     test = "@csp.edu"
 
-    #form = SignUpForm(request.form)
+    # form = SignUpForm(request.form)
     if request.method == "POST":
         firstname = request.form['firstname']
         lastname = request.form['lastname']
         email = request.form['email']
         password = sha256_crypt.encrypt((str(request.form['password'])))
 
-        #create connection
+        # create connection
         c, conn = connection()
 
         result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
@@ -81,7 +84,7 @@ def signup():
             c.execute('''
                       INSERT INTO student(USER_ID)
                       VALUES(%s)''',
-            ([user_id]))
+                      ([user_id]))
             conn.commit()
 
             conn.commit()
@@ -92,29 +95,28 @@ def signup():
 
         return redirect(url_for('login', flash=flash))
     return render_template('signup.html')
-    #return render_template('signup.html', form=form)
+    # return render_template('signup.html', form=form)
 
 
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
-
     try:
 
         if request.method == "POST":
-            #get form values
+            # get form values
             user_email = request.form['email']
             user_password = request.form['password']
 
             # create connection
             c, conn = connection()
 
-            #get email addresss from db
+            # get email addresss from db
             c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
 
             # get stored password hash from db
             result = c.fetchone()[1]
 
-            #xompare and verify passwords
+            # xompare and verify passwords
             if sha256_crypt.verify(user_password, result):
 
                 session['logged_in'] = True
@@ -131,14 +133,14 @@ def login():
                     session.fullname = session.firstname + " " + session.lastname
 
                     # for testing purposes
-                    #print(firstname, lastname)
-                    #print(fullname)
+                    # print(firstname, lastname)
+                    # print(fullname)
 
-                #flash("You are now logged in")
+                # flash("You are now logged in")
                 msg = "You are now logged in"
                 # return render_template("home.html", msg=msg)
                 return redirect("home.html")
-                #return redirect(url_for("login"))
+                # return redirect(url_for("login"))
 
 
             else:
@@ -153,7 +155,7 @@ def login():
         return render_template("login.html", error=error)
 
 
-#check if user is logged in
+# check if user is logged in
 def require_logged_in(f):
     @wraps(f)
     def wrap(*args, **kwargs):
@@ -162,41 +164,41 @@ def require_logged_in(f):
         else:
             flash("unauthorized, Please log in")
             return redirect(url_for('login'))
+
     return wrap
+
 
 @app.route('/logout')
 def logout():
-    #kill session
+    # kill session
     session.clear()
     flash("You are now logged out")
-    #msg = "You are now logged in"
+    # msg = "You are now logged in"
     return redirect(url_for('login'))
+
 
 @app.route('/home.html', methods=["GET", "POST"])
 @require_logged_in
 def home():
-
     c, conn = connection()
 
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
-
     # get Listing table
     list = c.fetchall()
 
-    #print(list)
+    # print(list)
     return render_template('home.html', data=list)
 
-
     # for data in list:
-        # firtsname = data[0]
-        # lastname = data[1]
-        # listID = data[2]
-        # listtitle = data[3]
+    # firtsname = data[0]
+    # lastname = data[1]
+    # listID = data[2]
+    # listtitle = data[3]
 
-        # fullname = firtsname +" "+ lastname
+    # fullname = firtsname +" "+ lastname
     #
     #     #for testing only
     #     print(fullname)
@@ -209,13 +211,9 @@ def home():
     # return render_template("home.html", data=list)
 
 
-
-
-
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
 def profile():
-
     c, conn = connection()
 
     c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_Phone "
@@ -235,29 +233,27 @@ def profile():
     return render_template("profile.html", data=prof)
 
 
-
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
 def newpost():
-
     if request.method == "POST":
 
         file = request.files['pic']
 
-        #image = open(file, 'rb')  # open binary file in read mode
-        #image_read = file.read()
-        #newFile = base64.encode(image_read)
-        #newFile = base64.b64encode(image_read)
+        # image = open(file, 'rb')  # open binary file in read mode
+        # image_read = file.read()
+        # newFile = base64.encode(image_read)
+        # newFile = base64.b64encode(image_read)
 
         # file.save(file.filename)
         newFile = file.read()
 
-        #newFile = base64.encodestring(newFile1)
+        # newFile = base64.encodestring(newFile1)
 
-        #newFile1 = newFile.encode("base64")
+        # newFile1 = newFile.encode("base64")
 
-        #print(file)
-        #print(newFile)
+        # print(file)
+        # print(newFile)
 
         # Book Information
         book_ISBN = request.form['field4']
@@ -265,18 +261,17 @@ def newpost():
         book_Author = request.form['field6']
         book_publisher = request.form['field7']
         book_Edition = request.form['field8']
-        #book_back_photo = request.form['field9']
+        # book_back_photo = request.form['field9']
         book_Comments = request.form['field10']
-        #listing_date = request.form['todaysdate']
-      # value = str(listing_date)
-        #print(value)
-
+        # listing_date = request.form['todaysdate']
+        # value = str(listing_date)
+        # print(value)
 
         # Course Information
         course_Title = request.form['field11']
         course_Number = request.form['field12']
 
-        #Payment Information
+        # Payment Information
         sale_type = request.form['field13']
 
         c, conn = connection()
@@ -289,7 +284,7 @@ def newpost():
             user_id = data[0]
             u_email = data[2]
 
-            #print(data)
+            # print(data)
             print(user_id)
             print(u_email)
 
@@ -303,7 +298,6 @@ def newpost():
                   (course_Number, course_Title,))
         conn.commit()
 
-
         c.execute('''
                  INSERT INTO photo(PHT_Image)
                  VALUES(%s)''',
@@ -315,7 +309,8 @@ def newpost():
         c.execute('''
                  INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
                  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
-                  (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN, book_Author,
+                  (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN,
+                   book_Author,
                    book_Edition))
         course_id = conn.insert_id()
         conn.commit()
@@ -331,13 +326,12 @@ def newpost():
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
 
-
     return render_template("newpost.html")
 
-@app.route('/listing/ <list_id>', methods=["GET", "POST"])
-#@require_logged_in
-def listing(list_id=None):
 
+@app.route('/listing/ <list_id>', methods=["GET", "POST"])
+# @require_logged_in
+def listing(list_id=None):
     c, conn = connection()
 
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
@@ -349,16 +343,50 @@ def listing(list_id=None):
     result = c.fetchall()
     for data in result:
         firstname = data[0]
-        #print(data[1])
+        # print(data[1])
         lastname = data[1]
         listID = data[2]
         listtitle = data[3]
         print(data)
 
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
+                           listtitle=listtitle)
 
 
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle)
+@app.route('/comments', methods=["GET", "POST"])
+def comments():
+
+    c, conn = connection()
+
+    c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE COM_ID BETWEEN %s AND %s", [1, 20])
+
+    conn.commit()
+
+    comm = c.fetchall()
+    for data in comm:
+        author = data[0]
+        date = data[1]
+        msg = data[2]
+        print(data)
+
+    conn.close()
+    return render_template("comments.html", data=data, author=author, date=date, msg=msg)
+
+
+@app.route("/submit_comment/<list_id>/<msg>/<auth>", methods=["GET", "POST"])
+def submit_comment(list_id, msg, auth):
+    date = datetime.now()
+
+    c, conn = connection()
+
+    c.execute("INSERT INTO comment %s, %s, %s, %s", (list_id, auth, date, msg))
+    conn.commit()
+
+    conn.close()
+
+    return redirect(url_for("/listing", list_id))
+
 
 if __name__ == '__main__':
-    app.secret_key='haha you cant guess my secret key'
+    app.secret_key = 'haha you cant guess my secret key'
     app.run(debug=True)

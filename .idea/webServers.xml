@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ccbf57b9-e0b4-4f03-9bea-a7dfb4c9f034" name="ConcordiaBookstore" url="http://ec2-35-171-27-249.compute-1.amazonaws.com">
+        <fileTransfer host="ec2-35-171-27-249.compute-1.amazonaws.com" port="22" privateKey="C:\Users\Ken and Katy\Desktop\private-key.pem.txt" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
