@@ -22,10 +22,66 @@
 
 	<div class="homeRight" style="float: left ;width:80%">
 		<div style="overflow-x:auto;">
-			<div style="overflow-x:auto;">
-				<div>
-			  <p> ahahbfdkjdhsbfjk</p>
+
+			<div id="info" align="left" style="overflow-x:auto;">
+                <h1 id="userInfo">User Information:</h1>
+                <p>
+                    <strong>Name: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[0] }} {{ d[1] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Student ID: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[4] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Email Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[2] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[5] + " " + d[6] + ", " + d[7] + " " + d[8]}}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Phone Number: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[9] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Average User Rating: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[3] }}
+                    {% endfor %}
+                </p>
+
 			</div>
+{#
+            <div class="form-style-5">
+            <form method="POST" action="newpost.html" enctype="multipart/form-data">
+
+                <fieldset>
+                    <legend><span class="number">1</span> Edit Personal Information</legend>
+                    <input name="field1" placeholder="First Name*" type="text">
+                    <input name="field2" placeholder="Last Name*"  type="text">
+                    <input name="field3" placeholder="Street Address*"  type="text">
+                    <input name="field4" placeholder="City*" type="text">
+                    <input name="field5" placeholder="State*" type="text">
+                    <input name="field6" placeholder="Zip Code*" type="text">
+                    <input name="field7" placeholder="Phone Number*" type="text">
+                </fieldset>
+
+                <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
+
+            </form>
+			</div> #}
 		</div>
 	</div>
     </div>

@@ -17,12 +17,15 @@
 	</div>
 			<h1>{% include "sideNav.html" %}</h1>
 		</div>
-	</div>
+
+    </div>
+
 
 	<div class="homeRight">
-    		<div style="overflow-x:auto;">
-    			<div class="form-style-5">
-				<form method="POST" action="newpost.html" enctype="multipart/form-data">
+        <div style="overflow-x:auto;">
+            <div class="form-style-5">
+            <form method="POST" action="newpost.html" enctype="multipart/form-data">
+
 
 					<fieldset>
 						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number" >1</span> Personal Information</legend>
@@ -31,6 +34,7 @@
 					<fieldset>
 						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number">2</span> Book Information</legend>
                         <input name="field4" placeholder="Book ISBN*" type="text">
+
 
                         <input name="field5" placeholder="Book Title*"  type="text" >
                         <input name="field6" placeholder="Book Author*"  type="text">
@@ -62,9 +66,11 @@
 						</select>
 					</fieldset>
 
-					<input class="submitlisting" type="submit"  value="Apply"> <a href="newpost.html"> </a>
 
-				</form>
+
+                <input class="submitlisting" type="submit"  value="Apply"> <a href="newpost.html"> </a>
+
+            </form>
 			</div>
 		</div>
 	</div>
