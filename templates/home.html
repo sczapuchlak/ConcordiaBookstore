@@ -1,47 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CSP Student Bookstore Forum</title>
-
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Forum</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
 <body>
+
 {% include "header.html" %}
 
-<div> <h4>{% include "flash_message.html" %} </h4></div>
-<div style="width: 100%;">
+<div style="width: 100%;" class="container">
    <div class="homeLeft">
-       <center><div class="userFlash"> <h4> You are logged in with email {{session.user_email}} </h4></div></center><br>
-       <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
-       <div class="vertical-menu">
-          <a href="profile.html">Profile</a>
-          <a href="newpost.html">Create New Post</a>
+<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+			<h1>{% include "sideNav.html" %}</h1>
+		</div>
 
-        </div>
 
    </div>
-   <div class="homeRight">
-       <div style="overflow-x:auto;">
+   <div class="homeRight" id="listtt">
+       <div>
+        <form>
+            <table class="listingHold">
+                <thead>
+                    <tr>
+                        <th>Author of Post</th>
+                        <th>Title of Post</th>
+                        <th>Sell Type</th>
+                        <th>Date Listed</th>
+                        <th>ID</th>
 
-           {% for listing in listings %}
-                <tr>
-                    <td>{{ listing.idnum }}</td>
-                    <td>{{ listing.userfirst }} + {{ listing.userlast }}</td>
-                    <td>{{ listing.titleofpost }} </td>
-                </tr>
-    {% endfor %}
-  <table>
+                    </tr>
+                </thead>
+                <tbody>
 
-  </table>
+
+                {% for d in data %}
+
+<tr style="border-bottom: 1px solid #ddd!important;">
+
+
+    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[0] }} {{ d[1]}}</a></td>
+    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
+        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
+        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
+        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[6] }}</a></td>
+
+</tr>
+{% endfor %}
+
+
+</a></p>
+</tbody>
+            </table></form><br/>
+
 </div>
    </div>
 </div>
 <div style="clear:both"></div>
 
 
+
 </body>
 </html>
+<script>
+     $(".listinghold tr").click(function(){
+       window.location = "example.html";
+     });
+</script>
+<style>
+    tr:hover {background-color: #f5f5f5;}
+    tr:nth-child(even) {background-color: rgba(17, 90, 255, 0.03);}
+</style>

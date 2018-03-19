@@ -1,39 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CSP Student Bookstore Forum</title>
-
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Forum</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
+
+
 <body>
 {% include "header.html" %}
 
-<div> <h4>{% include "flash_message.html" %} </h4></div>
-<div style="width: 100%;">
-   <div class="homeLeft">
-       <center><div class="userFlash"> <h4> You are logged in with email {{session.user_email}} </h4></div></center><br>
-       <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
-       <div class="vertical-menu">
-          <a href="#">Profile</a>
-          <a href="newpost.html">Create New Post</a>
-
-        </div>
-
-   </div>
-   <div class="homeRight">
-       <div style="overflow-x:auto;">
-  <table>
-
-  </table>
-</div>
-   </div>
-</div>
-<div style="clear:both"></div>
+    <div style="width: 100%;" class="container">
+        <div class="homeLeft">
+            <div>
+            <h4>{% include "flash_message.html" %}</h4>
+	        </div>
+        <h1>{% include "sideNav.html" %}</h1>
+		</div>
 
 
+	<div class="homeRight" style="float: left ;width:80%">
+		<div style="overflow-x:auto;">
+
+			<div id="info" align="left" style="overflow-x:auto;">
+                <h1 id="userInfo">User Information:</h1>
+                <p>
+                    <strong>Name: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[0] }} {{ d[1] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Student ID: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[4] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Email Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[2] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[5] + " " + d[6] + ", " + d[7] + " " + d[8]}}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Phone Number: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[9] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Average User Rating: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[3] }}
+                    {% endfor %}
+                </p>
+
+			</div>
+{#
+            <div class="form-style-5">
+            <form method="POST" action="newpost.html" enctype="multipart/form-data">
+
+                <fieldset>
+                    <legend><span class="number">1</span> Edit Personal Information</legend>
+                    <input name="field1" placeholder="First Name*" type="text">
+                    <input name="field2" placeholder="Last Name*"  type="text">
+                    <input name="field3" placeholder="Street Address*"  type="text">
+                    <input name="field4" placeholder="City*" type="text">
+                    <input name="field5" placeholder="State*" type="text">
+                    <input name="field6" placeholder="Zip Code*" type="text">
+                    <input name="field7" placeholder="Phone Number*" type="text">
+                </fieldset>
+
+                <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
+
+            </form>
+			</div> #}
+		</div>
+	</div>
+    </div>
+    </div>
+	<div style="clear:both"></div>
 </body>
 </html>

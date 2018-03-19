@@ -1,92 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>CSP Student Bookstore Forum</title>
-
-    <meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Forum</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
-	
-
-	
 </head>
 <body>
-{% include "header.html" %}
-
-<div> <h4>{% include "flash_message.html" %} </h4></div>
-<div style="width: 100%;">
+	{% include "header.html" %}
+<div style="width: 100%;" class="container">
    <div class="homeLeft">
-       <center><div class="userFlash"> <h4> You are logged in with email {{session.user_email}} </h4></div></center><br>
-       <input id="searchBar" type="text" name="search" placeholder="Search.."><br><br><br>
-       <div class="vertical-menu">
-          <a href="profile.html">Profile</a>
-          <a href="newpost.html">Create New Post</a>
+<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+			<h1>{% include "sideNav.html" %}</h1>
+		</div>
 
-        </div>
-
-   </div>
-   <div class="homeRight">
-       <div style="overflow-x:auto;">
-<div class="form-style-5">
-<form>
-<fieldset>
-<legend><span class="number">1</span> Personal Information</legend>
-<input type="text" name="field1" placeholder="Your Name *">
-<input type="email" name="field2" placeholder="Your CSP Email *">
-<input type="text" name="field3" placeholder="Title of Listing *">
-</fieldset>
-
-<fieldset>
-<legend><span class="number">2</span> Book Information</legend>
-<input type="text" name="field4" placeholder="Book ISBN*">
-<input type="text" name="field5" placeholder="Book Title*">
-<input type="text" name="field6" placeholder="Book Author*">
-<input type="text" name="field7" placeholder="Book Publisher*">
-<input type="text" name="field8" placeholder="Book Edition (If available)*">
-<input type="text" name="field9" placeholder="Book Front Photo (If available)*">
-<form method="POST" role="imageupload" action="login.html"> <br>
-  <input class="picSub"type="file" name="pic" accept="image/*">
-  <input class="picSub" type="submit"> <br>
-</form>
-<br><input type="text" name="field9" placeholder="Book Back Photo (If available)*">
-<form method="POST" role="imageupload" action="login.html">
-  <input class="picSub" type="file" name="pic" accept="image/*">
-  <input class="picSub" type="submit">
-</form>
-<br><textarea name="field10" placeholder="Book Comments: Example: Condition"></textarea>
-</fieldset>
+    </div>
 
 
-
-<fieldset>
-<legend><span class="number">3</span> Course Information</legend>
-<input type="text" name="field11" placeholder="Course Title*">
-<input type="text" name="field12" placeholder="Course Number*">
-</fieldset>
-
-<fieldset>
-<legend><span class="number">4</span> Payment Information</legend>
-<label for="job">Payment Type</label>
-<select id="job" name="field13">
-<optgroup label="Payment Type">
-  <option value="sell">Sell</option>
-  <option value="trade">Trade</option>
-  <option value="rent">Trade</option
-  </optgroup>
-
-<input type="text" name="field14" placeholder="If selling, what is your price?*">
-</fieldset>
+	<div class="homeRight">
+        <div style="overflow-x:auto;">
+            <div class="form-style-5">
+            <form method="POST" action="newpost.html" enctype="multipart/form-data">
 
 
-<input class="submitlisting" type="submit" value="Apply" />
-</form>
-</div>
-   </div>
-</div>
-<div style="clear:both"></div>
+					<fieldset>
+						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number" >1</span> Personal Information</legend>
+                        <input name="field3" placeholder="Title of Listing *" type="text">
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number">2</span> Book Information</legend>
+                        <input name="field4" placeholder="Book ISBN*" type="text">
 
 
+                        <input name="field5" placeholder="Book Title*"  type="text" >
+                        <input name="field6" placeholder="Book Author*"  type="text">
+                        <input name="field7" placeholder="Book Publisher*" type="text">
+                        <input name="field8" placeholder="Book Edition (If available)*" type="text">
+
+						<textarea name="field10" placeholder="Book Comments: Example: Condition"></textarea>
+					</fieldset>
+					<input accept="image/*" class="picSub" name="pic" type="file">
+					 <br>
+					 <br>
+					<fieldset>
+						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number">3</span> Course Information</legend> <input name="field11"  placeholder="Course Title*" type="text"> <input name="field12"  placeholder="Course Number*" type="text">
+
+					</fieldset>
+					<fieldset>
+						<legend style="font-size: 14pt; font-family: 'Open Sans', sans-serif; "><span class="number">4</span> Payment Information</legend> <label for="job">Payment Type</label> <select id="job" name="field13">
+							<optgroup label="Payment Type">
+								<option value="sell">
+									Sell
+								</option>
+								<option value="trade">
+									Trade
+								</option>
+								<option value="rent">
+									Rent
+								</option>
+							</optgroup>
+						</select>
+					</fieldset>
+
+
+
+                <input class="submitlisting" type="submit"  value="Apply"> <a href="newpost.html"> </a>
+
+            </form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

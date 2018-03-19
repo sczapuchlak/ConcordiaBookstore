@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Listing</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+</head>
+
+<body>
+	{% include "header.html" %}
+	<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+	<div  >
+        <div class="homeLeft" >
+			{% include "sideNav.html" %}
+        </div>
+    </div>
+
+    <div class="homeRight" style="float: left">
+              	<form method="POST" action="/listing" enctype="multipart/form-data">
+
+
+                         <a>
+                <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
+                            <br><br>
+                             <div class="photoBox"><p> Placeholder for picture</p></div>
+                             <div class="infoHolder">
+                             <div class="listTitle"><p>{{listtitle}}</p></div>
+                           <div> <p>{{firstname}}</p></div>
+                           <div> <p>{{lastname}}</p></div>
+                           <div> <p>{{listID}}</p></div>
+                            </div>
+
+                         </a>
+
+              	</form>
+
+                        </div>
+                    </div>
+
+
+	<div style="clear:both"></div>
+</body>
+</html>
+<style>
+   .photoBox{
+    background-color: lightgrey;
+       display: inline-block;
+    border: 4px solid black;
+    height: 300px;
+    width: 200pt;
+   margin-left: 20%;
+   }
+    .breadcrumbs{
+        text-decoration: none;
+        margin-right: 50%;
+    }
+    .infoHolder{
+        display: inline-block;
+        float: right;
+        padding-right: 20%;
+
+    }
+    .listTitle{
+        font-size: 32pt;
+    }
+
+
+</style>
