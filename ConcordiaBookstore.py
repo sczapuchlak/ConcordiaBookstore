@@ -356,21 +356,15 @@ def listing(list_id=None):
 @app.route('/comments', methods=["GET", "POST"])
 def comments():
 
+    global messages
     c, conn = connection()
 
     c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE COM_ID BETWEEN %s AND %s", [1, 20])
 
     conn.commit()
-
     comm = c.fetchall()
-    for data in comm:
-        author = data[0]
-        date = data[1]
-        msg = data[2]
-        print(data)
 
-    conn.close()
-    return render_template("comments.html", data=data, author=author, date=date, msg=msg)
+    return render_template("listing.html", comm=comm)
 
 
 @app.route("/submit_comment/<list_id>/<msg>/<auth>", methods=["GET", "POST"])

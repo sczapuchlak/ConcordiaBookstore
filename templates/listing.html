@@ -32,13 +32,28 @@
                          </a></center>
                 </form>
             </div>
+        <div>
+            <h1>Comments:</h1>
+            <br>
+            <form method="POST" action="/comments" enctype="multipart/form-data">
+                <table>
+                    <tr>
+                        <td>User</td>
+                        <td>Comment Date</td>
+                        <td>Message</td>
+                    </tr>
+                    <br>
+                    {% for msg in comm %}
+                    <tr>
+                        <td>{{msg[0]}}</td>
+                        <td>{{msg[1]}}</td>
+		                <td>{{msg[2]}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        </div>
     </div>
-	<div>
-        <form>
-            <a>
-                {% include "comments.html" %}
-            </a>
-        </form>
-    </div>
+
 </body>
 </html>

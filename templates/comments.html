@@ -1,8 +1,21 @@
-{% for datum in data %}
-    <div class="comment">
-	     <p>{{author}}</p>
-		 <p>{{date}}</p>
-		 <p>{{msg}}</p>
-	  </div>
-{% endfor %}
+{% block main %}
+    <br><br>
+    <h2>Comments:</h2>
+    <br><br>
+        <table>
+            <tr>
+                <td>User</td>
+                <td>Comment Date</td>
+                <td>Message</td>
+            </tr>
+            <br>
+            {% for msg in comm %}
+            <tr>
+                <td>{{msg[0]}}</td>
+                <td>{{msg[1]}}</td>
+		        <td>{{msg[2]}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+{% endblock %}
 
