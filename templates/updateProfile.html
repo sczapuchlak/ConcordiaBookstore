@@ -24,29 +24,29 @@
             <div class="form-style-5">
             <form method="POST" action="updateProfile.html" enctype="multipart/form-data">
                 <h1>Please update your personal information</h1>
-                <h2 align="center">(all fields are required)</h2>
+                <br>
                 <fieldset>
                     <legend><span class="number">1</span>Name:</legend>
-                    <input name="field1" placeholder="First Name*" type="text" required>
-                    <input name="field2" placeholder="Last Name*" type="text" required>
+                    <input name="field1" placeholder="First Name*" type="text">
+                    <input name="field2" placeholder="Last Name*" type="text">
                 </fieldset>
                 <fieldset>
                     <legend><span class="number">2</span>Student ID (number following "L"):</legend>
-                    <input name="field3" placeholder='Student "L" Number*' type="number" required>
+                    <input name="field3" placeholder='Student "L" Number*' type="number">
                 </fieldset>
                 <fieldset>
                     <legend><span class="number">3</span>Address:</legend>
-                    <input name="field4" placeholder="Street Address*" type="text" required>
-                    <input name="field5" placeholder="City*"  type="text" required>
-                    <input name="field6" placeholder="State*" type="text" required>
-                    <input name="field7" placeholder="Zip Code*" type="text" required>
+                    <input name="field4" placeholder="Street Address*" type="text">
+                    <input name="field5" placeholder="City*"  type="text">
+                    <input name="field6" placeholder="State*" type="text">
+                    <input name="field7" placeholder="Zip Code*" type="text">
                 </fieldset>
                 <fieldset>
                     <legend><span class="number">4</span>Telephone Number:</legend>
                     <input name="field8" placeholder="(123)456-7890*" type="text">
                 </fieldset>
 
-                <input class="submitlisting" type="submit"  value="Submit Changes"> <a href="{{ url_for('updateProfile')}}"> </a>
+                <input class="submitlisting" type="submit"  value="Submit Changes" target="{{ url_for('profile')}}">
 
             </form>
 			</div>
