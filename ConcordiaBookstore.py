@@ -485,29 +485,44 @@ def listing(list_id=None):
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
-    if request.method == "POST":
-        password = sha256_crypt.encrypt((str(request.form['newPassword'])))
 
-        # # create connection
-        # c, conn = connection()
-        #
-        # result = c.execute("UPDATE password FROM user WHERE  USER_Email = %s", (email,))
+   if request.method == "POST":
 
-        if len(request.form['newPassword']) < 8:
-            error = "Password must be more than 8 characters"
-            return render_template("changepassword.html", error=error)
-
-        elif request.form['newPassword'] != request.form['confirmPassword']:
-            error = "Password doesn't match"
-            return render_template("changepassword.html", error=error)
-
-        elif request.form['newPassword'] == request.form['oldPassword']:
-            error = "Old password cannot match new password"
-            return render_template("signup.html", error=error)
+       oldPassword = request.form['oldPassword']
+       newPassword = request.form['newPassword']
+       confirmPassword = request.form['confirmPassword']
 
 
+        # create connection
+       c, conn = connection()
 
-    return render_template("changepassword.html")
+       if len(newPassword) < 8:
+           error = "Password must be more than 8 characters"
+           return render_template("changepassword.html", error=error)
+
+       elif newPassword != confirmPassword:
+           error = "Password doesn't match"
+           return render_template("changepassword.html", error=error)
+
+       elif newPassword == oldPassword:
+           error = "Old password cannot match new password"
+           return render_template("changepassword.html", error=error)
+       else:
+
+           password = sha256_crypt.encrypt((str(newPassword)))
+
+           email = session['user_email']
+
+
+           c.execute("""
+                     UPDATE user
+                     SET USER_PW=%s
+                     WHERE USER_Email=%s
+                  """, (password, email))
+
+           conn.commit()
+
+   return render_template("changepassword.html")
 
 
 
