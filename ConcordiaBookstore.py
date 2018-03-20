@@ -15,8 +15,8 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "gikQr6kn",
-                           db = "bookexchange1")
+                           passwd = "AMH12bmh#$",
+                           db = "bookexchange")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -355,7 +355,9 @@ def updateProfile():
                   (Fname, Lname, email, ))
         conn.commit()
 
+        return redirect("profile.html")
     return render_template("updateProfile.html")
+
 
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
