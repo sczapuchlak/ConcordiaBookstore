@@ -13,12 +13,14 @@
 			<a href="{{ url_for('home')}}"><img class="logo" src="static/images/concordia.png">&nbsp; &nbsp;CSP Student Bookstore</a> <!-- Float links to the right. Hide them on small screens -->
 			<div class="w3-right w3-hide-small" style="padding-top: 7pt;">
 				{% if session.logged_in %} <a class="w3-bar-item w3-button" href="home.html">Books</a>
+
                     <a class="w3-bar-item w3-button" href="{{ url_for('logout')}}">Sign Out</a>
 
                      {% else %}
                     <a class="w3-bar-item w3-button" href="{{ url_for('signup')}}">Sign Up</a>
                     <a class="w3-bar-item w3-button" href="{{ url_for('login')}}">Login</a>
                     {% endif %}
+
 			</div>
 		</div>
 	</div>

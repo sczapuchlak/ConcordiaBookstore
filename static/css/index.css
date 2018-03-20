@@ -364,12 +364,16 @@ a.links {
 /* This is the styling for the submit new listing page */
 
 #info {
-    max-width: 80%;
+    max-width: 100%;
     background-color: #f4f7f8;
     border-radius: 8px;
     padding: 5px 20px;
-    margin: 10px auto;
+    margin: 20px 50px 0px 10px;
     font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#proLink {
+	text-color: blue;
 }
 
 .form-style-5 {
