@@ -2,15 +2,18 @@
 
     <h4>You are signed in with {{session.user_email}}</h4>
 
-</div>
-<br>
-<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
-<br>
-<br>
-<div class="vertical-menu">
-    <a href="{{ url_for('profile')}}">Profile</a>
+				</div>
+			</center><br>
+			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
+			<br>
 
-    <a href="{{ url_for('newpost')}}">Create New Listing </a>
+			<div class="vertical-menu">
+                <a href="{{ url_for('profile')}}">Profile</a>
 
-    <a href="{{ url_for('changepassword')}}">Change Password </a>
-</div>
+                <a href="{{ url_for('newpost')}}">Create New Listing </a>
+
+                <a href="{{ url_for('changepassword')}}">Change Password </a>
+			</div>
+		</div>
+
+

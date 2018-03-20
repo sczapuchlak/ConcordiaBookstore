@@ -2,19 +2,21 @@ import base64
 from base64 import b64encode
 import MySQLdb
 from datetime import datetime
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
 from random import *
+from form import EmailForm, PasswordForm
+# from utils import send_email, ts
 
 global userID
 
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "AMH12bmh#$",
-                           db = "bookexchange")
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -506,6 +508,55 @@ def changepassword():
 
 
     return render_template("changepassword.html")
+
+
+
+@app.route('/pwreset.html', methods=["GET", "POST"])
+def pwreset():
+#     form = EmailForm()
+#     if form.validate_on_submit():
+#         user = User.query.filter_by(email=form.email.data).first_or_404()
+#
+#         subject = "Password reset requested"
+#
+#         token = ts.dumps(user.email, salt='recover-key')
+#
+#         recover_url = url_for(
+#             'reset_with_token',
+#             token=token,
+#             _external=True)
+#
+#         html = render_template(
+#             'pwreset.html',
+#             recover_url=recover_url)
+#
+#         # Let's assume that send_email was defined in myapp/util.py
+#         send_email(user.email, subject, html)
+#
+#         return redirect(url_for('home'))
+    return render_template('pwreset.html')
+#,form=form)
+#
+# @app.route('/pwreset/<token>', methods=["GET", "POST"])
+# def reset_with_token(token):
+#     try:
+#         email = ts.loads(token, salt="recover-key", max_age=86400)
+#     except:
+#         abort(404)
+#
+#     form = PasswordForm()
+#
+#     if form.validate_on_submit():
+#         user = User.query.filter_by(email=email).first_or_404()
+#
+#         user.password = form.password.data
+#
+#         # need to add user to database session
+#         #commit the DB session
+#
+#         return redirect(url_for('signin'))
+#
+#     return render_template('pwreset.html', form=form, token=token)
 
 if __name__ == '__main__':
     app.secret_key='haha you cant guess my secret key'
