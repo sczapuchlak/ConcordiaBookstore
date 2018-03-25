@@ -351,6 +351,7 @@ def listing(list_id=None):
         listtitle = data[3]
         print(data)
 
+    # Pull comments from comments table for display
     c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE list_id = %s", [listID])
     rows = c.fetchall()
 
