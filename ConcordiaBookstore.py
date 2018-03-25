@@ -351,7 +351,7 @@ def listing(list_id=None):
         listtitle = data[3]
         print(data)
 
-    c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE COM_ID BETWEEN %s AND %s", [1, 20])
+    c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE list_id = %s", [listID])
     rows = c.fetchall()
 
     return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
