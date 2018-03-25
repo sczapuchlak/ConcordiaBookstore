@@ -332,6 +332,8 @@ def newpost():
 @app.route('/listing/ <list_id>', methods=["GET", "POST"])
 # @require_logged_in
 def listing(list_id=None):
+    global messages;
+
     c, conn = connection()
 
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
@@ -349,22 +351,11 @@ def listing(list_id=None):
         listtitle = data[3]
         print(data)
 
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
-                           listtitle=listtitle)
-
-
-@app.route('/comments', methods=["GET", "POST"])
-def comments():
-
-    global messages
-    c, conn = connection()
-
     c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE COM_ID BETWEEN %s AND %s", [1, 20])
+    rows = c.fetchall()
 
-    conn.commit()
-    comm = c.fetchall()
-
-    return render_template("listing.html", comm=comm)
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
+                           listtitle=listtitle, rows=rows)
 
 
 @app.route("/submit_comment/<list_id>/<msg>/<auth>", methods=["GET", "POST"])
@@ -373,7 +364,7 @@ def submit_comment(list_id, msg, auth):
 
     c, conn = connection()
 
-    c.execute("INSERT INTO comment %s, %s, %s, %s", (list_id, auth, date, msg))
+    c.execute("INSERT INTO comments %s, %s, %s, %s", (list_id, auth, date, msg))
     conn.commit()
 
     conn.close()
