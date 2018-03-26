@@ -20,9 +20,9 @@ global userID
 
 def connection():
     conn = MySQLdb.connect(host="localhost",
-                           user="root",
-                           passwd = "Che@ter1324",
-                           db="bookexchange1")
+                           user = "root",
+                           passwd = "mysql",
+                           db = "bookexchange")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -36,11 +36,43 @@ app = Flask(__name__, '/static', static_folder='static',
 # this is so the templates always reload when there are changes made
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+# token generation serializer
+serial = URLSafeTimedSerializer('its a secret')
+
+class SignUpForm(Form):
+    firstname = StringField('First Name', [validators.DataRequired()])
+    lastname= StringField('Last Name', [validators.DataRequired()])
+    email = StringField('Email Address', [validators.DataRequired(), validators.Email()])
+    password = PasswordField('Password', [
+        validators.DataRequired(),
+        validators.EqualTo('confirmpassword', message="Passwords must match")
+    ])
+    confirmpassword = PasswordField('Re-enter Password')
+
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
 
+
+def validate_email():
+
+    test = "@csp.edu"
+    email = request.form['email']
+    # create connection
+    c, conn = connection()
+
+    result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
+
+    if int(result) > 0:
+        error = "Email exist. Please use a different email";
+        return render_template("signup.html", error=error)
+
+    elif email[-8:] != test:
+        error = "Not a valid CSP email";
+        return render_template("signup.html", error=error)
 
 
 @app.route('/signup.html', methods=["GET", "POST"])
@@ -54,6 +86,7 @@ def signup():
         studnumber = request.form['studentnumber']
         email = request.form['email']
         password = sha256_crypt.encrypt((str(request.form['password'])))
+        confirm = False
 
         # create connection
         c, conn = connection()
@@ -83,23 +116,45 @@ def signup():
         else:
 
             c.execute('''
-                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
-                    VALUES(%s, %s, %s, %s)''',
-                      (password, email, firstname, lastname))
-            user_id = conn.insert_id()
-            print(user_id)
+                                                                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName, USER_Cnfrm)
+                                                                    VALUES(%s, %s, %s, %s, %s)''',
+                      (password, email, firstname, lastname, confirm))
 
             conn.commit()
 
             c.execute('''
-                      INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
-                      VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
-            (studnumber, [user_id]))
+                                  INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
+                                  VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
+                      (studnumber, [user_id]))
             conn.commit()
 
-            conn.commit()
-            flash("Thanks for registering!")
-            flash("Please Sign in below")
+            # generate token
+            token = serial.dumps(email, salt='email-confirm')
+
+            # create link for confirmation email
+            link = url_for('confirm_email', token=token, external=True)
+
+            # message parameters
+            fromaddr = 'csp.bookshare@gmail.com'
+            msg = MIMEMultipart()
+            msg['From'] = fromaddr
+            msg['To'] = email
+            msg['Subject'] = 'Please confirm your email address'
+            body = render_template('/activate.html', confirm_url=link)
+            msg.attach(MIMEText(body, 'html'))
+
+            # open email server connection
+            s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
+            s.login('csp.bookshare@gmail.com', 'Capstone450')
+            text = msg.as_string()
+
+            # send message
+            s.sendmail(fromaddr, email, text)
+
+            # close email server connection
+            s.quit()
+
+            # flash("Please Sign in below")
             c.close()
             conn.close()
 
@@ -191,8 +246,8 @@ def login():
             #get email addresss from db
             c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
 
-            # get stored password hash from db
-            result = c.fetchone()[1]
+        # get stored password hash from db
+        result = c.fetchone()[1]
 
         #get confirmation status from db
         c.execute("SELECT USER_Cnfrm FROM user WHERE USER_Email = %s", (user_email,))
@@ -202,35 +257,33 @@ def login():
         if sha256_crypt.verify(user_password, result):
             if conf == 1:
                 session['logged_in'] = True
-
                 if session['logged_in'] is True:
                    session['user_email'] = user_email
             else:
                 flash("Unconfirmed registration. Please verify your email using the link sent to you", 'danger')
                 return render_template(url_for("login", flash=flash))
 
-                    c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
-                    # get user first and last name
-                    user_details = c.fetchall()
-                    for data in user_details:
-                        session.firstname = data[3]
-                        session.lastname = data[4]
-                    session.fullname = session.firstname + " " + session.lastname
+            c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
+            # get user first and last name
+            user_details = c.fetchall()
+            for data in user_details:
+                session.firstname = data[3]
+                session.lastname = data[4]
+            session.fullname = session.firstname + " " + session.lastname
 
-                    # for testing purposes
-                    # print(firstname, lastname)
-                    # print(fullname)
+            # for testing purposes
+            # print(firstname, lastname)
+            # print(fullname)
 
-                # flash("You are now logged in")
-                msg = "You are now logged in"
-                # return render_template("home.html", msg=msg)
-                return redirect("home.html")
-                # return redirect(url_for("login"))
+            # flash("You are now logged in")
+            msg = "You are now logged in"
+            # return render_template("home.html", msg=msg)
+            return redirect("home.html")
+            # return redirect(url_for("login"))
 
-
-            else:
-                error = "Invalid credential, try again"
-                return render_template("login.html", error=error)
+        else:
+            error = "Invalid credential, try again"
+            return render_template("login.html", error=error)
 
         return render_template("login.html")
 
@@ -247,8 +300,8 @@ def require_logged_in(f):
         if 'logged_in' in session:
             return f(*args, **kwargs)
         else:
-            flash("unauthorized, Please log in")
-            return redirect(url_for('login'))
+            flash("Unauthorized, Please log in")
+            return redirect(url_for('login', flash=flash))
     return wrap
 
 @app.route('/logout')
@@ -257,7 +310,7 @@ def logout():
     session.clear()
     flash("You are now logged out")
     #msg = "You are now logged in"
-    return redirect(url_for('login'))
+    return redirect(url_for('login', flash=flash))
 
 @app.route('/home.html', methods=["GET", "POST"])
 @require_logged_in
@@ -297,6 +350,34 @@ def home():
 
 
 
+@app.route('/mailto/<target>')
+@require_logged_in
+def mailto(target):
+    subject = request.form['subject']
+    message = request.form['message']
+    email = session['user_email']
+
+    # message parameters
+    fromaddr = 'csp.bookshare@gmail.com'
+    msg = MIMEMultipart()
+    msg['From'] = fromaddr
+    msg['To'] = target
+    msg['Subject'] = subject
+    body = "<p>Message sent from " + email + "<br /><br />" + message + "</p>"
+    msg.attach(MIMEText(body, 'html'))
+
+    # open email server connection
+    s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
+    s.login('csp.bookshare@gmail.com', 'Capstone450')
+    text = msg.as_string()
+
+    # send message
+    s.sendmail(fromaddr, target, text)
+
+    # close email server connection
+    s.quit()
+
+    return
 
 
 @app.route('/profile.html', methods=["GET", "POST"])
@@ -415,12 +496,12 @@ def newpost():
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
 
+
     return render_template("newpost.html")
 
-@app.route('/listing/ <list_id>', methods=["GET", "POST"])
+@app.route('/listing/<list_id>', methods=["GET", "POST"])
 # @require_logged_in
 def listing(list_id=None):
-    global messages;
 
     c, conn = connection()
 

@@ -24,8 +24,10 @@
               	<br><br>
                          <center><a>
 
+                            <a href="{{ mailto/{email} }}" onclick="window.open('mailto.html', 'newwindow',
+	                           'width=300, height=250 ,resizable=yes , scrollbars=yes'); return false;">
                             <p>{{firstname}}</p>
-                            <p>{{lastname}}</p>
+                            <p>{{lastname}}</p></a>
                             <p>{{listID}}</p>
                             <p>{{listtitle}}</p>
 
@@ -52,8 +54,10 @@
                         <td>Message</td>
                     </tr>
                     {% for row in rows %}
-                        <tr>s
-                            <td>{{row[0]}}</td>
+                        <tr>
+                            <a href="{{ mailto/{comment.COM_email} }}" onclick="window.open('mailto.html', 'newwindow',
+	                           'width=300, height=250 ,resizable=yes , scrollbars=yes');return false;">
+                            <td>{{row[0]}}</td></a>
                             <td>{{row[1]}}</td>
                             <td>{{row[2]}}</td>
                         </tr>

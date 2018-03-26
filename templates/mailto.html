@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Send an email to a CSP Bookstore user</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+</head>
+<body>
+
+{% include "header.html" %}
+
+<form action="mailto.html" method="post">
+    <label for="subject">Subject</label><input autofocus="" id="subject" name="subject" placeholder="Subject" type="text" value="{{request.form.subject }}"><br>
+    <br>
+    <label for="message">Message</label><textarea autofocus="" id="message" name="message" placeholder="Message" rows="10" cols="75" value="{{request.form.message }}"><br>
+    <br>
+    <button id="btnSend" type="submit" value="submit"><a href="mailto.html">Send</a></button>
+</form>
+
+</body>
+</html>
