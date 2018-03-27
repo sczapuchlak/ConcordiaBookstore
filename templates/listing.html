@@ -13,58 +13,63 @@
 	<div>
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
-	<div style="width: 100%;">
-        <div class="homeLeft">
+	<div style="width: 100%" >
+        <div class="homeLeft" >
 			{% include "sideNav.html" %}
         </div>
-            <div class="homeRight">
-                <div class="listing" style="overflow-x:auto;">
-                    <div class="titleListing">
-                        {{ listing.title }}
+    </div>
 
-                    </div>
-                    <div class="pictureListing">
-                        {{ listing.picture }}
+    <div class="homeRight" style="float: left">
+              	<form method="POST" action="/listing" enctype="multipart/form-data">
 
-                    </div>
-                    <div class="sellersoldListing">
-                        <div class="seller">
-                        {{ listing.seller }}
 
-                        </div>
-                        <div class="sold">
-                        {{ listing.sold }}
+                         <a>
+                <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
+                            <br><br>
+                             <div class="photoBox"><p> Placeholder for picture</p></div>
+                             <div class="infoHolder">
+                             <div class="listTitle"><p>{{listtitle}}</p></div>
 
-                        </div>
-                        <div class="avgRating">
-                        {{ listing.avgrating }}
+                           <div> <p>{{firstname}}</p></div>
+                           <div> <p>{{lastname}}</p></div>
+                           <div> <p>{{listID}}</p></div>
+                            </div>
 
-                        </div>
-                        <div class="ratingStars">
-                        {{ listing.starRating }}
+                         </a>
+
+              	</form>
 
                         </div>
                     </div>
-                    <div class="descriptionListing">
-                        {{ listing.description}}
 
-                    </div>
-                    <div class="commentSection">
-                        <div class="commentaddListing">
-                        <form>
-{#                            {{ comment.addListing }}#}
-                            <textarea maxlength="2000"></textarea><br>
-                            <input type="submit"></input>
-                        </form>
-                        </div>
-                        <div class="commentdisplayListing">
-                        {{ comment.displayComment }}
 
-                        </div>
-                    </div>
-			    </div>
-		    </div>
-	    </div>
 	<div style="clear:both"></div>
 </body>
 </html>
+<style>
+
+   .photoBox{
+    background-color: lightgrey;
+       display: inline-block;
+    border: 4px solid black;
+    height: 300px;
+    width: 200pt;
+   margin-left: 20%;
+   }
+    .breadcrumbs{
+        text-decoration: none;
+        margin-right: 50%;
+    }
+    .infoHolder{
+        display: inline-block;
+        float: right;
+        padding-right: 20%;
+
+    }
+    .listTitle{
+        font-size: 32pt;
+    }
+
+
+
+</style>
