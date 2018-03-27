@@ -8,51 +8,115 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 </head>
+
+
 <body>
-	{% include "header.html" %}
-	<div>
+{% include "header.html" %}
+
+<div style="width: 100%;" class="container">
+   <div class="homeLeft">
+<div>
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
-	<div style="width: 100%;">
-		<div class="homeLeft">
-			{% include "sideNav.html" %}
+			<h1>{% include "sideNav.html" %}</h1>
 		</div>
 	</div>
-	<div class="homeRight">
+
+
+	<div class="homeRight" style="float: left ;width:80%">
 		<div style="overflow-x:auto;">
+
 			<div id="info" align="left" style="overflow-x:auto;">
-                <h1 id="userInfo">User Information:</h1>
+            <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
+                <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
+                <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
                 <p>
-                    Name: <br />
-                    {# place SQL query here #}
-                    {% for d in data %}
+                    <strong>Name: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[0] }} {{ d[1] }}
                     {% endfor %}
                 </p>
                 <p>
-                    Email Address: <br />
-                    {# place SQL query here #}
-                    {% for d in data %}
+                    <strong>Student ID: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[4] }}
+                    {% endfor %}
+                </p>
+                <p>
+                    <strong>Email Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[2] }}
                     {% endfor %}
                 </p>
                 <p>
-                    Phone Number: <br />
-                    {# place SQL query here #}
-                    {% for d in data %}
-                    {{ d[3] }}
+                    <strong>Address: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[5] + " " + d[6] + ", " + d[7] + " " + d[8]}}
                     {% endfor %}
                 </p>
                 <p>
-                    Average User Rating: <br />
-                    {# place SQL query here #}
-                    {% for d in data %}
-                    {{ d[4] }}
+                    <strong>Phone Number: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[9] }}
                     {% endfor %}
                 </p>
+                <p>
+                    <strong>Average User Rating: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[3] }}
+                    {% endfor %}
+                </p><br>
+            <button align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a></button>
 			</div>
+            </div>
+{#
+            <div class="form-style-5">
+            <form method="POST" action="newpost.html" enctype="multipart/form-data">
+
+                <fieldset>
+                    <legend><span class="number">1</span> Edit Personal Information</legend>
+                    <input name="field1" placeholder="First Name*" type="text">
+                    <input name="field2" placeholder="Last Name*"  type="text">
+                    <input name="field3" placeholder="Street Address*"  type="text">
+                    <input name="field4" placeholder="City*" type="text">
+                    <input name="field5" placeholder="State*" type="text">
+                    <input name="field6" placeholder="Zip Code*" type="text">
+                    <input name="field7" placeholder="Phone Number*" type="text">
+                </fieldset><br>
+
+                <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
+
+            </form>
+			</div> #}
 		</div>
 	</div>
-	<div style="clear:both"></div>
+    </div>
+
+    </div>
+
 </body>
+<style>
+    p{
+        font-size: 13pt;
+        font-family: 'Open Sans', sans-serif;
+        margin-left: 5pt;
+        margin-top: 20pt;
+        padding-top: 5pt;
+    }
+ button{
+
+    margin-right: 10pt;
+    display: inline-block;
+     font-size: 140%;
+    height: 100%;
+    width: 18%;
+    color: whitesmoke;
+    background: #0A2E50;
+    cursor: hand;
+     font-family: 'Open Sans', sans-serif;
+}
+    strong{
+        font-weight: 700;
+    }
+</style>
 </html>
