@@ -1,22 +1,17 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="../../../../favicon.ico">
-
-    <title>Login to Concordia Used Bookstore</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="signin.css" rel="stylesheet">
-  </head>
+<head>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+	<meta content="" name="description">
+	<meta content="" name="author">
+	<link href="../../../../favicon.ico" rel="icon">
+	<title>Login to Concordia Used Bookstore</title><!-- Bootstrap core CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><!-- Custom styles for this template -->
+	<link href="signin.css" rel="stylesheet">
+</head>
 <body class="signInBack">
+
 
 {% include "header.html" %}
 <div class="container">
@@ -29,12 +24,12 @@
         <form method="POST" role="login" action="login.html" >
           <img src="static/images/concordia.png" class="img-responsive" alt="" />
           <center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
-          <input type="email" id="inputEmail" name="email" placeholder="yourname@csp.edu" class="form-control input-lg" value= "email"/>
-          <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password" required="" value="password"/>
+          <input type="email" id="inputEmail" name="email" placeholder="yourname@csp.edu" class="form-control input-lg" value= ""/>
+          <input type="password" class="form-control input-lg" name="password" id="password" placeholder="Password" required="" value=""/>
           <button type="submit" name="go" class="btn btn-lg btn-primary btn-block"> Sign in</button>
           <div>
             {#I added reset password on here as a placeholder , since he talked about this for the future maybe#}
-              <a class="links" href="signup.html">Create account</a> or <a class="links" href="#">reset password</a>
+              <a class="links" href="signup.html">Create account</a> or <a class="links" href="pwreset.html">reset password</a>
 
           </div>
 
@@ -48,9 +43,6 @@
 
   </div>
 </div>
+
 </body>
 </html>
-
-
-
-
