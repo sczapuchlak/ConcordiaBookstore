@@ -16,39 +16,42 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `listing`
+-- Table structure for table `book`
 --
 
-DROP TABLE IF EXISTS `listing`;
+DROP TABLE IF EXISTS `book`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `listing` (
-  `LST_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `LST_SellType` varchar(30) DEFAULT NULL,
-  `LST_Title` varchar(100) DEFAULT NULL,
-  `BK_ID` int(11) DEFAULT NULL,
-  `MSG_ID` int(11) DEFAULT NULL,
-  `LST_USER_ID` int(11) DEFAULT NULL,
-  `LST_Date` date DEFAULT NULL,
-  PRIMARY KEY (`LST_ID`),
-  UNIQUE KEY `LST_ID_UNIQUE` (`LST_ID`),
-  KEY `BK_ID_idx` (`BK_ID`),
-  KEY `MSG_ID_idx` (`MSG_ID`),
-  KEY `LST_USER_ID_idx` (`LST_USER_ID`),
-  CONSTRAINT `BK_ID` FOREIGN KEY (`BK_ID`) REFERENCES `book` (`BK_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `LST_USER_ID` FOREIGN KEY (`LST_USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `MSG_ID` FOREIGN KEY (`MSG_ID`) REFERENCES `message` (`MSG_ID`) ON DELETE NO ACTION ON UPDATE CASCADE
+CREATE TABLE `book` (
+  `BK_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `BK_Title` varchar(60) DEFAULT NULL,
+  `CRS_ID` varchar(20) DEFAULT NULL,
+  `BK_Publisher` varchar(45) DEFAULT NULL,
+  `BK_Price` varchar(45) DEFAULT NULL,
+  `PHT_ID` int(11) DEFAULT NULL,
+  `BK_Sale_Type` varchar(20) DEFAULT NULL,
+  `BK_Comment` varchar(100) DEFAULT NULL,
+  `BK_ISBN` varchar(15) DEFAULT NULL,
+  `BK_Author` varchar(45) DEFAULT NULL,
+  `BK_Edition` varchar(20) DEFAULT NULL,
+  `BK_Sold` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`BK_ID`),
+  UNIQUE KEY `BK_ID_UNIQUE` (`BK_ID`),
+  KEY `PHT_ID_idx` (`PHT_ID`),
+  KEY `CRS_ID_idx` (`CRS_ID`),
+  CONSTRAINT `CRS_ID` FOREIGN KEY (`CRS_ID`) REFERENCES `course` (`CRS_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PHT_ID` FOREIGN KEY (`PHT_ID`) REFERENCES `photo` (`PHT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `listing`
+-- Dumping data for table `book`
 --
 
-LOCK TABLES `listing` WRITE;
-/*!40000 ALTER TABLE `listing` DISABLE KEYS */;
-INSERT INTO `listing` VALUES (4,'sell','Four',4,NULL,2,'2018-03-10'),(5,'rent','Blah',5,NULL,2,'2018-03-11');
-/*!40000 ALTER TABLE `listing` ENABLE KEYS */;
+LOCK TABLES `book` WRITE;
+/*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES (4,'Four','','Fourton Publishing inc.',NULL,4,'sell','','2345678901234','Sir Foursalot','4th',NULL),(5,'Blah','MAT','Blah house publishing',NULL,5,'rent','','1234567890','Bahsir Blasington','5th',NULL);
+/*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -60,4 +63,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-03-19 23:37:05

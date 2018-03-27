@@ -16,42 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `book`
+-- Table structure for table `comments`
 --
 
-DROP TABLE IF EXISTS `book`;
+DROP TABLE IF EXISTS `comments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `book` (
-  `BK_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `BK_Title` varchar(60) DEFAULT NULL,
-  `CRS_ID` varchar(20) DEFAULT NULL,
-  `BK_Publisher` varchar(45) DEFAULT NULL,
-  `BK_Price` varchar(45) DEFAULT NULL,
-  `PHT_ID` int(11) DEFAULT NULL,
-  `BK_Sale_Type` varchar(20) DEFAULT NULL,
-  `BK_Comment` varchar(100) DEFAULT NULL,
-  `BK_ISBN` varchar(15) DEFAULT NULL,
-  `BK_Author` varchar(45) DEFAULT NULL,
-  `BK_Edition` varchar(20) DEFAULT NULL,
-  `BK_Sold` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`BK_ID`),
-  UNIQUE KEY `BK_ID_UNIQUE` (`BK_ID`),
-  KEY `PHT_ID_idx` (`PHT_ID`),
-  KEY `CRS_ID_idx` (`CRS_ID`),
-  CONSTRAINT `CRS_ID` FOREIGN KEY (`CRS_ID`) REFERENCES `course` (`CRS_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PHT_ID` FOREIGN KEY (`PHT_ID`) REFERENCES `photo` (`PHT_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+CREATE TABLE `comments` (
+  `COM_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `COM_Auth` varchar(100) DEFAULT NULL,
+  `COM_Date` date DEFAULT NULL,
+  `COM_Body` varchar(500) DEFAULT NULL,
+  `LST_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`COM_ID`),
+  UNIQUE KEY `COM_ID_UNIQUE` (`COM_ID`),
+  KEY `LST_ID_idx` (`LST_ID`),
+  CONSTRAINT `LST_ID` FOREIGN KEY (`LST_ID`) REFERENCES `listing` (`LST_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `book`
+-- Dumping data for table `comments`
 --
 
-LOCK TABLES `book` WRITE;
-/*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (4,'Four','','Fourton Publishing inc.',NULL,4,'sell','','2345678901234','Sir Foursalot','4th',NULL),(5,'Blah','MAT','Blah house publishing',NULL,5,'rent','','1234567890','Bahsir Blasington','5th',NULL);
-/*!40000 ALTER TABLE `book` ENABLE KEYS */;
+LOCK TABLES `comments` WRITE;
+/*!40000 ALTER TABLE `comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -63,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-03-19 23:37:05

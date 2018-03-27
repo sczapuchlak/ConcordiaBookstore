@@ -16,28 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `message`
+-- Table structure for table `listing`
 --
 
-DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `listing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `message` (
-  `MSG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MSG_Date` date DEFAULT NULL,
-  `MSG_Body` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`MSG_ID`),
-  UNIQUE KEY `MSG_ID_UNIQUE` (`MSG_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `listing` (
+  `LST_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `LST_SellType` varchar(30) DEFAULT NULL,
+  `LST_Title` varchar(100) DEFAULT NULL,
+  `BK_ID` int(11) DEFAULT NULL,
+  `MSG_ID` int(11) DEFAULT NULL,
+  `LST_USER_ID` int(11) DEFAULT NULL,
+  `LST_Date` date DEFAULT NULL,
+  PRIMARY KEY (`LST_ID`),
+  UNIQUE KEY `LST_ID_UNIQUE` (`LST_ID`),
+  KEY `BK_ID_idx` (`BK_ID`),
+  KEY `MSG_ID_idx` (`MSG_ID`),
+  KEY `LST_USER_ID_idx` (`LST_USER_ID`),
+  CONSTRAINT `BK_ID` FOREIGN KEY (`BK_ID`) REFERENCES `book` (`BK_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `LST_USER_ID` FOREIGN KEY (`LST_USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `MSG_ID` FOREIGN KEY (`MSG_ID`) REFERENCES `message` (`MSG_ID`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `message`
+-- Dumping data for table `listing`
 --
 
-LOCK TABLES `message` WRITE;
-/*!40000 ALTER TABLE `message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+LOCK TABLES `listing` WRITE;
+/*!40000 ALTER TABLE `listing` DISABLE KEYS */;
+INSERT INTO `listing` VALUES (4,'sell','Four',4,NULL,2,'2018-03-10'),(5,'rent','Blah',5,NULL,2,'2018-03-11');
+/*!40000 ALTER TABLE `listing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-03-19 23:37:05
