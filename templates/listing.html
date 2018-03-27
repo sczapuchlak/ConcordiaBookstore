@@ -48,6 +48,7 @@
                                     </fieldset>
                                  <hr>
 
+
                                  <fieldset>
                              <legend>Book Information</legend>
                                  <div class="backgroundBox">
@@ -81,11 +82,45 @@
 
 
                         </div>
-
-
+                        </a></center>
+                </form>
+            </div>
+        <div>
+            <h1>Comments:</h1>
+            <br>
+{#            Add new comment#}
+            <div class="comments" align="center">
+                <form action="{url_for(submit_comment/{list_id})}" method="POST">
+                    <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
+                                                              placeholder="Write your comment here"
+                                                              value="{request.form.message}" id="message" name="message">
+                    </textarea><br /><br />
+                    <input type="button" id="submit" value="Submit Comment" /><br /><br />
+                </form>
+            {# Display comments for selected listing #}
+                <table class="comments" align="center">
+                    <tr>
+                        <td>User</td>
+                        <td>Comment Date</td>
+                        <td>Message</td>
+                    </tr>
+                    {% for row in rows %}
+                        <tr>s
+                            <td>{{row[0]}}</td>
+                            <td>{{row[1]}}</td>
+                            <td>{{row[2]}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            <input type="button" id="submit" value="Prev" />
+            <input type="button" id="submit" value="Next" />
+            </div>
+        </div>
+    </div>
 
 
 	<div style="clear:both"></div>
+
 </body>
 </html>
 <style>
