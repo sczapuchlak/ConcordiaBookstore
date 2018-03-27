@@ -80,7 +80,15 @@
 
                          </a>
               	</form>
-        <div>
+
+
+
+                        </div>
+
+
+
+
+	<div style="clear:both"><div>
             <h1>Comments:</h1>
             <br>
 {#            Add new comment#}
@@ -101,9 +109,8 @@
                     </tr>
                     {% for row in rows %}
                         <tr>
-                            <a href="../mailto/{{ row[4] }}" onclick="window.open('../mailto.html/{{ row[4] }}', 'newwindow',
-	                           'width=300, height=250 ,resizable=yes , scrollbars=yes');return false;">
-                            <td>{{row[0]}}</td></a>
+                            <td><a href="../mailto/{{ row[4] }}" onclick="window.open('../mailto/{{ row[4] }}', 'newwindow',
+	                           'width=300, height=250 ,resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
                             <td>{{row[1]}}</td>
                             <td>{{row[2]}}</td>
                         </tr>
@@ -112,15 +119,7 @@
             <input type="button" id="submit" value="Prev" />
             <input type="button" id="submit" value="Next" />
             </div>
-        </div>
-
-
-                        </div>
-
-
-
-
-	<div style="clear:both"></div>
+        </div></div>
 </body>
 </html>
 <style>
