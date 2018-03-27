@@ -27,30 +27,16 @@
         </div>
 
    </div>
-   <div class="homeRight" id="listtt">
-       <div style="overflow-x:auto; ">
-        <form>
-            <table class="listingHold">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Title of Post</th>
-                        <th>Sell Type</th>
-                    </tr>
-                </thead>
-                <tbody>
+   <div class="homeRight">
+       <div style="overflow-x:auto;">
 
-                {% for d in data %}
-<tr>
-<a href= "{{ '/listing.html' }}">
-    <td>{{ d[0] }} {{ d[1] }}</td>
-    <td >    {{ d[3] }}</td>
-    <td >    {{ d[4] }}</td>
-</a>
-</tr>
-{% endfor %}
-</tbody>
-            </table></form><br/>
+          {% for x in data %}
+                <tr>
+                    <td>{{ x }}</td>
+                    <td>{{ firstname }} + {{ lastname}}</td>
+                    <td>{{ listtitle }} </td>
+                </tr>
+    {% endfor %}
 
 </div>
    </div>
@@ -61,3 +47,8 @@
 
 </body>
 </html>
+<script>
+     $(".listinghold tr").click(function(){
+       window.location = "example.html";
+     });
+</script>
