@@ -15,8 +15,8 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "AMH12bmh#$",
-                           db = "bookexchange")
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -463,8 +463,9 @@ def listing(list_id=None):
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-              "FROM user,listing "
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID, BK_Author,BK_Edition,BK_Title,"
+              "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
+              "FROM user,listing,book,course "
               "WHERE LST_ID = %s", [list_id])
 
     conn.commit()
@@ -476,11 +477,25 @@ def listing(list_id=None):
         lastname = data[1]
         listID = data[2]
         listtitle = data[3]
+        listDate= data[5]
+        bookAuthor = data[7]
+        bookEdition = data[8]
+        bookTitle = data[9]
+        listSellType = data[10]
+        bookPublisher = data[11]
+        bookDesc = data[12]
+        bookISBN = data[13]
+        userRating = data[14]
+        courseID = data[15]
+        courseName = data[16]
+
+
         print(data)
 
 
-
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle)
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle, listDate=listDate,
+                           bookTitle=bookTitle, bookAuthor=bookAuthor,bookEdition=bookEdition, listSellType=listSellType,bookPublisher=bookPublisher,
+                           bookDesc=bookDesc, bookISBN=bookISBN, userRating=userRating, courseID=courseID, courseName=courseName)
 
 
 
