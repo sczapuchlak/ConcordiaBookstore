@@ -94,7 +94,11 @@
                 </p>
 
                 <table>
-                    StarsRating({{ d[3] }}, {{ d[11] }});
+                    <p>
+                    <strong>User Rating: </strong><br />
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    ({{ d[3] }}, {{ d[11] }});
+                    {% endfor %}
                     <tr class="RatingForUser">
                         <td>
                             <div class="starRating-outer">
@@ -102,6 +106,7 @@
                             </div>
                         </td>
                     </tr>
+                </p>
                 </table>
                 <p>
                     <strong>Total Reviews: </strong><br />
