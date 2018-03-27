@@ -24,7 +24,7 @@
               	<br><br>
                          <center><a>
 
-                            <a href="{{ mailto/{email} }}" onclick="window.open('mailto.html', 'newwindow',
+                            <a href="../mailto/{{ id }}" onclick="window.open('../mailto/{{ id }}', 'newwindow',
 	                           'width=300, height=250 ,resizable=yes , scrollbars=yes'); return false;">
                             <p>{{firstname}}</p>
                             <p>{{lastname}}</p></a>
@@ -39,12 +39,12 @@
             <br>
 {#            Add new comment#}
             <div class="comments" align="center">
-                <form action="{url_for(submit_comment/{list_id})}" method="POST">
+                <form action="../submit_comment/{{listID}}" method="POST">
                     <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
                                                               placeholder="Write your comment here"
                                                               value="{request.form.message}" id="message" name="message">
                     </textarea><br /><br />
-                    <input type="button" id="submit" value="Submit Comment" /><br /><br />
+                    <a href="../submit_comment/{{listID}}"><input type="button" id="submit" value="Submit Comment" /></a><br /><br />
                 </form>
             {# Display comments for selected listing #}
                 <table class="comments" align="center">
@@ -55,7 +55,7 @@
                     </tr>
                     {% for row in rows %}
                         <tr>
-                            <a href="{{ mailto/{comment.COM_email} }}" onclick="window.open('mailto.html', 'newwindow',
+                            <a href="../mailto/{{ row[4] }}" onclick="window.open('../mailto.html/{{ row[4] }}', 'newwindow',
 	                           'width=300, height=250 ,resizable=yes , scrollbars=yes');return false;">
                             <td>{{row[0]}}</td></a>
                             <td>{{row[1]}}</td>

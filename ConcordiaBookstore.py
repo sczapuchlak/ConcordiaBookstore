@@ -21,7 +21,7 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "mysql",
+                           passwd = "Che@ter1324",
                            db = "bookexchange")
 
     # Create a Cursor object to execute queries.
@@ -120,6 +120,8 @@ def signup():
                                                                     VALUES(%s, %s, %s, %s, %s)''',
                       (password, email, firstname, lastname, confirm))
 
+            user_id = conn.insert_id()
+            print(user_id)
             conn.commit()
 
             c.execute('''
@@ -289,6 +291,8 @@ def login():
 
     except Exception as e:
         print(e)
+        # fix this line so that it only shows up when user clicks button and it fails
+        # currently showing whenever page is visited, whether registered or not
         error = "Credentials don't exist. Please Sign Up "
         return render_template("login.html", error=error)
 
@@ -357,14 +361,22 @@ def mailto(target):
     message = request.form['message']
     email = session['user_email']
 
+    c, conn = connection()
+
+    c.execute('''SELECT USER_Email FROM comments JOIN ON user 
+                 WHERE comments.COM_USER_ID = user.USER_ID 
+                 AND comments.COM_USER_ID = %s''', [target])
+
     # message parameters
     fromaddr = 'csp.bookshare@gmail.com'
     msg = MIMEMultipart()
     msg['From'] = fromaddr
-    msg['To'] = target
+    msg['To'] = c.fetchone()[0]
     msg['Subject'] = subject
     body = "<p>Message sent from " + email + "<br /><br />" + message + "</p>"
     msg.attach(MIMEText(body, 'html'))
+
+    conn.close()
 
     # open email server connection
     s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
@@ -501,11 +513,11 @@ def newpost():
 
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
 # @require_logged_in
-def listing(list_id=None):
+def listing(list_id):
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+    c.execute("SELECT USER_FName,USER_LName,USER_ID, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
               "FROM user,listing "
               "WHERE LST_ID = %s", [list_id])
 
@@ -516,25 +528,42 @@ def listing(list_id=None):
         firstname = data[0]
         # print(data[1])
         lastname = data[1]
-        listID = data[2]
-        listtitle = data[3]
-        print(data)
+        id = data[2]
+        listID = data[3]
+        listtitle = data[4]
+        # print(data)
 
     # Pull comments from comments table for display related to selected listing
-    c.execute("SELECT COM_Auth, COM_Date, COM_Body FROM comments WHERE list_id = %s", [listID])
+    c.execute("SELECT COM_Auth, COM_Date, COM_Body, COM_USER_ID FROM comments WHERE LST_ID = %s", [listID])
     rows = c.fetchall()
 
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
+    # return render_template("listing.html", data=data, email=email, firstname=firstname, lastname=lastname, listID=listID,
+    #                        listtitle=listtitle, rows=rows)
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, id=id, listID=listID,
                            listtitle=listtitle, rows=rows)
 
 
-@app.route("/submit_comment/<list_id>/<msg>/<auth>", methods=["GET", "POST"])
-def submit_comment(list_id, msg, auth):
+@app.route("/submit_comment/<list_id>", methods=["GET", "POST"])
+@require_logged_in
+def submit_comment(list_id):
     date = datetime.now()
+    msg = request.form['message']
+    email = session['user_email']
 
     c, conn = connection()
 
-    c.execute("INSERT INTO comments %s, %s, %s, %s", (list_id, auth, date, msg))
+    c.execute("SELECT USER_FName, USER_LName, USER_ID FROM user WHERE USER_Email = %s", [email])
+    result = c.fetchall()
+    for data in result:
+        firstname = data[0]
+        lastname = data[1]
+        id = data[2]
+
+    auth = firstname + " " + lastname
+    # c.execute('''INSERT INTO comments (LST_ID,COM_Auth,COM_Date,COM_Body,...)
+    #           VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, email))
+    c.execute('''INSERT INTO comments (LST_ID,COM_Auth,COM_Date,COM_Body, COM_USER_ID) 
+                  VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, id))
     conn.commit()
 
     conn.close()
