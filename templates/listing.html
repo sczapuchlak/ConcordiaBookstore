@@ -42,9 +42,8 @@
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
                                  <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                     <a href="../mailto/{{ id }}" onclick="window.open('../mailto/{{ id }}', 'newwindow',
-	                           'width=300, height=250 ,resizable=yes , scrollbars=yes'); return false;">
-                                         <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4> <p class="information">{{firstname}} {{lastname}}</p></div></a>
+                                         <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="../mailto/{{ id }}" onclick="window.open('../mailto/{{ id }}', 'newwindow',
+	                           'width=300, height=250 ,resizable=yes , scrollbars=yes'); return false;"> <p class="information">{{firstname}} {{lastname}}</p></div></a>
                                  <div class="rateUser"> <h4 style="font-weight: 600">Rate the Seller:  </h4> <p class="information">{{userRating}} </p> <h4 style="font-weight: 600; margin-left: 55pt;"> Seller's Rating: </h4></div>
                                      </div>
                                     </fieldset>
@@ -67,7 +66,8 @@
                                         <br>
                                  <div class="buttons" style="width:100%;text-align: center">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
-                                     <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
+                                     <button class="button" onclick="window.open('../mailto/{{ id }}', 'newwindow', 'width=300, height=250 ,resizable=yes , scrollbars=yes'); return false;">
+                                         <i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
                                  </div>
 
 
