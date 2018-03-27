@@ -7,14 +7,43 @@
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome
+/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 
 <body>
+
+
+    <script>
+    function StarsRating(USER_Rating, USER_Num_Rating){
+
+    // To prevent code form breaking in case info does not get pulled for some reason
+    if (USER_Rating === null){
+        USER_Rating = 0;
+    }
+    // preventing a divide by 0 error
+    if (USER_Num_Rating === null || USER_Num_Rating === 0){
+        USER_Num_Rating = 1;
+    }
+
+      const starTotal = 5;
+      var rating = (USER_Rating / User_Num_Rating);
+      var starPercentage = (rating / starTotal) * 100;
+      //dividing first, then multiplying to make number a multiple of 10
+        var starPercentageRounded = (Math.round(starPercentage / 10) * 10) + "%";
+        var elem = document.getElementById("starRating-inner").style.width = starPercentageRounded;
+    }
+    </script>
+
+
 {% include "header.html" %}
 
 <div style="width: 100%;" class="container">
    <div class="homeLeft">
+
+
 <div>
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
@@ -23,13 +52,16 @@
 	</div>
 
 
+
 	<div class="homeRight" style="float: left ;width:80%">
 		<div style="overflow-x:auto;">
 
 			<div id="info" align="left" style="overflow-x:auto;">
+
             <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
                 <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
                 <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
+
                 <p>
                     <strong>Name: </strong><br />
                     &nbsp&nbsp&nbsp{% for d in data %}
@@ -60,15 +92,28 @@
                     {{ d[9] }}
                     {% endfor %}
                 </p>
+
+                <table>
+                    StarsRating({{ d[3] }}, {{ d[11] }});
+                    <tr class="RatingForUser">
+                        <td>
+                            <div class="starRating-outer">
+                                <div class="starRating-inner"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
                 <p>
-                    <strong>Average User Rating: </strong><br />
+                    <strong>Total Reviews: </strong><br />
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[3] }}
                     {% endfor %}
                 </p><br>
-            <button align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a></button>
+        <button align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a></button>
+      </div>
 			</div>
-            </div>
+
+
 {#
             <div class="form-style-5">
             <form method="POST" action="newpost.html" enctype="multipart/form-data">
@@ -82,12 +127,15 @@
                     <input name="field5" placeholder="State*" type="text">
                     <input name="field6" placeholder="Zip Code*" type="text">
                     <input name="field7" placeholder="Phone Number*" type="text">
+
                 </fieldset><br>
+
 
                 <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
 
             </form>
 			</div> #}
+
 		</div>
 	</div>
     </div>
@@ -120,3 +168,4 @@
     }
 </style>
 </html>
+
