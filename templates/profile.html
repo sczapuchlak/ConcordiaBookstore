@@ -27,8 +27,9 @@
 		<div style="overflow-x:auto;">
 
 			<div id="info" align="left" style="overflow-x:auto;">
-                <h1 id="userInfo">User Information:</h1>
-                <p align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">(Update Profile Information)</a></p>
+            <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
+                <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
+                <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
                 <p>
                     <strong>Name: </strong><br />
                     &nbsp&nbsp&nbsp{% for d in data %}
@@ -64,9 +65,10 @@
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[3] }}
                     {% endfor %}
-                </p>
-
+                </p><br>
+            <button align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a></button>
 			</div>
+            </div>
 {#
             <div class="form-style-5">
             <form method="POST" action="newpost.html" enctype="multipart/form-data">
@@ -80,7 +82,7 @@
                     <input name="field5" placeholder="State*" type="text">
                     <input name="field6" placeholder="Zip Code*" type="text">
                     <input name="field7" placeholder="Phone Number*" type="text">
-                </fieldset>
+                </fieldset><br>
 
                 <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
 
@@ -93,4 +95,28 @@
     </div>
 
 </body>
+<style>
+    p{
+        font-size: 13pt;
+        font-family: 'Open Sans', sans-serif;
+        margin-left: 5pt;
+        margin-top: 20pt;
+        padding-top: 5pt;
+    }
+ button{
+
+    margin-right: 10pt;
+    display: inline-block;
+     font-size: 140%;
+    height: 100%;
+    width: 18%;
+    color: whitesmoke;
+    background: #0A2E50;
+    cursor: hand;
+     font-family: 'Open Sans', sans-serif;
+}
+    strong{
+        font-weight: 700;
+    }
+</style>
 </html>
