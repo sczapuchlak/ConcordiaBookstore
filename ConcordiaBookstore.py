@@ -1,8 +1,10 @@
 import base64
 from base64 import b64encode
 import MySQLdb
+
 from datetime import datetime
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort
+
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
@@ -15,8 +17,10 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
+
                            passwd = "gikQr6kn",
                            db = "bookexchange1")
+
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -77,8 +81,8 @@ def signup():
         else:
 
             c.execute('''
-                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
-                    VALUES(%s, %s, %s, %s)''',
+                                                                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
+                                                                    VALUES(%s, %s, %s, %s)''',
                       (password, email, firstname, lastname))
             user_id = conn.insert_id()
             print(user_id)
@@ -86,9 +90,11 @@ def signup():
             conn.commit()
 
             c.execute('''
+
                       INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
                       VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
             (studnumber, [user_id]))
+
             conn.commit()
 
             conn.commit()
@@ -142,9 +148,8 @@ def login():
                     #print(fullname)
 
                 #flash("You are now logged in")
-                msg = "You are now logged in"
-                # return render_template("home.html", msg=msg)
-                return redirect("home.html")
+                msg = "You are now logged"
+                return render_template("home.html", msg=msg)
                 #return redirect(url_for("login"))
 
 
@@ -185,13 +190,16 @@ def home():
 
     c, conn = connection()
 
+
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
 
     # get Listing table
     list = c.fetchall()
+
 
     #print(list)
     return render_template('home.html', data=list)
@@ -341,6 +349,7 @@ def updateProfile():
             Phone = profPhone
 
         c.execute('''
+
                   UPDATE student
                   SET STU_ID = %s, STU_Address = %s,
                   STU_City = %s, STU_State = %s,
@@ -353,6 +362,7 @@ def updateProfile():
                   UPDATE user SET USER_FName = %s, USER_LName = %s
                   WHERE USER_Email = %s''',
                   (Fname, Lname, email, ))
+
         conn.commit()
 
         return redirect("profile.html")
@@ -390,10 +400,6 @@ def newpost():
         book_Edition = request.form['field8']
         #book_back_photo = request.form['field9']
         book_Comments = request.form['field10']
-        #listing_date = request.form['todaysdate']
-      # value = str(listing_date)
-        #print(value)
-
 
         # Course Information
         course_Title = request.form['field11']
@@ -421,39 +427,33 @@ def newpost():
         conn.commit()
 
         c.execute('''
-                  INSERT INTO course (CRS_ID, CRS_Name )
-                  VALUES(%s,%s)''',
+                                                  INSERT INTO course (CRS_ID, CRS_Name )
+                                                  VALUES(%s,%s)''',
                   (course_Number, course_Title,))
         conn.commit()
 
 
         c.execute('''
-                 INSERT INTO photo(PHT_Image)
-                 VALUES(%s)''',
+                                                                     INSERT INTO photo(PHT_Image)
+                                                                     VALUES(%s)''',
                   [newFile])
         photo_id = conn.insert_id()
         print(photo_id)
         conn.commit()
 
         c.execute('''
-                 INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
-                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+                             INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
+                             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
                   (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN, book_Author,
                    book_Edition))
         course_id = conn.insert_id()
         conn.commit()
 
-        c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
-
-        now = datetime.now()
-        print(now)
-
         c.execute('''
-                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID,LST_Date)
-                VALUES(%s,%s,%s,%s,%s)''',
-                  (sale_type, listing_title, [course_id], user_id, now))
+                                                                                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
+                                                                                VALUES(%s,%s,%s,%s)''',
+                  (sale_type, listing_title, [course_id], user_id))
         conn.commit()
-
 
     return render_template("newpost.html")
 
