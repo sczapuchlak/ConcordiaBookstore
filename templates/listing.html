@@ -68,7 +68,7 @@
                                  <hr>
 
                                         <br>
-                                 <div class="buttons" style="width:100%;text-align: center">
+                                 <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
                                      <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
                                  </div>
@@ -86,6 +86,54 @@
 
 
                         </div>
+                        </a></center>
+                </form>
+            </div>
+        <div>
+<h1>Comments:</h1>
+            <br>
+{#            Add new comment#}
+            <div class="comments" align="center">
+                <form action="{url_for(submit_comment/{list_id})}" method="POST">
+                    <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
+                                                              placeholder="Write your comment here"
+                                                              value="{request.form.message}" id="message" name="message">
+                    </textarea><br /><br />
+                    <input type="button" id="submit" value="Submit Comment" /><br /><br />
+                </form>
+            {# Display comments for selected listing #}
+                <table class="comments" align="center">
+                    <tr>
+                        <td>User</td>
+                        <td>Comment Date</td>
+                        <td>Message</td>
+                    </tr>
+                    {% for row in rows %}
+
+                  <div class="dialogbox">
+                    <div class="body">
+                      <span class="tip tip-up"></span>
+                      <div class="message">
+
+
+                        <tr><span>
+
+
+                            <td class="author">{{row[0]}}</td>
+                            <td class="date">{{row[1]}}</td>
+                            <td class="comBody">{{row[2]}}</td>
+                                    </span>
+                              </div>
+    </div>
+  </div>
+                        </tr>
+                    {% endfor %}
+                </table>
+            <input type="button" id="submit" value="Prev" />
+            <input type="button" id="submit" value="Next" />
+            </div>
+        </div>
+    </div>
 
 
 
@@ -95,7 +143,41 @@
 </body>
 </html>
 <style>
-fieldset {
+.tip {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  background: transparent;
+  border: 10px solid #ccc;
+}
+
+.tip-up {
+  top: -25px; /* Same as body margin top + border */
+  left: 10px;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+.dialogbox .body {
+  position: relative;
+  max-width: 300px;
+  height: auto;
+  margin: 20px 10px;
+  padding: 5px;
+  background-color: #DADADA;
+  border-radius: 3px;
+  border: 5px solid #ccc;
+}
+
+.body .message {
+  min-height: 30px;
+  border-radius: 3px;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #797979;
+}
+    fieldset {
     border: 0;
 
 }
