@@ -1,14 +1,19 @@
-<center>
-				<div class="userFlash">
+<div class="userFlash" align="center">
 
-					<h4>You are signed in with {{session.user_email}}</h4>
+    <h4>You are signed in with {{session.user_email}}</h4>
 
 				</div>
 			</center><br>
 			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
 			<br>
-			<br>
+
 			<div class="vertical-menu">
-				<a href="#">Profile</a> <a href="newpost.html">Create New Post</a>
+                <a href="{{ url_for('profile')}}">Profile</a>
+
+                <a href="{{ url_for('newpost')}}">Create New Listing </a>
+
+                <a href="{{ url_for('changepassword')}}">Change Password </a>
 			</div>
 		</div>
+
+

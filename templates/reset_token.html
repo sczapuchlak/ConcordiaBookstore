@@ -1,10 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+	<meta charset="UTF-8">
+	<title>Password Reset</title>
+
+ <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link href="index.css" rel="stylesheet">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 </head>
 <body>
-$END$
+
+{% include "header.html" %}
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<div class="container">
+      <div class="row">
+          <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+      		<form action="{{ url_for('reset_token', token=token) }}" method="POST" role="form" class="sign_up_form">
+      			<h2 class="sign_up_title">New password</h2>
+      			<center><div> <h4>{% include "flash_message.html" %} </h4></div></center>
+      			<div class="form-group">
+      				<input type="password" name="password" id="password" class="form-control input-lg" placeholder="New password" tabindex="4">
+      			</div>
+                 <div class="form-group">
+                    <input type="password" name="confirmpassword" id="confirmpassword" class="form-control input-lg" placeholder="Confirm New password" tabindex="4">
+                 </div>
+                 <div>
+                     <p id="demo"></p>
+                 </div>
+      			<div class="row">
+      		         <input name="recover-submit" class="btn btn-lg btn-primary btn-block" value="Update Password"  type="submit">
+      			</div>
+      		</form>
+      	</div>
+      </div>
+  </div>
+
 </body>
-</html>
+
+
+
+  <style>
+
+  .buttons_divider {
+      margin-top: 10%;
+      margin-bottom: 10%;
+      border-bottom: solid #ccc 1px;
+  }
+
+  .sign_up_title {
+      text-align: center;
+      margin-bottom: 5%;
+  }
+
+  .sign_in_but {
+      border-radius: 45%;
+      margin-left: 5px
+  }
+
+  .sign_up_form {
+      margin-bottom: 30%;
+  }
+
+  .sign_up_form input {
+      border-radius: 0px;
+  }
+
+  .bg-lightgray {
+      background-color:LightGray;
+  }
+
+  p {
+      text-align: center;
+  }
+
+  header {
+      margin-bottom: 5%;
+  }
+
+  .header_bar {
+      margin-top: 20px;
+      margin-bottom: 20px
+  }
+
+  footer {
+      margin-top: 5%;
+  }
+
+  .footer_terms {
+      margin-top: 20px;
+  }
+
+  .footer_rights {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+  }
+
+  .terms_and_conditions {
+      text-align: center;
+      margin-bottom: 10px;
+  }
+
+  </style>
+
+
+
