@@ -1,31 +1,38 @@
-import base64
-from base64 import b64encode
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+
+import os
+from flask_mail import Mail, Message
 import MySQLdb
-
 from datetime import datetime
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort
-
+from threading import Thread
+import serial as serial
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
+from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
 from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
-from random import *
+from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm
-# from utils import send_email, ts
-
-global userID
-
-def connection():
-    conn = MySQLdb.connect(host="localhost",
-                           user = "root",
-
-                           passwd = "gikQr6kn",
-                           db = "bookexchange1")
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer
 
 
-    # Create a Cursor object to execute queries.
-    c = conn.cursor()
 
-    return c, conn
+app =Flask(__name__)
+
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'cspbookstore@gmail.com'
+app.config['MAIL_PASSWORD'] = 'Concordia2018$'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
+
+url = URLSafeTimedSerializer('SECRET_KEY')
+
+
+
 
 # set up the application with Flask
 app = Flask(__name__, '/static', static_folder='static',
@@ -33,6 +40,35 @@ app = Flask(__name__, '/static', static_folder='static',
 
 # this is so the templates always reload when there are changes made
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+
+# token generation serializer
+
+
+class EmailForm(Form):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+
+class PasswordForm(Form):
+    password = PasswordField('Password', validators=[DataRequired()])
+
+global userID
+
+def connection():
+    conn = MySQLdb.connect(host="localhost",
+                           user = "root",
+
+
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
+
+
+
+    # Create a Cursor object to execute queries.
+    c = conn.cursor()
+
+    return c, conn
+
+
 
 @app.route('/')
 @app.route('/index')
@@ -81,8 +117,8 @@ def signup():
         else:
 
             c.execute('''
-                                                                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
-                                                                    VALUES(%s, %s, %s, %s)''',
+                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
+                    VALUES(%s, %s, %s, %s)''',
                       (password, email, firstname, lastname))
             user_id = conn.insert_id()
             print(user_id)
@@ -90,6 +126,7 @@ def signup():
             conn.commit()
 
             c.execute('''
+
 
                       INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
                       VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
@@ -143,13 +180,10 @@ def login():
                         session.lastname = data[4]
                     session.fullname = session.firstname + " " + session.lastname
 
-                    # for testing purposes
-                    #print(firstname, lastname)
-                    #print(fullname)
-
                 #flash("You are now logged in")
-                msg = "You are now logged"
-                return render_template("home.html", msg=msg)
+                msg = "You are now logged in"
+                # return render_template("home.html", msg=msg)
+                return redirect("home.html")
                 #return redirect(url_for("login"))
 
 
@@ -191,7 +225,9 @@ def home():
     c, conn = connection()
 
 
+
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+
 
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
@@ -222,10 +258,6 @@ def home():
     #     print(data)
     # #get
     # return render_template("home.html", data=list)
-
-
-
-
 
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
@@ -369,6 +401,11 @@ def updateProfile():
     return render_template("updateProfile.html")
 
 
+
+
+
+
+
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
 def newpost():
@@ -377,13 +414,16 @@ def newpost():
 
         file = request.files['pic']
 
+
         #image = open(file, 'rb')  # open binary file in read mode
         #image_read = file.read()
         #newFile = base64.encode(image_read)
         #newFile = base64.b64encode(image_read)
 
+
         # file.save(file.filename)
         newFile = file.read()
+
 
         #newFile = base64.encodestring(newFile1)
 
@@ -400,6 +440,8 @@ def newpost():
         book_Edition = request.form['field8']
         #book_back_photo = request.form['field9']
         book_Comments = request.form['field10']
+        #listing_date = request.form['todaysdate']
+      # value = str(listing_date)
 
         # Course Information
         course_Title = request.form['field11']
@@ -427,45 +469,55 @@ def newpost():
         conn.commit()
 
         c.execute('''
-                                                  INSERT INTO course (CRS_ID, CRS_Name )
-                                                  VALUES(%s,%s)''',
+                  INSERT INTO course (CRS_ID, CRS_Name )
+                  VALUES(%s,%s)''',
                   (course_Number, course_Title,))
         conn.commit()
 
 
         c.execute('''
-                                                                     INSERT INTO photo(PHT_Image)
-                                                                     VALUES(%s)''',
+                 INSERT INTO photo(PHT_Image)
+                 VALUES(%s)''',
                   [newFile])
         photo_id = conn.insert_id()
         print(photo_id)
         conn.commit()
 
         c.execute('''
-                             INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
-                             VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
+                 INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
+                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
                   (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN, book_Author,
                    book_Edition))
         course_id = conn.insert_id()
         conn.commit()
 
+        c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
+
+        now = datetime.now()
+        print(now)
+
         c.execute('''
-                                                                                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID)
-                                                                                VALUES(%s,%s,%s,%s)''',
-                  (sale_type, listing_title, [course_id], user_id))
+                INSERT INTO listing (LST_SellType, LST_Title, BK_ID, LST_USER_ID,LST_Date)
+                VALUES(%s,%s,%s,%s,%s)''',
+                  (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
+
 
     return render_template("newpost.html")
 
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
+
 #@require_logged_in
+
 def listing(list_id=None):
 
     c, conn = connection()
 
+
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID, BK_Author,BK_Edition,BK_Title,"
               "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
               "FROM user,listing,book,course "
+
               "WHERE LST_ID = %s", [list_id])
 
     conn.commit()
@@ -503,93 +555,143 @@ def listing(list_id=None):
 @require_logged_in
 def changepassword():
 
-   if request.method == "POST":
 
-       oldPassword = request.form['oldPassword']
-       newPassword = request.form['newPassword']
-       confirmPassword = request.form['confirmPassword']
+    if request.method == "POST":
 
+        oldPassword = request.form['oldPassword']
+        newPassword = request.form['newPassword']
+        confirmPassword = request.form['confirmPassword']
 
-        # create connection
-       c, conn = connection()
+         # create connection
+        c, conn = connection()
 
-       if len(newPassword) < 8:
-           error = "Password must be more than 8 characters"
-           return render_template("changepassword.html", error=error)
+        if len(newPassword) < 8:
+            error = "Password must be more than 8 characters"
+            return render_template("changepassword.html", error=error)
 
-       elif newPassword != confirmPassword:
-           error = "Password doesn't match"
-           return render_template("changepassword.html", error=error)
+        elif newPassword != confirmPassword:
+            error = "Password doesn't match"
+            return render_template("changepassword.html", error=error)
 
-       elif newPassword == oldPassword:
-           error = "Old password cannot match new password"
-           return render_template("changepassword.html", error=error)
-       else:
+        elif newPassword == oldPassword:
+            error = "Old password cannot match new password"
+            return render_template("changepassword.html", error=error)
+        else:
 
-           password = sha256_crypt.encrypt((str(newPassword)))
+            password = sha256_crypt.encrypt((str(newPassword)))
 
-           email = session['user_email']
-
-
-           c.execute("""
-                     UPDATE user
-                     SET USER_PW=%s
-                     WHERE USER_Email=%s
-                  """, (password, email))
-
-           conn.commit()
-
-   return render_template("changepassword.html")
+            email = session['user_email']
 
 
+            c.execute("""
+                      UPDATE user
+                      SET USER_PW=%s
+                      WHERE USER_Email=%s
+                   """, (password, email))
 
-@app.route('/pwreset.html', methods=["GET", "POST"])
-def pwreset():
-#     form = EmailForm()
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=form.email.data).first_or_404()
-#
-#         subject = "Password reset requested"
-#
-#         token = ts.dumps(user.email, salt='recover-key')
-#
-#         recover_url = url_for(
-#             'reset_with_token',
-#             token=token,
-#             _external=True)
-#
-#         html = render_template(
-#             'pwreset.html',
-#             recover_url=recover_url)
-#
-#         # Let's assume that send_email was defined in myapp/util.py
-#         send_email(user.email, subject, html)
-#
-#         return redirect(url_for('home'))
-    return render_template('pwreset.html')
-#,form=form)
-#
-# @app.route('/pwreset/<token>', methods=["GET", "POST"])
-# def reset_with_token(token):
-#     try:
-#         email = ts.loads(token, salt="recover-key", max_age=86400)
-#     except:
-#         abort(404)
-#
-#     form = PasswordForm()
-#
-#     if form.validate_on_submit():
-#         user = User.query.filter_by(email=email).first_or_404()
-#
-#         user.password = form.password.data
-#
-#         # need to add user to database session
-#         #commit the DB session
-#
-#         return redirect(url_for('signin'))
-#
-#     return render_template('pwreset.html', form=form, token=token)
+            conn.commit()
+
+    return render_template("changepassword.html")
+
+@app.route('/reset.html', methods=["GET", "POST"])
+def reset():
+
+    try:
+        c, conn = connection()
+        if request.method == "POST":
+
+            email = request.form['email']
+
+            c.execute("SELECT USER_Email, USER_FName, USER_LName "
+                      "FROM user "
+                      "WHERE USER_Email = %s", (email,))
+
+            result = c.fetchall()
+            for data in result:
+                user = data[0]
+                firstname = data[1]
+                lastname = data[2]
+
+                fullname = firstname + " " + lastname
+
+            if email == user:
+                token = url.dumps(email, salt='reset-password')
+
+                message = Message('Reset Password', sender='awahndingwan@gmail.com', recipients=[email])
+
+                password_link = url_for('reset_token', token=token, _external=True)
+
+                message.body = render_template('email_password_reset.html', password_link=password_link,
+                                               fullname=fullname)
+                mail.send(message)
+
+                msg = 'Please check your email for a password reset link.'
+                return render_template('login.html', msg=msg)
+            else:
+                error = 'Invalid Email Address'
+                return render_template('login.html', error=error)
+    except:
+        error = "Account doesn't exist. Please Sign Up"
+        return render_template('reset.html', error=error)
+
+    return render_template('reset.html')
+
+@app.route('/reset_token/<token>', methods=["GET", "POST"])
+def reset_token(token):
+    try:
+        email = url.loads(token, salt='reset-password', max_age=3600)
+    except:
+        error = 'The password reset link is invalid or has expired.'
+        return render_template('reset.html', error=error)
+
+    c, conn = connection()
+    if request.method == "POST":
+        password1 = request.form['password']
+        confirmpassword = request.form['confirmpassword']
+        print(email)
+        print(password1)
+
+        c.execute("SELECT USER_Email "
+                  "FROM user "
+                  "WHERE USER_Email = %s", (email,))
+        user = c.fetchone()[0]
+
+        print(user)
+        if user == email:
+            if password1 != confirmpassword:
+                error = "Password doesn't match"
+                return render_template("reset_token.html", error=error, token=token)
+
+            elif len(password1) < 8:
+                error = "Password must be more than 8 characters";
+                return render_template("reset_token.html", error=error, token=token)
+
+            else:
+                password = sha256_crypt.encrypt((str(password1)))
+                print(password)
+
+                c.execute("""
+                                                     UPDATE user
+                                                     SET USER_PW=%s
+                                                     WHERE USER_Email=%s
+                                                  """, (password, email))
+                conn.commit()
+                #msg = 'Your password has been updated! '
+                return redirect(url_for('login'))
+                #return render_template('login.html', msg=msg)
+
+        else:
+            error = 'Invalid email address!'
+            render_template('reset.html', error=error)
+
+    conn.commit()
+
+    return render_template('reset_token.html', token=token)
+
 
 if __name__ == '__main__':
-    app.secret_key='haha you cant guess my secret key'
+    app.secret_key='SECRET_KEY'
     app.run(debug=True)
+
+
+  

@@ -8,7 +8,9 @@
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 </head>
 
@@ -26,7 +28,6 @@
 
     <div class="homeRight" style="float: left">
               	<form method="POST" action="/listing" enctype="multipart/form-data">
-
 
                          <a>
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
@@ -173,6 +174,7 @@ legend{
     height: 40rem;
     width: 40rem;
    margin-left: 7%;
+
    }
     .breadcrumbs{
         text-decoration: none;
@@ -185,9 +187,11 @@ legend{
 
         font-size: 10pt;
 
+
     }
     .listTitle{
         font-size: 32pt;
+
         margin-top: -20%;
         margin-left: -110%;
     }
@@ -195,3 +199,4 @@ legend{
 
 
 </style>
+

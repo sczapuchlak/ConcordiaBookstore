@@ -16,6 +16,7 @@
 <body>
 
 
+
     <script>
     function StarsRating(USER_Rating, USER_Num_Rating){
 
@@ -38,11 +39,11 @@
     </script>
 
 
+
 {% include "header.html" %}
 
 <div style="width: 100%;" class="container">
    <div class="homeLeft">
-
 
 <div>
 		<h4>{% include "flash_message.html" %}</h4>
@@ -58,9 +59,11 @@
 
 			<div id="info" align="left" style="overflow-x:auto;">
 
+
             <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
                 <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
                 <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
+
 
                 <p>
                     <strong>Name: </strong><br />
@@ -93,6 +96,7 @@
                     {% endfor %}
                 </p>
 
+
                 <table>
                     <p>
                     <strong>User Rating: </strong><br />
@@ -119,6 +123,7 @@
 			</div>
 
 
+
 {#
             <div class="form-style-5">
             <form method="POST" action="newpost.html" enctype="multipart/form-data">
@@ -133,7 +138,9 @@
                     <input name="field6" placeholder="Zip Code*" type="text">
                     <input name="field7" placeholder="Phone Number*" type="text">
 
+
                 </fieldset><br>
+
 
 
                 <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
@@ -148,6 +155,7 @@
     </div>
 
 </body>
+
 <style>
     p{
         font-size: 13pt;
