@@ -1,3 +1,4 @@
+
 import smtplib
 from email.mime.multipart import MIMEMultipart
 
@@ -50,12 +51,17 @@ class EmailForm(Form):
 class PasswordForm(Form):
     password = PasswordField('Password', validators=[DataRequired()])
 
+global userID
 
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "yannique16",
-                           db = "bookexchange11")
+
+
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
+
+
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -120,9 +126,12 @@ def signup():
             conn.commit()
 
             c.execute('''
+
+
                       INSERT INTO student(STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, USER_ID)
                       VALUES(%s, 'St. Address', 'City', 'State', 'Zip Code', '(000)000-0000', %s)''',
             (studnumber, [user_id]))
+
             conn.commit()
 
             conn.commit()
@@ -215,7 +224,11 @@ def home():
 
     c, conn = connection()
 
+
+
     c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+
+
               "FROM user,listing "
               "WHERE user.USER_ID = listing.LST_USER_ID")
 
@@ -223,12 +236,28 @@ def home():
     # get Listing table
     list = c.fetchall()
 
+
     #print(list)
     return render_template('home.html', data=list)
 
 
+    # for data in list:
+        # firtsname = data[0]
+        # lastname = data[1]
+        # listID = data[2]
+        # listtitle = data[3]
 
-
+        # fullname = firtsname +" "+ lastname
+    #
+    #     #for testing only
+    #     print(fullname)
+    #     #print(firtsname)
+    #     #print(lastname)
+    #     print(listID)
+    #     print(listtitle)
+    #     print(data)
+    # #get
+    # return render_template("home.html", data=list)
 
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
@@ -267,6 +296,114 @@ def profile():
 
     return render_template("profile.html", data=prof)
 
+@app.route('/updateProfile.html', methods=["GET", "POST"])
+@require_logged_in
+def updateProfile():
+
+    if request.method == "POST":
+
+
+        c, conn = connection()
+
+        email = session['user_email']
+
+        # get User information with JOIN to get User's information
+        c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, "
+                  "STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID "
+                  "FROM user JOIN student ON user.USER_ID=student.USER_ID "
+                  "WHERE USER_Email = %s", (email,))
+
+        pro = c.fetchall()
+
+        for data in pro:
+            proFName = data[0]
+            proLName = data[1]
+            proEmail = data[2]
+            proRating = data[3]
+            proID = data[10]
+            studId = data[4]
+            proAddy = data[5]
+            proCity = data[6]
+            proState = data[7]
+            proZip = data[8]
+            proPhone = data[9]
+            proName = proFName + " " + proLName
+
+        print(pro)
+
+        profFName = request.form['field1']
+        profLName = request.form['field2']
+        profStuID = request.form['field3']
+        profAddy = request.form['field4']
+        profCity = request.form['field5']
+        profState = request.form['field6']
+        profZip = request.form['field7']
+        profPhone = request.form['field8']
+
+        if profFName == '':
+            Fname = proFName
+        else:
+            Fname = profFName
+
+        if profLName == '':
+            Lname = proLName
+        else:
+            Lname = profLName
+
+        if profStuID == '':
+            Stud = studId
+        else:
+            Stud = profStuID
+
+        if profAddy == '':
+            Addy = proAddy
+        else:
+            Addy = profAddy
+
+        if profCity == '':
+            City = proCity
+        else:
+            City = profCity
+
+        if profState == '':
+            State = proState
+        else:
+            State = profState
+
+        if profZip == '':
+            Zip = proZip
+        else:
+            Zip = profZip
+
+        if profPhone == '':
+            Phone = proPhone
+        else:
+            Phone = profPhone
+
+        c.execute('''
+
+                  UPDATE student
+                  SET STU_ID = %s, STU_Address = %s,
+                  STU_City = %s, STU_State = %s,
+                  STU_Zip = %s, STU_Phone = %s
+                  WHERE student.USER_ID = %s''',
+                  (Stud, Addy, City, State, Zip, Phone, proID, ))
+        conn.commit()
+
+        c.execute('''
+                  UPDATE user SET USER_FName = %s, USER_LName = %s
+                  WHERE USER_Email = %s''',
+                  (Fname, Lname, email, ))
+
+        conn.commit()
+
+        return redirect("profile.html")
+    return render_template("updateProfile.html")
+
+
+
+
+
 
 
 @app.route('/newpost.html', methods=["GET", "POST"])
@@ -278,8 +415,22 @@ def newpost():
         file = request.files['pic']
 
 
+        #image = open(file, 'rb')  # open binary file in read mode
+        #image_read = file.read()
+        #newFile = base64.encode(image_read)
+        #newFile = base64.b64encode(image_read)
+
+
         # file.save(file.filename)
         newFile = file.read()
+
+
+        #newFile = base64.encodestring(newFile1)
+
+        #newFile1 = newFile.encode("base64")
+
+        #print(file)
+        #print(newFile)
 
         # Book Information
         book_ISBN = request.form['field4']
@@ -355,13 +506,18 @@ def newpost():
     return render_template("newpost.html")
 
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
-@require_logged_in
+
+#@require_logged_in
+
 def listing(list_id=None):
 
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-              "FROM user,listing "
+
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID, BK_Author,BK_Edition,BK_Title,"
+              "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
+              "FROM user,listing,book,course "
+
               "WHERE LST_ID = %s", [list_id])
 
     conn.commit()
@@ -373,16 +529,32 @@ def listing(list_id=None):
         lastname = data[1]
         listID = data[2]
         listtitle = data[3]
+        listDate= data[5]
+        bookAuthor = data[7]
+        bookEdition = data[8]
+        bookTitle = data[9]
+        listSellType = data[10]
+        bookPublisher = data[11]
+        bookDesc = data[12]
+        bookISBN = data[13]
+        userRating = data[14]
+        courseID = data[15]
+        courseName = data[16]
+
+
         print(data)
 
 
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle, listDate=listDate,
+                           bookTitle=bookTitle, bookAuthor=bookAuthor,bookEdition=bookEdition, listSellType=listSellType,bookPublisher=bookPublisher,
+                           bookDesc=bookDesc, bookISBN=bookISBN, userRating=userRating, courseID=courseID, courseName=courseName)
 
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle)
 
 
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
+
 
     if request.method == "POST":
 
@@ -521,3 +693,5 @@ if __name__ == '__main__':
     app.secret_key='SECRET_KEY'
     app.run(debug=True)
 
+
+  

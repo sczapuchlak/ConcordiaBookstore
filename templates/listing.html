@@ -1,14 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
 	<title>CSP Student Bookstore Listing</title>
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
 </head>
+
 <body>
+
 	{% include "header.html" %}
 	<div>
 		<h4>{% include "flash_message.html" %}</h4>
@@ -21,50 +28,175 @@
 
     <div class="homeRight" style="float: left">
               	<form method="POST" action="/listing" enctype="multipart/form-data">
+
                          <a>
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
-                             <div class="photoBox"><p> Placeholder for picture</p></div>
+                             <div class="wrapper">
+                             <div class="photoBox"><p> Placeholder for picture</p>
+
+                                 <div class="verticalLine"></div></div>
+
                              <div class="infoHolder">
-                             <div class="listTitle"><p>{{listtitle}}</p></div>
-                           <div> <p>{{firstname}}</p></div>
-                           <div> <p>{{lastname}}</p></div>
-                           <div> <p>{{listID}}</p></div>
+                             <div class="listTitle "><p>{{listtitle}}</p></div>
+                                 <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
+                                 <hr>
+                                 <div class="rightSide" style="margin-left: 40pt;">
+                                 <fieldset>
+                                    <legend>Meet The Seller</legend>
+                                 <div class="backgroundBox">
+                                 <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
+                                 <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
+                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4> <p class="information">{{firstname}} {{lastname}}</p></div>
+                                 <div class="rateUser"> <h4 style="font-weight: 600">Rate the Seller:  </h4> <p class="information">{{userRating}} </p> <h4 style="font-weight: 600; margin-left: 55pt;"> Seller's Rating: </h4></div>
+                                     </div>
+                                    </fieldset>
+                                 <hr>
+
+                                 <fieldset>
+                             <legend>Book Information</legend>
+                                 <div class="backgroundBox">
+                             <div class="bookTitle"><h4 style="font-weight: 600">Book Title: </h4> <p>{{bookTitle}}</p></div>
+                             <div class="bookAuthor"><h4 style="font-weight: 600">Book Author: </h4> <p>{{bookAuthor}}</p></div>
+                             <div class="bookEdition"><h4 style="font-weight: 600">Book Edition: </h4> <p>{{bookEdition}}</p></div>
+                             <div class="bookISBN"><h4 style="font-weight: 600">Book ISBN: </h4> <p>{{bookISBN}}</p></div>
+                             <div class="bookPublisher"><h4 style="font-weight: 600">Book Publisher: </h4> <p>{{bookPublisher}}</p></div>
+                             <div class="bookDesc"><h4 style="font-weight: 600">Book Description: </h4> <p>{{bookDesc}}</p></div>
+                             <div class="courseInfo"><h4 style="font-weight: 600">Recommended Book For: </h4> <p class="information"> {{courseTitle}} {{ courseName }}</p></div>
+                                 </div>
+                                 </fieldset>
+                                 <hr>
+
+                                        <br>
+                                 <div class="buttons" style="width:100%;text-align: center">
+                                     <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
+                                     <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
+                                 </div>
+                                    </div>
+
                             </div>
+                         </div><br><br>
+                                    <div class="picturesSlide>">
+                                     <img class="leftArrow" src="/static/images/leftArrow.png">
+                                     <img class="rightArrow" src="/static/images/right.ico">
+                                    </div>
 
                          </a>
-
               	</form>
 
+
                         </div>
-                    </div>
+
+
 
 
 	<div style="clear:both"></div>
+
 </body>
 </html>
 <style>
+fieldset {
+    border: 0;
 
-   .photoBox{
+}
+legend{
+    font-size: 14pt;
+}
+    .buttons button{
+
+    margin-right: 10pt;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    color: whitesmoke;
+    background: #0A2E50;
+    cursor: hand;
+}
+
+    .leftArrow{
+    width: 40px;
+    height: 41px;
+    margin-left: 16%;
+    display:inline;
+}
+.rightArrow{
+    margin-top: 1px;
+    width: 42px;
+    height: 42px;
+    display:inline;
+    margin-left:10pt;
+
+
+}
+ .listID{
+     padding-left: 60%;
+     margin-top: -14%;
+     padding-bottom: 10pt;
+
+ }
+    .backgroundBox{
+     background-color: #f2f2f2;
+     width: 150%;
+ }
+    hr{
+        width: 150%;
+        margin-bottom: 10pt;
+        margin-top: 10pt;
+ }
+    h4, .information{
+        display:inline;
+        vertical-align: top;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        line-height: 25px;
+  }
+    .wrapper{
+        display: grid;
+        grid-template-columns: .5fr 1fr 1fr 1fr;
+        grid-template-rows: .5fr .5fr  ;
+        width:98.5vw;
+        height:32vw;
+    }
+    .verticalLine{
+        border-left: 1px solid lightgray;
+        height: 36rem;
+        position: absolute;
+        left: 58%;
+        margin-left: -3px;
+
+    }
+
+
+    .photoBox{
     background-color: lightgrey;
        display: inline-block;
-    border: 4px solid black;
-    height: 300px;
-    width: 200pt;
-   margin-left: 20%;
+       float: left;
+    height: 40rem;
+    width: 40rem;
+   margin-left: 7%;
+
    }
     .breadcrumbs{
         text-decoration: none;
         margin-right: 50%;
+        margin-top: 15pt;
     }
     .infoHolder{
-        display: inline-block;
+        display: inline;
         float: right;
-        padding-right: 20%;
+
+        font-size: 10pt;
+
 
     }
     .listTitle{
         font-size: 32pt;
+
+        margin-top: -20%;
+        margin-left: -110%;
     }
 
+
+
 </style>
+
