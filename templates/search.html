@@ -31,7 +31,7 @@
 
 {# This is the code to have the Search form display with the drop down menu#}
 {% from "_formhelpers.html" import render_field %}
-<form method=post id="searchBar" style="width: 500px;">
+<form method=post id="searchBar" style="width: 500px; margin-top: 50px">
   <dl  style="font-size: 14pt">
     {{ render_field(form.select) }}
     <p>
