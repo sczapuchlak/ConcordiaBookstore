@@ -31,13 +31,14 @@
 
 {# This is the code to have the Search form display with the drop down menu#}
 {% from "_formhelpers.html" import render_field %}
-<form method=post>
-  <dl>
+<form method=post id="searchBar" style="width: 500px;">
+  <dl  style="font-size: 14pt">
     {{ render_field(form.select) }}
     <p>
+    </dl><dl style="margin-top: 11.5px">
     {{ render_field(form.search) }}
   </dl>
-  <p><input type=submit value=Search>
+  <p><input type=submit value=Search style="margin-top: 90px; margin-left: -337px; width: 338px">
 </form>
 <h4>{% include "flash_message.html" %}</h4>
    </div>
@@ -75,4 +76,13 @@
 <style>
     tr:hover {background-color: #f5f5f5;}
     tr:nth-child(even) {background-color: rgba(17, 90, 255, 0.03);}
+
+    form{
+        text-align: left;
+        display: inline-flex;
+        width: 100%;
+        height:100%;
+
+    }
+
 </style>
