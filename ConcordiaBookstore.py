@@ -11,11 +11,12 @@ import serial as serial
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
 from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
-from wtforms import Form, StringField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, SelectField
 from functools import wraps
 from wtforms.validators import DataRequired, Email
-from form import EmailForm, PasswordForm
+from form import EmailForm, PasswordForm, BookSearchForm
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer
+
 
 
 
@@ -75,7 +76,32 @@ def connection():
 def index():
     return render_template('index.html')
 
+@app.route('/search.html', methods=["GET", "POST"])
+def search():
+    search = BookSearchForm(request.form)
+    if request.method == 'POST':
+        return search_results(search)
 
+    return render_template('search.html', form=search)
+
+
+@app.route('/results')
+def search_results(search):
+    results = []
+    search_string = search.data['search']
+
+    if search.data['search'] == '':
+            # create connection
+            c, conn = connection()
+            c.executemany('''select * from book where BK_Title = %s''', request.form['search'])
+            return render_template("search.html", records=c.fetchall())
+
+    if not results:
+        flash('No results found!')
+        return redirect('/search.html')
+    else:
+        # display results
+        return render_template('search.html', results=results)
 
 @app.route('/signup.html', methods=["GET", "POST"])
 def signup():

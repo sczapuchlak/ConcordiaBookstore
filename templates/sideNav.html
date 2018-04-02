@@ -4,8 +4,18 @@
 
 				</div>
 			</center><br>
-			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>
-			<br>
+{#			<input id="searchBar" name="search" placeholder="Search.." type="text"><br>#}
+{#			<br>#}
+
+{#{% from "_formhelpers.html" import render_field %}#}
+{#<form method=post">#}
+{#            <dl style="font-size: 14pt; color: white">#}
+{#            {{ render_field(form.select) }}#}
+{#            <p style="font-size: 14pt">#}
+{#            {{ render_field(form.search) }}#}
+{#            </dl>#}
+{#  <p><input type=submit value=Search>#}
+{#</form>#}
 
 			<div class="vertical-menu">
                 <a href="{{ url_for('profile')}}">Profile</a>
@@ -13,6 +23,8 @@
                 <a href="{{ url_for('newpost')}}">Create New Listing </a>
 
                 <a href="{{ url_for('changepassword')}}">Change Password </a>
+
+                <a href="{{ url_for('search')}}">Search Books </a>
 			</div>
 		</div>
 
