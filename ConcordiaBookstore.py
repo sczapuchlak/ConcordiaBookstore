@@ -695,7 +695,7 @@ def listing(list_id=None):
 
     conn.commit()
 
-     result = c.fetchall()
+    result = c.fetchall()
     for data in result:
         firstname = data[0]
         # print(data[1])
