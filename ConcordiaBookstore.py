@@ -686,7 +686,7 @@ def listing(list_id=None):
     c, conn = connection()
 
 
- c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
+    c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
               " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, course.CRS_id, course.CRS_Name "
               "FROM listing, user, book, course "
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
