@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 	<meta charset="UTF-8">
 	<title>CSP Student Bookstore Listing</title>
 	<meta content="width=device-width, initial-scale=1" name="viewport">
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+
 </head>
 
 <body>
+
 	{% include "header.html" %}
 	<div>
 		<h4>{% include "flash_message.html" %}</h4>
@@ -24,7 +29,6 @@
     <div class="homeRight" style="float: left">
               	<form method="POST" action="/listing" enctype="multipart/form-data">
 
-
                          <a>
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
@@ -37,7 +41,8 @@
                              <div class="listTitle "><p>{{listtitle}}</p></div>
                                  <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
                                  <hr>
-                                    <fieldset>
+                                 <div class="rightSide" style="margin-left: 40pt;">
+                                 <fieldset>
                                     <legend>Meet The Seller</legend>
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
@@ -63,33 +68,103 @@
                                  <hr>
 
                                         <br>
-                                 <div class="buttons" style="width:100%;text-align: center">
+                                 <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
                                      <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
                                  </div>
-
+                                    </div>
 
                             </div>
-                         </div><br><br>
-                                    <div class="picturesSlide>">
+                         </div>
+                                    <div class="picturesSlide" style="margin-top: -2%">
                                      <img class="leftArrow" src="/static/images/leftArrow.png">
                                      <img class="rightArrow" src="/static/images/right.ico">
                                     </div>
-
+<br><br><br><br><br>
                          </a>
               	</form>
 
 
                         </div>
+                        </a></center>
+
+
+<h1>Comments:</h1>
+            <br>
+{#            Add new comment#}
+            <div class="comments" align="center">
+                <form action="{{ url_for('submit_comment', list_id=listID) }}" method="POST">
+                    <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
+                                                              placeholder="Write your comment here"
+                                                              value="{request.form.message}" id="message" name="message" onfocus="value='';">
+                    </textarea><br /><br />
+                    <!--<a href="{ url_for('submit_comment', list_id=listID) }}"><input type="button" id="submit" value="Submit Comment" /><!--</a>-->
+                    <button type="submit" id="subBut" value="Submit Comment"><!--<a href="{ url_for('submit_comment', list_id=listID) }}">Submit Comment</a>-->Submit Comment</button> <br /><br />
+                </form>
+            {# Display comments for selected listing #}
+                <table class="comments" align="center">
+                    <tr>
+                        <td>User</td>
+                        <td>Comment Date</td>
+                        <td>Message</td>
+                    </tr>
+           {% for row in rows %}
+                        <tr>
+                            <td><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
+	                           'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
+                            <td>{{row[1]}}</td>
+                            <td>{{row[2]}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            <input type="button" id="submit" value="Prev" />
+            <input type="button" id="submit" value="Next" />
+            </div>
+
 
 
 
 
 	<div style="clear:both"></div>
+
 </body>
 </html>
 <style>
-fieldset {
+.tip {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  background: transparent;
+  border: 10px solid #ccc;
+}
+
+.tip-up {
+  top: -25px; /* Same as body margin top + border */
+  left: 10px;
+  border-right-color: transparent;
+  border-left-color: transparent;
+  border-top-color: transparent;
+}
+.dialogbox .body {
+  position: relative;
+  max-width: 300px;
+  height: auto;
+  margin: 20px 10px;
+  padding: 5px;
+  background-color: #DADADA;
+  border-radius: 3px;
+  border: 5px solid #ccc;
+}
+
+.body .message {
+  min-height: 30px;
+  border-radius: 3px;
+  font-family: Arial;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #797979;
+}
+    fieldset {
     border: 0;
 
 }
@@ -110,7 +185,7 @@ legend{
     .leftArrow{
     width: 40px;
     height: 41px;
-    margin-left: 16%;
+    margin-left: 13%;
     display:inline;
 }
 .rightArrow{
@@ -118,7 +193,7 @@ legend{
     width: 42px;
     height: 42px;
     display:inline;
-    margin-left:10pt;
+    margin-left:40pt;
 
 
 }
@@ -152,7 +227,7 @@ legend{
         height:32vw;
     }
     .verticalLine{
-        border-left: 1px solid lightgray;
+        border-left: 0px solid lightgray;
         height: 36rem;
         position: absolute;
         left: 58%;
@@ -168,6 +243,7 @@ legend{
     height: 40rem;
     width: 40rem;
    margin-left: 7%;
+
    }
     .breadcrumbs{
         text-decoration: none;
@@ -180,13 +256,16 @@ legend{
 
         font-size: 10pt;
 
+
     }
     .listTitle{
         font-size: 32pt;
-        margin-top: -20%;
-        margin-left: -140%;
+
+        margin-top: -15%;
+        margin-left: -90%;
     }
 
 
 
 </style>
+
