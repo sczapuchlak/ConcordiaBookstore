@@ -32,7 +32,7 @@
                          <a>
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
-                         <div class="wrapper">
+                             <div class="wrapper">
                              <div class="photoBox"><p> Placeholder for picture</p>
 
                                  <div class="verticalLine"></div></div>
@@ -93,12 +93,13 @@
             <br>
 {#            Add new comment#}
             <div class="comments" align="center">
-                <form action="{url_for(submit_comment/{list_id})}" method="POST">
+                <form action="{{ url_for('submit_comment', list_id=listID) }}" method="POST">
                     <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
                                                               placeholder="Write your comment here"
-                                                              value="{request.form.message}" id="message" name="message">
+                                                              value="{request.form.message}" id="message" name="message" onfocus="value='';">
                     </textarea><br /><br />
-                    <input type="button" id="submit" value="Submit Comment" /><br /><br />
+                    <!--<a href="{ url_for('submit_comment', list_id=listID) }}"><input type="button" id="submit" value="Submit Comment" /><!--</a>-->
+                    <button type="submit" id="subBut" value="Submit Comment"><!--<a href="{ url_for('submit_comment', list_id=listID) }}">Submit Comment</a>-->Submit Comment</button> <br /><br />
                 </form>
             {# Display comments for selected listing #}
                 <table class="comments" align="center">
@@ -107,32 +108,19 @@
                         <td>Comment Date</td>
                         <td>Message</td>
                     </tr>
-                    {% for row in rows %}
-
-                  <div class="dialogbox">
-                    <div class="body">
-                      <span class="tip tip-up"></span>
-                      <div class="message">
-
-
-                        <tr><span>
-
-
-                            <td class="author">{{row[0]}}</td>
-                            <td class="date">{{row[1]}}</td>
-                            <td class="comBody">{{row[2]}}</td>
-                                    </span>
-                              </div>
-    </div>
-  </div>
+           {% for row in rows %}
+                        <tr>
+                            <td><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
+	                           'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
+                            <td>{{row[1]}}</td>
+                            <td>{{row[2]}}</td>
                         </tr>
                     {% endfor %}
                 </table>
             <input type="button" id="submit" value="Prev" />
             <input type="button" id="submit" value="Next" />
             </div>
-        </div>
-    </div>
+
 
 
 

@@ -1,7 +1,9 @@
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
-
+from email.mime.text import MIMEText
+import base64
+from base64 import b64encode
 import os
 from flask_mail import Mail, Message
 import MySQLdb
@@ -11,14 +13,12 @@ import serial as serial
 from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
 from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
-from wtforms import Form, StringField, PasswordField, SelectField
+from wtforms import Form, StringField, PasswordField, SelectField, validators
 from functools import wraps
+from random import *
 from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer
-
-
-
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
 
 app =Flask(__name__)
 
@@ -57,8 +57,10 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "AMH12bmh#$",
-                           db = "bookexchange")
+
+
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
 
 
 
@@ -158,7 +160,40 @@ def signup():
 
             conn.commit()
 
+            # generate token
+            token = serial.dumps(email, salt='email-confirm')
+
+            # create link for confirmation email
+            link = url_for('confirm_email', token=token, external=True)
+
+            # message parameters
+            fromaddr = 'csp.bookshare@gmail.com'
+            msg = MIMEMultipart()
+            msg['From'] = fromaddr
+            msg['To'] = email
+            msg['Subject'] = 'Please confirm your email address'
+            body = render_template('/activate.html', confirm_url=link)
+            msg.attach(MIMEText(body, 'html'))
+
+            # open email server connection
+            s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
+            s.login('csp.bookshare@gmail.com', 'Capstone450')
+            text = msg.as_string()
+
+            # send message
+            s.sendmail(fromaddr, email, text)
+
+            # close email server connection
+            s.quit()
+
+            # flash("Please Sign in below")
+            c.close()
+            conn.close()
+
+            flash("Thanks for registering! Please verify your account with the email we sent you before logging in", 'success')
+
             conn.commit()
+
             flash("Thanks for registering!")
             flash("Please Sign in below")
             c.close()
@@ -167,6 +202,66 @@ def signup():
         return redirect(url_for('login', flash=flash))
     return render_template('signup.html')
     #return render_template('signup.html', form=form)
+
+@app.route('/confirm_email/<token>')
+def confirm_email(token):
+    try:
+        email = serial.loads(token, salt='email-confirm', max_age=3600)
+
+        # create connection
+        c, conn = connection()
+
+        c.execute("SELECT USER_Cnfrm FROM user WHERE USER_Email = %s", (email,))
+        test = c.fetchone()[0]
+
+        if test == 1:
+             flash("You have already registered. Please sign in", 'danger')
+             c.close()
+             conn.close()
+             return redirect(url_for("login", flash=flash))
+        c.execute("UPDATE user SET USER_Cnfrm = 1 WHERE USER_Email = %s", (email,))
+        conn.commit()
+
+        c.close()
+        conn.close()
+    except SignatureExpired:
+        # if the token has expired, extract the email address and redirect them to the page to resend link
+        email = serial.loads(token, salt='email-confirm')
+        return render_template('resend.html', email=email)
+    flash("You have registered successfully. Please log in", 'success')
+    return redirect(url_for("login", flash=flash))
+
+
+@app.route('/resend/<email>', methods=['GET'])
+def resend(email):
+    # generate token
+    token = serial.dumps(email, salt='email-confirm')
+
+    # create link for confirmation email
+    link = url_for('confirm_email', token=token, external=True)
+
+    # message parameters
+    fromaddr = 'csp.bookshare@gmail.com'
+    msg = MIMEMultipart()
+    msg['From'] = fromaddr
+    msg['To'] = email
+    msg['Subject'] = 'Please confirm your email address'
+    body = render_template('/activate.html', confirm_url=link)
+    msg.attach(MIMEText(body, 'html'))
+
+    # open email server connection
+    s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
+    s.login('csp.bookshare@gmail.com', 'Capstone450')
+    text = msg.as_string()
+
+    # send message
+    s.sendmail(fromaddr, email, text)
+
+    # close email server connection
+    s.quit()
+
+    flash("Please check your email address for the new verification link", 'success')
+    return redirect(url_for("login", flash=flash))
 
 
 @app.route('/login.html', methods=['GET', 'POST'])
@@ -188,21 +283,27 @@ def login():
             # get stored password hash from db
             result = c.fetchone()[1]
 
-            #xompare and verify passwords
+            # get confirmation status from db
+            c.execute("SELECT USER_Cnfrm FROM user WHERE USER_Email = %s", (user_email,))
+            conf = c.fetchone()[0]
+
+            # compare and verify passwords
             if sha256_crypt.verify(user_password, result):
+                if conf == 1:
+                    session['logged_in'] = True
+                    if session['logged_in'] is True:
+                        session['user_email'] = user_email
+                else:
+                    flash("Unconfirmed registration. Please verify your email using the link sent to you", 'danger')
+                    return render_template(url_for("login", flash=flash))
 
-                session['logged_in'] = True
-
-                if session['logged_in'] is True:
-                    session['user_email'] = user_email
-
-                    c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
-                    # get user first and last name
-                    user_details = c.fetchall()
-                    for data in user_details:
-                        session.firstname = data[3]
-                        session.lastname = data[4]
-                    session.fullname = session.firstname + " " + session.lastname
+                c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
+                # get user first and last name
+                user_details = c.fetchall()
+                for data in user_details:
+                    session.firstname = data[3]
+                    session.lastname = data[4]
+                session.fullname = session.firstname + " " + session.lastname
 
                 #flash("You are now logged in")
                 msg = "You are now logged in"
@@ -283,6 +384,53 @@ def home():
     # #get
     # return render_template("home.html", data=list)
 
+@app.route('/mailto/<target>')
+@require_logged_in
+def mailto(target):
+    return render_template('mailto.html', target=target)
+
+
+@app.route('/send_msg/<target>', methods=["GET", "POST"])
+@require_logged_in
+def send_msg(target):
+    subject = request.form['subject']
+    message = request.form['message']
+    email = session['user_email']
+
+    c, conn = connection()
+
+    # c.execute('''SELECT USER_Email FROM comments JOIN ON user
+    #              WHERE comments.COM_USER_ID = user.USER_ID
+    #              AND comments.COM_USER_ID = %s''', [target])
+
+    c.execute('''SELECT USER_Email FROM user WHERE USER_ID = %s''', [target])
+
+    # message parameters
+    fromaddr = 'csp.bookshare@gmail.com'
+    toaddr = c.fetchone()[0]
+    msg = MIMEMultipart()
+    msg['From'] = fromaddr
+    msg['To'] = toaddr
+    msg['Subject'] = subject
+    body = "<p>Message sent from " + email + "<br /><br />" + message + "</p>"
+    msg.attach(MIMEText(body, 'html'))
+
+    conn.close()
+
+    # open email server connection
+    s = smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=120)
+    s.login('csp.bookshare@gmail.com', 'Capstone450')
+    text = msg.as_string()
+
+    # send message
+    s.sendmail(fromaddr, toaddr, text)
+
+    # close email server connection
+    s.quit()
+
+    return render_template('sent.html')
+
+
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
 def profile():
@@ -325,6 +473,8 @@ def profile():
 def updateProfile():
 
     if request.method == "POST":
+
+
         c, conn = connection()
 
         email = session['user_email']
@@ -423,6 +573,11 @@ def updateProfile():
     return render_template("updateProfile.html")
 
 
+
+
+
+
+
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
 def newpost():
@@ -519,27 +674,24 @@ def newpost():
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
 
+
     return render_template("newpost.html")
 
-
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
+
 #@require_logged_in
+
 def listing(list_id=None):
 
     c, conn = connection()
 
-    c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
+
+ c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
               " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, course.CRS_id, course.CRS_Name "
               "FROM listing, user, book, course "
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
               "AND book.CRS_ID = course.CRS_ID", [list_id])
 
-    # old SQL statement. See Gary if you have any questions about the changes.
-    # c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author,BK_Edition,BK_Title,"
-    #           "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
-    #           "FROM user,listing,book,course "
-    #
-    #           "WHERE LST_ID = %s", [list_id])
 
     conn.commit()
 
@@ -562,17 +714,50 @@ def listing(list_id=None):
         courseID = data[14]
         courseName = data[15]
 
+
         print(data)
 
+    # Pull comments from comments table for display related to selected listing
+    c.execute("SELECT COM_Auth, COM_Date, COM_Body, COM_USER_ID FROM comments WHERE LST_ID = %s", [listID])
+    rows = c.fetchall()
 
     return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID, listtitle=listtitle, listDate=listDate,
                            bookTitle=bookTitle, bookAuthor=bookAuthor,bookEdition=bookEdition, listSellType=listSellType,bookPublisher=bookPublisher,
-                           bookDesc=bookDesc, bookISBN=bookISBN, userRating=userRating, courseID=courseID, courseName=courseName)
+                           bookDesc=bookDesc, bookISBN=bookISBN, userRating=userRating, courseID=courseID, courseName=courseName,id=id, rows=rows)
+
+@app.route("/submit_comment/<list_id>", methods=["GET", "POST"])
+@require_logged_in
+def submit_comment(list_id):
+    date = datetime.now()
+    msg = request.form['message']
+    email = session['user_email']
+
+    c, conn = connection()
+
+    c.execute("SELECT USER_FName, USER_LName, USER_ID FROM user WHERE USER_Email = %s", [email])
+    result = c.fetchall()
+    for data in result:
+        firstname = data[0]
+        lastname = data[1]
+        id = data[2]
+
+    auth = firstname + " " + lastname
+    # c.execute('''INSERT INTO comments (LST_ID,COM_Auth,COM_Date,COM_Body,...)
+    #           VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, email))
+    c.execute('''INSERT INTO comments (LST_ID,COM_Auth,COM_Date,COM_Body, COM_USER_ID) 
+                          VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, id))
+    conn.commit()
+
+    conn.close()
+
+    return redirect(url_for("listing", list_id=list_id))
+
 
 
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
+
 
     if request.method == "POST":
 
@@ -610,7 +795,6 @@ def changepassword():
             conn.commit()
 
     return render_template("changepassword.html")
-
 
 @app.route('/reset.html', methods=["GET", "POST"])
 def reset():
@@ -654,7 +838,6 @@ def reset():
         return render_template('reset.html', error=error)
 
     return render_template('reset.html')
-
 
 @app.route('/reset_token/<token>', methods=["GET", "POST"])
 def reset_token(token):
