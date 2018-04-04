@@ -534,6 +534,7 @@ def listing(list_id=None):
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
               "AND book.CRS_ID = course.CRS_ID", [list_id])
 
+    # old SQL statement. See Gary if you have any questions about the changes.
     # c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author,BK_Edition,BK_Title,"
     #           "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
     #           "FROM user,listing,book,course "
