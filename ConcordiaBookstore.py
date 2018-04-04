@@ -59,8 +59,8 @@ def connection():
                            user = "root",
 
 
-                           passwd = "gikQr6kn",
-                           db = "bookexchange1")
+                           passwd = "Che@ter1324",
+                           db = "bookexchange")
 
 
 
@@ -687,7 +687,7 @@ def listing(list_id=None):
 
 
     c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
-              " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, course.CRS_id, course.CRS_Name "
+              " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, USER_ID, course.CRS_id, course.CRS_Name "
               "FROM listing, user, book, course "
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
               "AND book.CRS_ID = course.CRS_ID", [list_id])
@@ -711,8 +711,9 @@ def listing(list_id=None):
         bookDesc = data[9]
         bookISBN = data[10]
         userRating = data[13]
-        courseID = data[14]
-        courseName = data[15]
+        id = data[14]
+        courseID = data[15]
+        courseName = data[16]
 
 
         print(data)
