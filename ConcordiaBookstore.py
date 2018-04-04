@@ -57,8 +57,10 @@ global userID
 def connection():
     conn = MySQLdb.connect(host="localhost",
                            user = "root",
-                           passwd = "AMH12bmh#$",
-                           db = "bookexchange")
+
+
+                           passwd = "gikQr6kn",
+                           db = "bookexchange1")
 
 
 
@@ -471,6 +473,8 @@ def profile():
 def updateProfile():
 
     if request.method == "POST":
+
+
         c, conn = connection()
 
         email = session['user_email']
@@ -569,6 +573,11 @@ def updateProfile():
     return render_template("updateProfile.html")
 
 
+
+
+
+
+
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
 def newpost():
@@ -665,32 +674,30 @@ def newpost():
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
 
+
     return render_template("newpost.html")
 
-
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
+
 #@require_logged_in
+
 def listing(list_id=None):
 
     c, conn = connection()
 
-    c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
-              " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, course.CRS_id, course.CRS_Name "
-              "FROM listing, user, book, course "
-              "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
-              "AND book.CRS_ID = course.CRS_ID", [list_id])
 
-    # c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author,BK_Edition,BK_Title,"
-    #           "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
-    #           "FROM user,listing,book,course "
-    #
-    #           "WHERE LST_ID = %s", [list_id])
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID, BK_Author,BK_Edition,BK_Title,"
+              "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
+              "FROM user,listing,book,course "
+
+              "WHERE LST_ID = %s", [list_id])
 
     conn.commit()
 
     result = c.fetchall()
     for data in result:
         firstname = data[0]
+
         # print(data[1])
         lastname = data[1]
         id = data[2]
@@ -707,6 +714,7 @@ def listing(list_id=None):
         userRating = data[15]
         courseID = data[16]
         courseName = data[17]
+
         print(data)
 
     # Pull comments from comments table for display related to selected listing
@@ -745,9 +753,11 @@ def submit_comment(list_id):
     return redirect(url_for("listing", list_id=list_id))
 
 
+
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
+
 
     if request.method == "POST":
 
@@ -785,7 +795,6 @@ def changepassword():
             conn.commit()
 
     return render_template("changepassword.html")
-
 
 @app.route('/reset.html', methods=["GET", "POST"])
 def reset():
@@ -829,7 +838,6 @@ def reset():
         return render_template('reset.html', error=error)
 
     return render_template('reset.html')
-
 
 @app.route('/reset_token/<token>', methods=["GET", "POST"])
 def reset_token(token):
