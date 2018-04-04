@@ -59,7 +59,7 @@ def connection():
                            user = "root",
 
 
-                           passwd = "Che@ter1324",
+                           passwd = "mysql",
                            db = "bookexchange")
 
 
