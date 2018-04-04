@@ -1,24 +1,21 @@
 
 import smtplib
+from datetime import datetime
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import base64
-from base64 import b64encode
-import os
-from flask_mail import Mail, Message
-import MySQLdb
-from datetime import datetime
-from threading import Thread
-import serial as serial
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
-from future.backports.email.mime.text import MIMEText
-from passlib.hash import sha256_crypt
-from wtforms import Form, StringField, PasswordField, SelectField, validators
 from functools import wraps
-from random import *
+
+import MySQLdb
+import serial as serial
+from flask import Flask, render_template, flash, redirect, url_for, session, request
+from flask_mail import Mail, Message
+from future.backports.email.mime.text import MIMEText
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from passlib.hash import sha256_crypt
+from wtforms import Form, StringField, PasswordField
 from wtforms.validators import DataRequired, Email
-from form import EmailForm, PasswordForm, BookSearchForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
+
+import form
 
 app =Flask(__name__)
 
