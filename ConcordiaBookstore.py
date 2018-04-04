@@ -686,36 +686,34 @@ def listing(list_id=None):
     c, conn = connection()
 
 
-    c.execute("SELECT LST_ID, LST_Title, LST_SellType, LST_Date, LST_USER_ID, BK_Author, BK_Edition, BK_Title, "
-              " BK_Publisher, BK_Comment, BK_ISBN, USER_FName, USER_LName, USER_Rating, USER_ID, course.CRS_id, course.CRS_Name "
-              "FROM listing, user, book, course "
+    c.execute("SELECT USER_FName,USER_LName, USER_ID, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID, BK_Author,BK_Edition,BK_Title,"
+              "LST_SellType, BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name "
+              "FROM user,listing,book,course "
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
               "AND book.CRS_ID = course.CRS_ID", [list_id])
 
 
     conn.commit()
 
-    result = c.fetchall()
+     result = c.fetchall()
     for data in result:
-        firstname = data[11]
-        #print(data[1])
-        lastname = data[12]
-        listID = data[0]
-        listtitle = data[1]
-        listDate= data[3]
-        bookAuthor = data[5]
-        bookEdition = data[6]
-        bookTitle = data[7]
-        listSellType = data[2]
-        bookPublisher = data[8]
-        bookDesc = data[9]
-        bookISBN = data[10]
-        userRating = data[13]
-        id = data[14]
-        courseID = data[15]
-        courseName = data[16]
-
-
+        firstname = data[0]
+        # print(data[1])
+        lastname = data[1]
+        id = data[2]
+        listID = data[3]
+        listtitle = data[4]
+        listDate = data[6]
+        bookAuthor = data[8]
+        bookEdition = data[9]
+        bookTitle = data[10]
+        listSellType = data[11]
+        bookPublisher = data[12]
+        bookDesc = data[13]
+        bookISBN = data[14]
+        userRating = data[15]
+        courseID = data[16]
+        courseName = data[17]
         print(data)
 
     # Pull comments from comments table for display related to selected listing
