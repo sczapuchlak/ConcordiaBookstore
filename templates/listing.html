@@ -89,7 +89,8 @@
                         </a></center>
 
 
-<h1>Comments:</h1>
+<div style="clear:both"></div>
+    <div style="clear:both"><h1>Comments:</h1>
             <br>
 {#            Add new comment#}
             <div class="comments" align="center">
@@ -104,29 +105,89 @@
             {# Display comments for selected listing #}
                 <table class="comments" align="center">
                     <tr>
-                        <td>User</td>
-                        <td>Comment Date</td>
-                        <td>Message</td>
+                        <th>User</th>
+                        <th>Comment Date</th>
+                        <th>Message</th>
                     </tr>
-           {% for row in rows %}
-                        <tr>
+                    {% set count = [0] %}
+                    <script>var comments = 0;</script>
+                    {% for row in rows %}
+                        <tr style="" id="comment{{ count }}">
                             <td><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
-	                           'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
                             <td>{{row[1]}}</td>
                             <td>{{row[2]}}</td>
                         </tr>
+                        {% if count.append(count.pop() + 1) %}{% endif %}
+                        <script>comments++</script>
                     {% endfor %}
                 </table>
-            <input type="button" id="submit" value="Prev" />
-            <input type="button" id="submit" value="Next" />
+            <div id="buttonHolder">
+                <div id="prevBox" style="display: inline;"></div>
+                <div id="nextBox" style="display: inline;"></div>
             </div>
-
-
-
-
-
-	<div style="clear:both"></div>
-
+            </div><br /><br /></div>
+<script>
+    var min = 0;
+    var max = 20;
+    var elements = 0;
+    function displayComments(){
+        if (comments > max) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("comment[" + i + "]").style.display = "table-row";
+            }
+        }
+        else {
+            for (var i = min; i < comments; i++) {
+                document.getElementById("comment[" + i + "]").style.display = "table-row";
+            }
+            document.getElementById("nextButton").style.display = "none"
+        }
+    }
+    function nextComments() {
+        if (comments - max > 0) {
+            elements = comments - max;
+            for (var i = min; i < max+elements; i++) {
+                document.getElementById("comment[" + i + "]").style.display = "none";
+            }
+            min += 20;
+            max += 20;
+            displayComments();
+            document.getElementById("prevButton").style.display = "inline";
+        }
+    }
+    function prevComments() { // fix comments not showing issue
+        if (elements >= 20) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("comment[" + i + "]").style.display = "none";
+            }
+        }
+        else {
+            for (i = min; i < min+elements; i++) {
+                document.getElementById("comment[" + i + "]").style.display = "none";
+            }
+            elements = 20;
+        }
+        if (min >= 20 && max >= 40) {
+            min -= 20;
+            max -= 20;
+        }
+        if (min < 20) {
+            document.getElementById("prevButton").style.display="none";
+        }
+        if ((document.getElementById("nextButton").style.display) === "none"){
+            document.getElementById("nextButton").style.display = "inline";
+        }
+        displayComments();
+    }
+    for (var i = min; i < comments; i++) {
+        document.getElementById("comment["+i+"]").style.display="none";
+    }
+    document.getElementById("prevBox").innerHTML="<input type=\"button\" value=\"Prev\" id=\"prevButton\" onclick=\"prevComments();\" />";
+    document.getElementById("nextBox").innerHTML="<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextComments();\" />"
+    document.getElementById("prevButton").style.display="none";
+    displayComments();
+</script>
 </body>
 </html>
 <style>
