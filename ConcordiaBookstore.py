@@ -58,8 +58,8 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="AMH12bmh#$",
-
+                           # passwd="AMH12bmh#$",
+                           passwd="mysql",
                            db="bookexchange")
 
     # Create a Cursor object to execute queries.
