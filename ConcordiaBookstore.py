@@ -335,6 +335,7 @@ def require_logged_in(f):
     return wrap
 
 
+
 @app.route('/logout')
 def logout():
     # kill session
