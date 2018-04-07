@@ -638,9 +638,8 @@ def newpost():
         conn.commit()
 
         c.execute('''
-                 INSERT INTO photo (PHT_Image, PHT_Path)
-                 VALUES(%s, %s)''',
-                  ([newFile], f))
+                 INSERT INTO photo (PHT_Path)
+                 VALUES(%s)''', (f,))
         photo_id = conn.insert_id()
         print(photo_id)
         conn.commit()
