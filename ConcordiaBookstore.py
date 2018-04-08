@@ -68,7 +68,7 @@ def connection():
 
                            passwd="gikQr6kn",
 
-                           db="bookexchange1")
+                           db="bookexchange")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
