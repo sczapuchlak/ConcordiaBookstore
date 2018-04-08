@@ -329,7 +329,6 @@ def logout():
 @app.route('/home.html', methods=["GET", "POST"])
 #@require_logged_in
 def home():
-
    c, conn = connection()
 
    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
@@ -343,35 +342,49 @@ def home():
        value = request.form["value"]
        search = request.form["search"]
 
-
        if value == 'title':
-           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
                      "FROM user,listing,book "
                      "WHERE user.USER_ID = listing.LST_USER_ID AND listing.LST_Title= %s", (search,))
-
            list1 = c.fetchall()
-           return render_template('home.html', data=list1)
+           if int(result) > 0:
+               return render_template('home.html', data=list1)
+           else:
+               error = "No Results found"
+               return render_template('home.html', error=error)
 
-       if value == 'author':
-           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+       elif value == 'author':
+           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
                      "FROM user,listing,book "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_Author= %s", (search,))
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_Author= %s", (search,))
            list1 = c.fetchall()
-           return render_template('home.html', data=list1)
+           if int(result) > 0:
+               return render_template('home.html', data=list1)
+           else:
+               error = "No Results found"
+               return render_template('home.html', error=error)
 
-       if value == 'course':
-           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+       elif value == 'course':
+           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
                      "FROM user,listing,book,course "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND course.CRS_Name= %s", (search,))
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND course.CRS_ID = book.CRS_ID AND  book.BK_ID = listing.BK_ID AND course.CRS_Name= %s", (search,))
            list1 = c.fetchall()
-           return render_template('home.html', data=list1)
+           if int(result) > 0:
+               return render_template('home.html', data=list1)
+           else:
+               error = "No Results found"
+               return render_template('home.html', error=error)
 
-       if value == "ISBN":
-           c.execute("SELECT DISTINCT  USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+       elif value == "ISBN":
+           result = c.execute("SELECT DISTINCT  USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
                      "FROM user,listing,book "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ISBN= %s", (search,))
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_ISBN= %s", (search,))
            list1 = c.fetchall()
-           return render_template('home.html', data=list1)
+           if int(result) > 0:
+               return render_template('home.html', data=list1)
+           else:
+               error = "No Results found"
+               return render_template('home.html', error=error)
 
        else:
            error = "No Results found"
