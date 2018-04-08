@@ -118,7 +118,13 @@
                     {{ d[3] }}
                     {% endfor %}
                 </p><br>
-        <button align="center" id="proLink"><a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a></button>
+
+        <form method="POST">
+            <button align="center" id="proLink" method="POST">
+                <a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a>
+            </button>
+        </form>
+                
       </div>
 			</div>
 

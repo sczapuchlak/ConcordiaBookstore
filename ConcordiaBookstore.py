@@ -470,6 +470,9 @@ def profile():
 
     conn.commit()
 
+    if request.method =="POST":
+        return render_template("updateProfile.html")
+
     return render_template("profile.html", data=prof)
 
 
