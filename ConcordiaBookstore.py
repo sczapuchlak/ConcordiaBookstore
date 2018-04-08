@@ -66,9 +66,9 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="AMH12bmh#$",
+                           passwd="gikQr6kn",
 
-                           db="bookexchange")
+                           db="bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -82,32 +82,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/search.html', methods=["GET", "POST"])
-def search():
-    search = BookSearchForm(request.form)
-    if request.method == 'POST':
-        return search_results(search)
-
-    return render_template('search.html', form=search)
-
-
-@app.route('/results')
-def search_results(search):
-    results = []
-    search_string = search.data['search']
-
-    if search.data['search'] == '':
-            # create connection
-            c, conn = connection()
-            c.executemany('''select * from book where BK_Title = %s''', request.form['search'])
-            return render_template("search.html", records=c.fetchall())
-
-    if not results:
-        flash('No results found!')
-        return redirect('/search.html')
-    else:
-        # display results
-        return render_template('search.html', results=results)
 
 
 @app.route('/signup.html', methods=["GET", "POST"])
@@ -353,41 +327,57 @@ def logout():
 
 
 @app.route('/home.html', methods=["GET", "POST"])
-@require_logged_in
+#@require_logged_in
 def home():
 
-    c, conn = connection()
+   c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+   c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+             "FROM user,listing "
+             "WHERE user.USER_ID = listing.LST_USER_ID")
 
+   # get Listing table
+   list1 = c.fetchall()
 
-              "FROM user,listing "
-              "WHERE user.USER_ID = listing.LST_USER_ID")
-
-    # get Listing table
-    list = c.fetchall()
-
-    # print(list)
-    return render_template('home.html', data=list)
-
-    # for data in list:
-    #     firtsname = data[0]
-    #     lastname = data[1]
-    #     listID = data[2]
-    #     listtitle = data[3]
-    #     fullname = firtsname +" "+ lastname
-    #
-    #     #for testing only
-    #     print(fullname)
-    #     #print(firtsname)
-    #     #print(lastname)
-    #     print(listID)
-    #     print(listtitle)
-    #     print(data)
-    # #get
-    # return render_template("home.html", data=list)
+   if request.method == "POST":
+       value = request.form["value"]
+       search = request.form["search"]
 
 
+       if value == 'title':
+           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                     "FROM user,listing,book "
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND listing.LST_Title= %s", (search,))
+
+           list1 = c.fetchall()
+           return render_template('home.html', data=list1)
+
+       if value == 'author':
+           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                     "FROM user,listing,book "
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_Author= %s", (search,))
+           list1 = c.fetchall()
+           return render_template('home.html', data=list1)
+
+       if value == 'course':
+           c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                     "FROM user,listing,book,course "
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND course.CRS_Name= %s", (search,))
+           list1 = c.fetchall()
+           return render_template('home.html', data=list1)
+
+       if value == "ISBN":
+           c.execute("SELECT DISTINCT  USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                     "FROM user,listing,book "
+                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ISBN= %s", (search,))
+           list1 = c.fetchall()
+           return render_template('home.html', data=list1)
+
+       else:
+           error = "No Results found"
+           return render_template('home.html', error=error)
+
+   return render_template('home.html', data=list1)
 @app.route('/mailto/<target>')
 @require_logged_in
 def mailto(target):
