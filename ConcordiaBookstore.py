@@ -60,7 +60,7 @@ def connection():
 
                            # passwd="AMH12bmh#$",
                            passwd="mysql",
-                           db="bookexchange")
+                           db="bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -771,7 +771,6 @@ def changepassword():
             password = sha256_crypt.encrypt((str(newPassword)))
 
             email = session['user_email']
-
 
             c.execute("""
                       UPDATE user
