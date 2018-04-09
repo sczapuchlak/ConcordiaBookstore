@@ -30,10 +30,10 @@
               	<form method="POST" action="/listing" enctype="multipart/form-data">
 
                          <a>
-                <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
+                <div class="breadcrumbs">  </div>
                             <br><br>
                              <div class="wrapper">
-                             <div class="photoBox"><p> Placeholder for picture</p>
+                             <div class="photoBox"><p> <img src="/{{ image }}" height="600pt" width="120%"></p>
 
                                  <div class="verticalLine"></div></div>
 
@@ -41,7 +41,7 @@
                              <div class="listTitle "><p>{{listtitle}}</p></div>
                                  <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
                                  <hr>
-                                 <div class="rightSide" style="margin-left: 40pt;">
+                                 <div class="rightSide" style="margin-left: 90pt;">
                                  <fieldset>
                                     <legend>Meet The Seller</legend>
                                  <div class="backgroundBox">
@@ -76,7 +76,7 @@
 
                             </div>
                          </div>
-                                    <div class="picturesSlide" style="margin-top: -2%">
+                                    <div class="picturesSlide" style="margin-top: -2%; margin-left: 3.5%">
                                      <img class="leftArrow" src="/static/images/leftArrow.png">
                                      <img class="rightArrow" src="/static/images/right.ico">
                                     </div>
