@@ -9,21 +9,56 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script
+	src="http://code.jquery.com/jquery-2.2.4.min.js"
+	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
 <script>
+$("#rateMeButton").click(function () {
+    {% for d in starData %}
+        var result = parseInt($("input[name=starSelector]:checked").val());
+        userRating = userRating + result;
+        userNumRating = userNumRating + 1;
+        listingID = id;
+        var starinfo = [listingID, userRating, userNumRating];
+        $.post(
+            '{{ url_for("listing", list_id=list_id) }}',
+            {share: starinfo},
+            function () {
+                $("#theResult").text("Success!").show().fadeOut(2000);
+                this.slideUp();
 
-function addToRating(){
-    var x = document.getElementById("myRadio").value;
+            });
+         {% endfor %}
+    });
 
-    //do something with SQL to add new  star value to USER_Rating, and add one to USER_Num_Rating
-    var button = document.getElementById('RateMeButton');
-    button.disabled = 'disabled';
-  }
-  return;
-}
+    function StarsRating() {
+        {% for d in data %}
+            var totScore= userRating;
+            var totVotes= proNumRating;
+        // error prevention
+        if (totScore === null) {
+            totScore = 0;
+        }
+        // preventing divide by 0 error
+        if (totVotes === null || totVotes === 0) {
+            totVotes = 1;
+        }
+        var ratings = {
+            RatingForUser: (totScore / totVotes)
+        };
+        // 5 = total number of stars
+        for (var r in ratings) {
+            var starPercentage = (ratings[r] / 5) * 100;
+            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
+        }
+        {% endfor %}
+    }
 </script>
 
 	{% include "header.html" %}
@@ -58,47 +93,40 @@ function addToRating(){
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
                                  <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
-                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"> <p class="information">{{firstname}} {{lastname}}</p></a></div>
-                                 <div class="rateUser"> <h4 style="font-weight: 600">Rate the Seller:  </h4>
+                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4> <p class="information">{{firstname}} {{lastname}}</p></div>
 
-                                     <div class="rate">
-                                         <input type="radio" id="star5" name="rate" value="5"/>
-                                         <label for="star5" title="text">5 stars</label>
-                                         <input type="radio" id="star4" name="rate" value="4"/>
-                                         <label for="star4" title="text">4 stars</label>
-                                         <input type="radio" id="star3" name="rate" value="3">
-                                         <label for="star3" title="text">3 stars</label>
-                                         <input type="radio" id="star2" name="rate" value="2"/>
-                                         <label for="star2" title="text">2 stars</label>
-                                         <input type="radio" id="star1" name="rate" value="1"/>
-                                         <label for="star1" title="text">1 star</label>
-                                     </div>
-                                     <button class="RateMeButton" onclick="addToRating()";>Rate Me!</button>
+                                     <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4><div class="star-selector" style="display: inline">
+                                    <label for="starSelector1"></label>
+                                    <input type="radio" name="starSelector" id="starSelector1" value="1"/>
+                                    <label for="starSelector2"></label>
+                                    <input type="radio" name="starSelector" id="starSelector2" value="2"
+                                           checked="checked"/>
+                                    <label for="starSelector3"></label>
+                                    <input type="radio" name="starSelector" id="starSelector3" value="3"/>
+                                    <label for="starSelector4"></label>
+                                    <input type="radio" name="starSelector" id="starSelector4" value="4"/>
+                                    <label for="starSelector5"></label>
+                                    <input type="radio" name="starSelector" id="starSelector5" value="5"/>
 
-                                 
-                                     <p class="information">{{userRating}} </p><h4 style="font-weight: 600; margin-left: 55pt;"> Seller's Rating: </h4>
-                                 <table>
+                                    <button class="RateMeButton">Rate Me!</button>
+                                    <p></p>
+                                    <span id="theResult"></span>
+                                     <h4 style="font-weight: 600;"> Seller's Rating: <p class="information">{{ userRating }} </p> </h4>
 
-                                     /* d3 is USER_Rating, d11 is USER_Num_Rating */
-                                     StarsRating({{ d[3] }}, {{ d[11] }});
-                                     <tr class="RatingForUser">
-                                         <td>
-                                             <div class="starRatings-outer">
-                                                 <div class="starRatings-inner"></div>
-                                             </div>
-                                         </td>
-                                     </tr>
-                                     <tr>
-                                         <td>
-                                             <p>Total Votes: {{ d[11] }}</p>
-                                         </td>
-                                     </tr>
-                                 </table>
 
-                                 </div>
-                                 </div>
-                                    </fieldset>
+
+                                    <script>StarsRating();</script>
+
+                                    <p>
+                                        <strong>Total Reviews: </strong><br/>
+                                        &nbsp&nbsp&nbsp
+                                        {{ proNumRating }}
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                                  
                                  <hr>
 
@@ -121,8 +149,7 @@ function addToRating(){
 
                                  <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
-                                     <button class="button" ><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
-                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
+                                     <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
                                  </div>
                                     </div>
 
@@ -389,6 +416,65 @@ legend{
         margin-left: -90%;
 
     }
+    .RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+    color: #f8ce0b;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+/*Star-selector stuff*/
+
+.star-selector {
+    margin-left: 2px;
+    padding-top: 2px;
+}
+
+.star-selector input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.star-selector label {
+    display: inline-block;
+    font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.star-selector label:before {
+    content: "\f005";
+
+}
+
+.star-selector input[type=radio]:checked ~ label:before {
+    content: "\f006";
+}
 
 
 

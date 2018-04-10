@@ -24,10 +24,9 @@ from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
 
-
 app = Flask(__name__)
 
-app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'cspbookstore@gmail.com'
 app.config['MAIL_PASSWORD'] = 'Concordia2018$'
@@ -35,12 +34,10 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
-
 UPLOAD_FOLDER = os.path.join('static', 'bookImage')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 url = URLSafeTimedSerializer('SECRET_KEY')
-
 
 # set up the application with Flask
 app = Flask(__name__, '/static', static_folder='static',
@@ -68,17 +65,14 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-
                            passwd="gikQr6kn",
 
                            db="bookexchange")
-
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
 
     return c, conn
-
 
 
 @app.route('/')
@@ -174,7 +168,8 @@ def signup():
             c.close()
             conn.close()
 
-            flash("Thanks for registering! Please verify your account with the email we sent you before logging in", 'success')
+            flash("Thanks for registering! Please verify your account with the email we sent you before logging in",
+                  'success')
 
             conn.commit()
 
@@ -186,7 +181,6 @@ def signup():
         return redirect(url_for('login', flash=flash))
     return render_template('signup.html')
     # return render_template('signup.html', form=form)
-
 
 
 @app.route('/confirm_email/<token>')
@@ -250,7 +244,6 @@ def resend(email):
     return redirect(url_for("login", flash=flash))
 
 
-
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
     try:
@@ -268,7 +261,6 @@ def login():
 
             # get stored password hash from db
             result = c.fetchone()[1]
-
 
             # get confirmation status from db
             c.execute("SELECT USER_Cnfrm FROM user WHERE USER_Email = %s", (user_email,))
@@ -323,7 +315,6 @@ def require_logged_in(f):
     return wrap
 
 
-
 @app.route('/logout')
 def logout():
     # kill session
@@ -334,71 +325,79 @@ def logout():
 
 
 @app.route('/home.html', methods=["GET", "POST"])
-#@require_logged_in
+# @require_logged_in
 def home():
+    c, conn = connection()
 
-   c, conn = connection()
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+              "FROM user,listing "
+              "WHERE user.USER_ID = listing.LST_USER_ID")
 
-   c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-             "FROM user,listing "
-             "WHERE user.USER_ID = listing.LST_USER_ID")
+    # get Listing table
+    list1 = c.fetchall()
 
-   # get Listing table
-   list1 = c.fetchall()
+    if request.method == "POST":
+        value = request.form["value"]
+        search = request.form["search"]
 
-   if request.method == "POST":
-       value = request.form["value"]
-       search = request.form["search"]
+        if value == 'title':
+            result = c.execute(
+                "SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                "FROM user,listing,book "
+                "WHERE user.USER_ID = listing.LST_USER_ID AND listing.LST_Title= %s", (search,))
+            list1 = c.fetchall()
+            if int(result) > 0:
+                return render_template('home.html', data=list1)
+            else:
+                error = "No Results found"
+                return render_template('home.html', error=error)
 
-       if value == 'title':
-           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-                     "FROM user,listing,book "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND listing.LST_Title= %s", (search,))
-           list1 = c.fetchall()
-           if int(result) > 0:
-               return render_template('home.html', data=list1)
-           else:
-               error = "No Results found"
-               return render_template('home.html', error=error)
+        elif value == 'author':
+            result = c.execute(
+                "SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                "FROM user,listing,book "
+                "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_Author= %s",
+                (search,))
+            list1 = c.fetchall()
+            if int(result) > 0:
+                return render_template('home.html', data=list1)
+            else:
+                error = "No Results found"
+                return render_template('home.html', error=error)
 
-       elif value == 'author':
-           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-                     "FROM user,listing,book "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_Author= %s", (search,))
-           list1 = c.fetchall()
-           if int(result) > 0:
-               return render_template('home.html', data=list1)
-           else:
-               error = "No Results found"
-               return render_template('home.html', error=error)
+        elif value == 'course':
+            result = c.execute(
+                "SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                "FROM user,listing,book,course "
+                "WHERE user.USER_ID = listing.LST_USER_ID AND course.CRS_ID = book.CRS_ID AND  book.BK_ID = listing.BK_ID AND course.CRS_Name= %s",
+                (search,))
+            list1 = c.fetchall()
+            if int(result) > 0:
+                return render_template('home.html', data=list1)
+            else:
+                error = "No Results found"
+                return render_template('home.html', error=error)
 
-       elif value == 'course':
-           result = c.execute("SELECT DISTINCT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-                     "FROM user,listing,book,course "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND course.CRS_ID = book.CRS_ID AND  book.BK_ID = listing.BK_ID AND course.CRS_Name= %s", (search,))
-           list1 = c.fetchall()
-           if int(result) > 0:
-               return render_template('home.html', data=list1)
-           else:
-               error = "No Results found"
-               return render_template('home.html', error=error)
+        elif value == "ISBN":
+            result = c.execute(
+                "SELECT DISTINCT  USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
+                "FROM user,listing,book "
+                "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_ISBN= %s",
+                (search,))
+            list1 = c.fetchall()
+            if int(result) > 0:
+                return render_template('home.html', data=list1)
+            else:
+                error = "No Results found"
+                return render_template('home.html', error=error)
 
-       elif value == "ISBN":
-           result = c.execute("SELECT DISTINCT  USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
-                     "FROM user,listing,book "
-                     "WHERE user.USER_ID = listing.LST_USER_ID AND book.BK_ID = listing.BK_ID AND book.BK_ISBN= %s", (search,))
-           list1 = c.fetchall()
-           if int(result) > 0:
-               return render_template('home.html', data=list1)
-           else:
-               error = "No Results found"
-               return render_template('home.html', error=error)
+        else:
+            error = "No Results found"
+            return render_template('home.html', error=error)
 
-       else:
-           error = "No Results found"
-           return render_template('home.html', error=error)
+    return render_template('home.html', data=list1)
 
-   return render_template('home.html', data=list1)
+
 @app.route('/mailto/<target>')
 @require_logged_in
 def mailto(target):
@@ -440,7 +439,6 @@ def send_msg(target):
     # send message
     s.sendmail(fromaddr, toaddr, text)
 
-
     # close email server connection
     s.quit()
 
@@ -450,12 +448,11 @@ def send_msg(target):
 @app.route('/profile.html', methods=["GET", "POST"])
 @require_logged_in
 def profile():
-
     c, conn = connection()
 
     email = session['user_email']
 
- # get User information with JOIN to get User's Phone number
+    # get User information with JOIN to get User's Phone number
     # added USER_Num_Rating, to recycle code for rating function
     c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_ID, STU_Address, "
               "STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID, USER_Num_Rating "
@@ -485,7 +482,7 @@ def profile():
 
     conn.commit()
 
-    if request.method =="POST":
+    if request.method == "POST":
         return render_template("updateProfile.html")
 
     return render_template("profile.html", data=prof)
@@ -494,7 +491,6 @@ def profile():
 @app.route('/updateProfile.html', methods=["GET", "POST"])
 @require_logged_in
 def updateProfile():
-
     if request.method == "POST":
 
         c, conn = connection()
@@ -582,13 +578,13 @@ def updateProfile():
                   STU_Zip = %s, STU_Phone = %s
                   WHERE student.USER_ID = %s''',
 
-                  (Stud, Addy, City, State, Zip, Phone, proID, ))
+                  (Stud, Addy, City, State, Zip, Phone, proID,))
         conn.commit()
 
         c.execute('''
                   UPDATE user SET USER_FName = %s, USER_LName = %s
                   WHERE USER_Email = %s''',
-                  (Fname, Lname, email, ))
+                  (Fname, Lname, email,))
 
         conn.commit()
 
@@ -617,7 +613,6 @@ def newpost():
         file.save(f)
         print(f)
 
-
         # Book Information
         book_ISBN = request.form['field4']
         listing_title = request.form['field5']
@@ -626,7 +621,6 @@ def newpost():
         book_Edition = request.form['field8']
 
         book_Comments = request.form['field10']
-
 
         # Course Information
         course_Title = request.form['field11']
@@ -689,67 +683,17 @@ def newpost():
     return render_template("newpost.html")
 
 
-
-@app.route('/update_star_rating', methods=["POST"])
-# @require_logged_in
-def update_star_rating():
-    share = request.json['share']
-    list_id = share[0],
-    userRating = share[1],
-    userNumRating = share[2]
-
-    c, conn = connection()
-
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, USER_Rating, USER_Num_Rating "
-              "FROM user,listing "
-              "WHERE LST_ID = %s", [list_id])
-
-    c.execute('''
-        INSERT INTO user (USER_Rating, USER_Num_Rating)
-        VALUES(%s,%s)''',
-              (userRating, userNumRating))
-    conn.commit()
-
-    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, USER_Rating, USER_Num_Rating "
-              "FROM user, listing "
-              "WHERE LST_ID = %s", [list_id])
-
-    conn.commit()
-
-    result = c.fetchall()
-    for data in result:
-        firstname = data[0]
-        lastname = data[1]
-        listID = data[2]
-        listtitle = data[3]
-        listSellType = data[4]
-        listDate = data[5]
-        userRating = data[6]
-        userNumRating = data[7]
-    print(data)
-
-    # not sure if this will work, due to the javascript scope, but should it work, it should partially re-render
-    # the page, giving the appearance of instant update for the star rating.
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
-                           listtitle=listtitle, listSellType=listSellType, listDate=listDate,
-                           userRating=userRating, userNumRating=userNumRating)
-
-
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
 # @require_logged_in
 def listing(list_id=None):
-
     c, conn = connection()
 
-    c.execute("SELECT USER_FName,USER_LName, USER_ID, LST_ID, LST_Title, LST_SellType, LST_Date, BK_Author,BK_Edition,BK_Title,"
-              "BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name, photo.PHT_ID, photo.PHT_Path "
-              "FROM user,listing,book,course,photo "
-              "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
-              "AND book.CRS_ID = course.CRS_ID AND book.PHT_ID = photo.PHT_ID ", [list_id])
-    
-   
-    
-
+    c.execute(
+        "SELECT USER_FName,USER_LName, USER_ID, LST_ID, LST_Title, LST_SellType, LST_Date, BK_Author,BK_Edition,BK_Title,"
+        "BK_Publisher,BK_Comment,BK_ISBN,USER_Rating,course.CRS_ID,course.CRS_Name, photo.PHT_ID, photo.PHT_Path, USER_Num_Rating "
+        "FROM user,listing,book,course,photo "
+        "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
+        "AND book.CRS_ID = course.CRS_ID AND book.PHT_ID = photo.PHT_ID ", [list_id])
 
     conn.commit()
 
@@ -773,16 +717,22 @@ def listing(list_id=None):
         courseName = data[15]
         photoID = data[16]
         image_path = data[17]
+        proNumRating = data[18]
 
     # Pull comments from comments table for display related to selected listing
     c.execute("SELECT COM_Auth, COM_Date, COM_Body, COM_USER_ID FROM comments WHERE LST_ID = %s", [listID])
     rows = c.fetchall()
 
-    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
+    if request.method == "POST":
+        return redirect(url_for("listing", list_id=list_id))
+
+
+
+    return render_template('listing.html', data=data, firstname=firstname, lastname=lastname, listID=listID,
                            listtitle=listtitle, listDate=listDate, bookTitle=bookTitle, bookAuthor=bookAuthor,
-                           bookEdition=bookEdition, listSellType=listSellType,bookPublisher=bookPublisher,
-                           bookDesc=bookDesc, bookISBN=bookISBN, userRating=userRating, courseID=courseID,
-                           courseName=courseName,id=id, image=image_path, rows=rows)
+                           bookEdition=bookEdition, listSellType=listSellType, bookDesc=bookDesc,
+                           bookPublisher=bookPublisher, bookISBN=bookISBN, userRating=userRating, courseID=courseID,
+                           courseName=courseName, id=id, image=image_path, rows=rows, proNumRating=proNumRating)
 
 
 @app.route("/submit_comment/<list_id>", methods=["GET", "POST"])
@@ -816,7 +766,6 @@ def submit_comment(list_id):
 @app.route('/changepassword.html', methods=["GET", "POST"])
 @require_logged_in
 def changepassword():
-
     if request.method == "POST":
 
         oldPassword = request.form['oldPassword']
@@ -856,7 +805,6 @@ def changepassword():
 
 @app.route('/reset.html', methods=["GET", "POST"])
 def reset():
-
     try:
         c, conn = connection()
         if request.method == "POST":
@@ -952,6 +900,5 @@ def reset_token(token):
 
 
 if __name__ == '__main__':
-    app.secret_key='SECRET_KEY'
+    app.secret_key = 'SECRET_KEY'
     app.run(debug=True)
-
