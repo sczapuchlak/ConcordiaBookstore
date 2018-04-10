@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Change Password</title><!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"><!-- Custom styles for this template -->
+    <link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <style>
+
+
+    </style>
+
+</head>
+<body >
+{% include "header.html" %}
+
+<div style="width: 100%;" class="container">
+    <div class="homeLeft">
+        <div>
+        <h4>{% include "flash_message.html" %}</h4>
+        </div>
+    <h1>{% include "sideNav.html" %}</h1>
+        </div>
+
+
+
+# this is commented out so that the program will run
+{% block body %}
+{#<form action="{{ url_for('pwreset', token=token) }}" method="POST">#}
+{#    {{ form.password.label }}: {{ form.password }}<br>#}
+{#    {{ form.csrf_token }}#}
+{#    <input type="submit" value="Change my password" />#}
+{#</form>#}
+{% endblock %}
+</div>

@@ -7,11 +7,13 @@ body {
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
-    font-weight: 300;
+    font-weight: 200;
 }
 a{
     !important;text-decoration: none;
-    font-weight: 300;
+    font-weight: 200;
+
+
 }
 .logo {
 	width: 48px;
@@ -454,6 +456,9 @@ a.links {
 	border-width: 1px 1px 3px;
 	margin-bottom: 10px;
 }
+
+
+
 .form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
 	background: rgba(23, 0, 91, 0.63);
 }
@@ -483,6 +488,7 @@ a{
 }
 .labelPass{
 	font-size: 18pt;
+
 }
 
 /*Star Rating Stuff*/
@@ -516,3 +522,4 @@ styling would repeat for the consecutive stars*/
   content: "\f005 \f005 \f005 \f005 \f005";
   color: #f8ce0b;
 }
+
