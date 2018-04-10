@@ -75,7 +75,7 @@ $("#rateMeButton").click(function () {
               	<form method="POST" action="/listing" enctype="multipart/form-data">
 
 
-                         <a>
+
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
                              <div class="wrapper">
@@ -93,8 +93,8 @@ $("#rateMeButton").click(function () {
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
                                  <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4> <p class="information">{{firstname}} {{lastname}}</p></div>
-
+                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"> <p class="information">{{firstname}} {{lastname}}</p></a></div>
                                      <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4><div class="star-selector" style="display: inline">
                                     <label for="starSelector1"></label>
                                     <input type="radio" name="starSelector" id="starSelector1" value="1"/>
@@ -149,10 +149,10 @@ $("#rateMeButton").click(function () {
 
                                  <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
-                                     <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
+                                     <button class="button" ><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
                                  </div>
-                                    </div>
-
+                                 </div>
                             </div>
                          </div>
                                     <div class="picturesSlide" style="margin-top: -2%; margin-left: 3.5%">
@@ -161,14 +161,14 @@ $("#rateMeButton").click(function () {
                                     </div>
 <br><br><br><br><br>
 
-                         </a>
+
               	</form>
 
 
                         </div>
 
 
-                        </a></center>
+                        </center>
 
 
 <div style="clear:both"></div>

@@ -108,21 +108,21 @@
 
                 <table>
                     <p>
-                    <strong>User Rating: </strong><br />
+                    <strong>User Rating: </strong>
                     &nbsp&nbsp&nbsp{% for d in data %}
-                    ({{ d[3] }}, {{ d[11] }});
+                    {{ d[3] }} stars out of {{ d[11] }} votes;
                     {% endfor %}
-                    <tr class="RatingForUser">
+                    <div class="RatingForUser" style="margin-top: -35px; " >
                         <td>
                             <div class="starRatings-outer">
                                 <div class="starRatings-inner"></div>
                             </div>
                         </td>
-                    </tr>
+                    </div>
 
                     <tr>
                      <td>
-                         <p>Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p>
+                         <strong><p style="margin-left: -10px">Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p></strong>
                      </td>
                     </tr>
 
@@ -130,7 +130,7 @@
 
                 </table>
                 <p>
-                    <strong>Total Reviews: </strong><br />
+                    <strong>Total Reviews: </strong>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[3] }}
                     {% endfor %}
@@ -202,6 +202,67 @@
     strong{
         font-weight: 700;
     }
+        .RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+    color: #f8ce0b;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+/*Star-selector stuff*/
+
+.star-selector {
+    margin-left: 2px;
+    padding-top: 2px;
+}
+
+.star-selector input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.star-selector label {
+    display: inline-block;
+    font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.star-selector label:before {
+    content: "\f005";
+
+}
+
+.star-selector input[type=radio]:checked ~ label:before {
+    content: "\f006";
+}
+
+
 </style>
 </html>
 
