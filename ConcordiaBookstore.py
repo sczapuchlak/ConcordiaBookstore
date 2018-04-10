@@ -66,9 +66,11 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
+
                            passwd="gikQr6kn",
 
                            db="bookexchange")
+
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -142,7 +144,7 @@ def signup():
             conn.commit()
 
             # generate token
-            token = serial.dumps(email, salt='email-confirm')
+            token = url.dumps(email, salt='email-confirm')
 
             # create link for confirmation email
             link = url_for('confirm_email', token=token, external=True)
@@ -188,7 +190,7 @@ def signup():
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
-        email = serial.loads(token, salt='email-confirm', max_age=3600)
+        email = url.loads(token, salt='email-confirm', max_age=3600)
 
         # create connection
         c, conn = connection()
@@ -208,7 +210,7 @@ def confirm_email(token):
         conn.close()
     except SignatureExpired:
         # if the token has expired, extract the email address and redirect them to the page to resend link
-        email = serial.loads(token, salt='email-confirm')
+        email = url.loads(token, salt='email-confirm')
         return render_template('resend.html', email=email)
     flash("You have registered successfully. Please log in", 'success')
     return redirect(url_for("login", flash=flash))
@@ -217,7 +219,7 @@ def confirm_email(token):
 @app.route('/resend/<email>', methods=['GET'])
 def resend(email):
     # generate token
-    token = serial.dumps(email, salt='email-confirm')
+    token = url.dumps(email, salt='email-confirm')
 
     # create link for confirmation email
     link = url_for('confirm_email', token=token, external=True)
@@ -315,6 +317,7 @@ def require_logged_in(f):
             flash("unauthorized, Please log in")
             return redirect(url_for('login'))
     return wrap
+
 
 
 @app.route('/logout')
@@ -775,7 +778,6 @@ def changepassword():
             password = sha256_crypt.encrypt((str(newPassword)))
 
             email = session['user_email']
-
 
             c.execute("""
                       UPDATE user
