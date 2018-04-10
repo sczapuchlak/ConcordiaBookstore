@@ -1,4 +1,3 @@
-
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -25,6 +24,7 @@ from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
 
+
 app = Flask(__name__)
 
 app.config['MAIL_SERVER']='smtp.gmail.com'
@@ -35,10 +35,12 @@ app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
 
+
 UPLOAD_FOLDER = os.path.join('static', 'bookImage')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 url = URLSafeTimedSerializer('SECRET_KEY')
+
 
 # set up the application with Flask
 app = Flask(__name__, '/static', static_folder='static',
@@ -78,12 +80,11 @@ def connection():
     return c, conn
 
 
+
 @app.route('/')
 @app.route('/index')
 def index():
     return render_template('index.html')
-
-
 
 
 @app.route('/signup.html', methods=["GET", "POST"])
@@ -187,6 +188,7 @@ def signup():
     # return render_template('signup.html', form=form)
 
 
+
 @app.route('/confirm_email/<token>')
 def confirm_email(token):
     try:
@@ -248,9 +250,9 @@ def resend(email):
     return redirect(url_for("login", flash=flash))
 
 
+
 @app.route('/login.html', methods=['GET', 'POST'])
 def login():
-
     try:
 
         if request.method == "POST":
@@ -266,6 +268,7 @@ def login():
 
             # get stored password hash from db
             result = c.fetchone()[1]
+
 
             # get confirmation status from db
             c.execute("SELECT USER_Cnfrm FROM user WHERE USER_Email = %s", (user_email,))
@@ -316,6 +319,7 @@ def require_logged_in(f):
         else:
             flash("unauthorized, Please log in")
             return redirect(url_for('login'))
+
     return wrap
 
 
@@ -332,6 +336,7 @@ def logout():
 @app.route('/home.html', methods=["GET", "POST"])
 #@require_logged_in
 def home():
+
    c, conn = connection()
 
    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date,LST_ID "
@@ -435,6 +440,7 @@ def send_msg(target):
     # send message
     s.sendmail(fromaddr, toaddr, text)
 
+
     # close email server connection
     s.quit()
 
@@ -449,13 +455,15 @@ def profile():
 
     email = session['user_email']
 
-    # get User information with JOIN to get User's Phone number
-    c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, "
-              "STU_ID, STU_Address, STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID "
+ # get User information with JOIN to get User's Phone number
+    # added USER_Num_Rating, to recycle code for rating function
+    c.execute("SELECT USER_FName, USER_LName, USER_Email, USER_Rating, STU_ID, STU_Address, "
+              "STU_City, STU_State, STU_Zip, STU_Phone, user.USER_ID, USER_Num_Rating "
               "FROM user JOIN student ON user.USER_ID=student.USER_ID "
               "WHERE USER_Email = %s", (email,))
 
     # assign from SQL statement to an array named prof
+    # added USER_Num_Rating here as well, to recycle code for displaying the user rating
     prof = c.fetchall()
 
     for data in prof:
@@ -463,6 +471,7 @@ def profile():
         proLName = data[1]
         proEmail = data[2]
         proRating = data[3]
+        proNumRating = data[11]
         proID = data[10]
         studId = data[4]
         proAddy = data[5]
@@ -572,6 +581,7 @@ def updateProfile():
                   STU_City = %s, STU_State = %s,
                   STU_Zip = %s, STU_Phone = %s
                   WHERE student.USER_ID = %s''',
+
                   (Stud, Addy, City, State, Zip, Phone, proID, ))
         conn.commit()
 
@@ -589,7 +599,6 @@ def updateProfile():
 @app.route('/newpost.html', methods=["GET", "POST"])
 @require_logged_in
 def newpost():
-
     if request.method == "POST":
 
         file = request.files['pic']
@@ -601,11 +610,13 @@ def newpost():
 
         # file.save(file.filename)
 
+
         newFile = file.read
 
         f = os.path.join(UPLOAD_FOLDER, file.filename)
         file.save(f)
         print(f)
+
 
         # Book Information
         book_ISBN = request.form['field4']
@@ -613,7 +624,9 @@ def newpost():
         book_Author = request.form['field6']
         book_publisher = request.form['field7']
         book_Edition = request.form['field8']
+
         book_Comments = request.form['field10']
+
 
         # Course Information
         course_Title = request.form['field11']
@@ -656,7 +669,8 @@ def newpost():
         c.execute('''
                  INSERT INTO book (CRS_ID, BK_Publisher, PHT_ID, BK_Sale_Type, BK_Comment, BK_Title, BK_ISBN, BK_Author, BK_Edition )
                  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)''',
-                  (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN, book_Author,
+                  (course_Number, book_publisher, [photo_id], sale_type, book_Comments, listing_title, book_ISBN,
+                   book_Author,
                    book_Edition))
         course_id = conn.insert_id()
         conn.commit()
@@ -675,6 +689,52 @@ def newpost():
     return render_template("newpost.html")
 
 
+
+@app.route('/update_star_rating', methods=["POST"])
+# @require_logged_in
+def update_star_rating():
+    share = request.json['share']
+    list_id = share[0],
+    userRating = share[1],
+    userNumRating = share[2]
+
+    c, conn = connection()
+
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, USER_Rating, USER_Num_Rating "
+              "FROM user,listing "
+              "WHERE LST_ID = %s", [list_id])
+
+    c.execute('''
+        INSERT INTO user (USER_Rating, USER_Num_Rating)
+        VALUES(%s,%s)''',
+              (userRating, userNumRating))
+    conn.commit()
+
+    c.execute("SELECT USER_FName,USER_LName, LST_ID, LST_Title, LST_SellType, LST_Date, USER_Rating, USER_Num_Rating "
+              "FROM user, listing "
+              "WHERE LST_ID = %s", [list_id])
+
+    conn.commit()
+
+    result = c.fetchall()
+    for data in result:
+        firstname = data[0]
+        lastname = data[1]
+        listID = data[2]
+        listtitle = data[3]
+        listSellType = data[4]
+        listDate = data[5]
+        userRating = data[6]
+        userNumRating = data[7]
+    print(data)
+
+    # not sure if this will work, due to the javascript scope, but should it work, it should partially re-render
+    # the page, giving the appearance of instant update for the star rating.
+    return render_template("listing.html", data=data, firstname=firstname, lastname=lastname, listID=listID,
+                           listtitle=listtitle, listSellType=listSellType, listDate=listDate,
+                           userRating=userRating, userNumRating=userNumRating)
+
+
 @app.route('/listing/<list_id>', methods=["GET", "POST"])
 # @require_logged_in
 def listing(list_id=None):
@@ -686,6 +746,10 @@ def listing(list_id=None):
               "FROM user,listing,book,course,photo "
               "WHERE LST_ID = %s AND listing.LST_USER_ID = user.USER_ID AND listing.BK_ID = book.BK_ID "
               "AND book.CRS_ID = course.CRS_ID AND book.PHT_ID = photo.PHT_ID ", [list_id])
+    
+   
+    
+
 
     conn.commit()
 
@@ -890,3 +954,4 @@ def reset_token(token):
 if __name__ == '__main__':
     app.secret_key='SECRET_KEY'
     app.run(debug=True)
+

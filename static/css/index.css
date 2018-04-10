@@ -1,16 +1,18 @@
 /*Page Styles*/
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+
 
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
-
     font-weight: 200;
 }
 a{
     !important;text-decoration: none;
     font-weight: 200;
+
 
 }
 .logo {
@@ -487,5 +489,37 @@ a{
 .labelPass{
 	font-size: 18pt;
 
+}
+
+/*Star Rating Stuff*/
+.RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+/*Not sure why, but wound up having to make inner and outer star classes plural so
+styling would repeat for the consecutive stars*/
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
 }
 

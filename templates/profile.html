@@ -18,24 +18,33 @@
 
 
     <script>
-    function StarsRating(USER_Rating, USER_Num_Rating){
+    function StarsRating(totScore, totVotes) {
 
-    // To prevent code form breaking in case info does not get pulled for some reason
-    if (USER_Rating === null){
-        USER_Rating = 0;
-    }
-    // preventing a divide by 0 error
-    if (USER_Num_Rating === null || USER_Num_Rating === 0){
-        USER_Num_Rating = 1;
+        // To prevent code form breaking in case info does not get pulled for some reason
+        if (totScore === null) {
+            totScore = 0;
+        }
+        // preventing a divide by 0 error
+        if (totVotes === null || totVotes === 0) {
+            totVotes = 1;
+        }
+
+        // Wound up casting as object in order to make the needed link to the specific table row via querySelector.
+        // Handling as getClass or as getElement would not allow script to change CSS dynamically for some reason.
+        var ratings = {
+            RatingForUser: (totScore / totVotes)
+        };
+
+// total number of stars
+        const starTotal = 5;
+
+        for (var r in ratings) {
+            var starPercentage = (ratings[r] / starTotal) * 100;
+            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
+        }
     }
 
-      const starTotal = 5;
-      var rating = (USER_Rating / User_Num_Rating);
-      var starPercentage = (rating / starTotal) * 100;
-      //dividing first, then multiplying to make number a multiple of 10
-        var starPercentageRounded = (Math.round(starPercentage / 10) * 10) + "%";
-        var elem = document.getElementById("starRating-inner").style.width = starPercentageRounded;
-    }
     </script>
 
 
@@ -105,12 +114,20 @@
                     {% endfor %}
                     <tr class="RatingForUser">
                         <td>
-                            <div class="starRating-outer">
-                                <div class="starRating-inner"></div>
+                            <div class="starRatings-outer">
+                                <div class="starRatings-inner"></div>
                             </div>
                         </td>
                     </tr>
+
+                    <tr>
+                     <td>
+                         <p>Total Votes: {{ d[11] }}</p>
+                     </td>
+                    </tr>
+
                 </p>
+
                 </table>
                 <p>
                     <strong>Total Reviews: </strong><br />
