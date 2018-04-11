@@ -3,7 +3,7 @@
 
 
 body {
-	font-family: 'Open Sans', sans-serif;
+
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
@@ -19,17 +19,15 @@ a{
 	width: 48px;
 	height: 15%;
 }
-h1,h2,h3,h4,h5,h6{
-font-family: 'Open Sans', sans-serif;
-}
+h
 .title {
-	font-family: 'Open Sans', sans-serif;
+
 	font-size: 14px;
 	color: #4c4c4c;
 }
 h1 {
 	font-size: 32px;
-	font-weight: 700;
+	font-weight: 500;
 	color: #4c4c4c;
 	text-align: center;
 	padding-top: 10px;
@@ -80,6 +78,7 @@ h1 {
 
 .right {
 	right: 0;
+	 box-shadow: #4c4c4c 2px 1px 1px;
 	background-color: #4844ff;
 	background: url(../images/concordia1.PNG);
 	background-position: center center;
@@ -92,7 +91,7 @@ h1 {
 	text-align: left;
 	padding-left: 30pt;
 	font-size: 27pt;
-	font-family: 'Open Sans', sans-serif;
+
 }
 .signUpForm {
 	padding-top: 7%;
@@ -102,19 +101,19 @@ h1 {
 	display: inline-block;
 	float: left;
 	clear: left;
-	width: 200px;
+	width: 100px;
 	text-align: right;
 	padding-left: 5px;
-	padding-right: 30px;
+
 	padding-top: 7px;
 	padding-bottom: 10px;
 	font-size: 16pt;
-	font-family: 'Open Sans', sans-serif;
 }
 .form-control {
 	margin-bottom: 10px;
 	margin-top: 12px;
 	padding: 8pt 60pt 8pt 60pt;
+	width: 55% !important;
 }
 #btnSignUp {
 	text-align: center;
@@ -147,27 +146,30 @@ a {
 	text-decoration: none;
 }
 .indexBackground {
-	background: url(../images/concordia12.jpg);
+	background: url(../images/concordia11.png);
+	opacity: .55;
 	background-position: center center;
 	background-size: cover;
-	margin-top: -14pt;
+	border-top:black 2px solid;
+	border-bottom: 1pt black solid;
+	margin-right: -15pt;
 	margin-left: -15pt;
+	margin-top: -13pt;
 	height: 60vh;
-	width: 130%;
 	background-repeat: no-repeat;
 	overflow: hidden;
 }
 #footer {
 	!important;
-	background-color: #0A2E50;
+	background-color: #003055;
 	color: white;
 }
 .gotosignup {
 	background-color: midnightblue;
 }
 .textbooks {
-	width: 80%;
-	height: 80%;
+	width: 120%;
+	height: 120%;
 }
 .indexContent {
 	margin-top: 15px;
