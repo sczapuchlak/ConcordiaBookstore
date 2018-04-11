@@ -3,12 +3,13 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Concordia Student Bookstore Signup</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	{% include "header.html" %} {% block body %}
 	<div class="container">
-		<div class="left split">
-			<h1 class="signUpHeading">Sign up</h1>
+		<div class="left split"><br>
+			<h1 class="signUpHeading">Sign up</h1><br>
 			<p class="useEmail">Please enter your Concordia email address. Currently, the Concordia Student Bookstore is only available to the St.Paul campus in Minnesota.</p>
 			<p class="future">Stop by in the future to see if your campus has been added.</p>
 			<center>
@@ -16,8 +17,8 @@
 					<h4>{% include "flash_message.html" %}</h4>
 				</div>
 			</center>
-			<form action="signup.html" class="signUpForm" method="post">
-				<label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="form-control" id="first-name" name="firstname" placeholder="First Name" type="text" value="{{request.form.firstname }}"><br>
+			<form action="signup.html" class="signUpForm align-left" method="post">
+				<label class="signUpLabel" for="first-name">First Name</label><input autofocus="" class="form-control form-custom" id="first-name" name="firstname" placeholder="First Name" type="text" value="{{request.form.firstname }}"><br>
 				<br>
 				<label class="signUpLabel" for="last-name">Last Name</label><input autofocus="" class="form-control" id="last-name" name="lastname" placeholder="Last Name" required="" type="text" value="{{request.form.lastname }}"><br>
 				<br>
@@ -28,11 +29,12 @@
 				<label class="signUpLabel" for="inputPassword">Password</label><input class="form-control" id="password" name="password" placeholder="Password" required="" type="password" value="{{request.form.password }}"><br>
 				<br>
 				<label class="signUpLabel" for="inputPassword">Re-enter Password</label><input class="form-control" id="password" name="confirmpassword" placeholder="Password" required="" type="password" value="{{request.form.confirmpassword }}"><br>
-				<br>
+
 				<button id="btnSignUp" type="submit" value="submit"><a href="signup.html">Sign up</a></button>
+                <p class="text-center"><a href="login.html">Already a member? Sign in</a> <a href="login.html">here.</a></p>
 			</form>
 			<center>
-				<p><a href="login.html">Already a member? Sign in</a> <a href="login.html">here.</a></p>
+
 			</center>
 		</div>
 		<div class="right split2"></div>
@@ -40,5 +42,48 @@
 {% include "footer.html" %}
 </body>
      {% endblock %}
+<style>
+    .signUpLabel {
+	display: inline-block;
+	float: left;
+	clear: left;
+	width: 200px;
+	text-align: right;
+	padding-left: 5px;
+	padding-right: 30px;
+	padding-top: 7px;
+	padding-bottom: 10px;
+	font-size: 16pt;
+}
+.form-control {
+	margin-bottom: 10px;
+	margin-top: 12px;
+	padding: 8pt 60pt 8pt 60pt;
+	width: 55% !important;
+
+}
+    #btnSignUp {
+	text-align: center;
+	padding: 8pt 140pt 8pt 140pt;
+	margin-top: 15pt;
+	margin-left: 75px;
+}
+    .useEmail {
+	font-size: 12pt;
+	padding-left: 30pt;
+	padding-right: 30pt;
+}
+.future {
+	padding-left: 30pt;
+	font-size: 12pt;
+}
+    .signUpForm{
+
+
+    min-height: 100%;
+
+    }
+</style>
+
 </html>
 

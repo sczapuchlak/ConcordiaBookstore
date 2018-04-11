@@ -9,13 +9,57 @@
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>var comments = 0;</script>
-
-
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script
+	src="http://code.jquery.com/jquery-2.2.4.min.js"
+	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+	crossorigin="anonymous"></script>
 </head>
 
 <body>
+<script>
+$("#rateMeButton").click(function () {
+    {% for d in starData %}
+        var result = parseInt($("input[name=starSelector]:checked").val());
+        userRating = userRating + result;
+        userNumRating = userNumRating + 1;
+        listingID = id;
+        var starinfo = [listingID, userRating, userNumRating];
+        $.post(
+            '{{ url_for("listing", list_id=list_id) }}',
+            {share: starinfo},
+            function () {
+                $("#theResult").text("Success!").show().fadeOut(2000);
+                this.slideUp();
+
+            });
+         {% endfor %}
+    });
+
+    function StarsRating() {
+        {% for d in data %}
+            var totScore= userRating;
+            var totVotes= proNumRating;
+        // error prevention
+        if (totScore === null) {
+            totScore = 0;
+        }
+        // preventing divide by 0 error
+        if (totVotes === null || totVotes === 0) {
+            totVotes = 1;
+        }
+        var ratings = {
+            RatingForUser: (totScore / totVotes)
+        };
+        // 5 = total number of stars
+        for (var r in ratings) {
+            var starPercentage = (ratings[r] / 5) * 100;
+            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
+        }
+        {% endfor %}
+    }
+</script>
 
 	{% include "header.html" %}
 	<div>
@@ -30,11 +74,12 @@
     <div class="homeRight" style="float: left">
               	<form method="POST" action="/listing" enctype="multipart/form-data">
 
-                         <a>
+
+
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
                              <div class="wrapper">
-                             <div class="photoBox"><p> Placeholder for picture</p>
+                             <div class="photoBox"><p> <img src="/{{ image }}" height="700pt" width="120%"></p>
 
                                  <div class="verticalLine"></div></div>
 
@@ -42,17 +87,49 @@
                              <div class="listTitle "><p>{{listtitle}}</p></div>
                                  <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
                                  <hr>
-                                 <div class="rightSide" style="margin-left: 40pt;">
+                                 <div class="rightSide" style="margin-left: 100pt;">
                                  <fieldset>
                                     <legend>Meet The Seller</legend>
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
                                  <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4> <p class="information">{{firstname}} {{lastname}}</p></div>
-                                 <div class="rateUser"> <h4 style="font-weight: 600">Rate the Seller:  </h4> <p class="information">{{userRating}} </p> <h4 style="font-weight: 600; margin-left: 55pt;"> Seller's Rating: </h4></div>
-                                     </div>
-                                    </fieldset>
+                                <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"> <p class="information">{{firstname}} {{lastname}}</p></a></div>
+                                     <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4><div class="star-selector" style="display: inline">
+                                    <label for="starSelector1"></label>
+                                    <input type="radio" name="starSelector" id="starSelector1" value="1"/>
+                                    <label for="starSelector2"></label>
+                                    <input type="radio" name="starSelector" id="starSelector2" value="2"
+                                           checked="checked"/>
+                                    <label for="starSelector3"></label>
+                                    <input type="radio" name="starSelector" id="starSelector3" value="3"/>
+                                    <label for="starSelector4"></label>
+                                    <input type="radio" name="starSelector" id="starSelector4" value="4"/>
+                                    <label for="starSelector5"></label>
+                                    <input type="radio" name="starSelector" id="starSelector5" value="5"/>
+
+                                    <button class="RateMeButton">Rate Me!</button>
+                                    <p></p>
+                                    <span id="theResult"></span>
+                                     <h4 style="font-weight: 600;"> Seller's Rating: <p class="information">{{ userRating }} </p> </h4>
+
+
+
+                                    <script>StarsRating();</script>
+
+                                    <p>
+                                        <strong>Total Reviews: </strong><br/>
+                                        &nbsp&nbsp&nbsp
+                                        {{ proNumRating }}
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                                 
                                  <hr>
+
 
                                  <fieldset>
                              <legend>Book Information</legend>
@@ -69,33 +146,33 @@
                                  <hr>
 
                                         <br>
+
                                  <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
-                                     <button class="button" ><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</button>
+              <button class="button" ><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
                                  </div>
-                                    </div>
-
+                                 </div>
                             </div>
                          </div>
-                                    <div class="picturesSlide" style="margin-top: -2%">
+                                    <div class="picturesSlide" style="margin-top: 3%; margin-left: 3.5%">
                                      <img class="leftArrow" src="/static/images/leftArrow.png">
                                      <img class="rightArrow" src="/static/images/right.ico">
                                     </div>
-<br><br><br><br><br>
-                         </a>
+
+
+
               	</form>
 
 
                         </div>
-                        </a></center>
 
 
+                        </center>
 
 
-
-
-    <div style="clear:both"></div>
-	<div style="clear:both"><h1>Comments:</h1>
+<div style="clear:both"></div><br><br>
+    <br><br><div style="clear:both"><h1>Comments:</h1>
             <br>
 {#            Add new comment#}
             <div class="comments" align="center">
@@ -110,15 +187,16 @@
             {# Display comments for selected listing #}
                 <table class="comments" align="center">
                     <tr>
-                        <td>User</td>
-                        <td>Comment Date</td>
-                        <td>Message</td>
+                        <th>User</th>
+                        <th>Comment Date</th>
+                        <th>Message</th>
                     </tr>
                     {% set count = [0] %}
+                    <script>var comments = 0;</script>
                     {% for row in rows %}
                         <tr style="" id="comment{{ count }}">
                             <td><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
-	                           'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
+                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
                             <td>{{row[1]}}</td>
                             <td>{{row[2]}}</td>
                         </tr>
@@ -135,7 +213,6 @@
     var min = 0;
     var max = 20;
     var elements = 0;
-
     function displayComments(){
         if (comments > max) {
             for (var i = min; i < max; i++) {
@@ -149,7 +226,6 @@
             document.getElementById("nextButton").style.display = "none"
         }
     }
-
     function nextComments() {
         if (comments - max > 0) {
             elements = comments - max;
@@ -162,7 +238,6 @@
             document.getElementById("prevButton").style.display = "inline";
         }
     }
-
     function prevComments() { // fix comments not showing issue
         if (elements >= 20) {
             for (var i = min; i < max; i++) {
@@ -187,7 +262,6 @@
         }
         displayComments();
     }
-
     for (var i = min; i < comments; i++) {
         document.getElementById("comment["+i+"]").style.display="none";
     }
@@ -195,7 +269,6 @@
     document.getElementById("nextBox").innerHTML="<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextComments();\" />"
     document.getElementById("prevButton").style.display="none";
     displayComments();
-
 </script>
 </body>
 </html>
@@ -235,6 +308,7 @@
   color: #797979;
 }
     fieldset {
+
     border: 0;
 
 }
@@ -255,7 +329,9 @@ legend{
     .leftArrow{
     width: 40px;
     height: 41px;
+
     margin-left: 13%;
+
     display:inline;
 }
 .rightArrow{
@@ -263,7 +339,9 @@ legend{
     width: 42px;
     height: 42px;
     display:inline;
+
     margin-left:40pt;
+
 
 
 }
@@ -297,7 +375,9 @@ legend{
         height:32vw;
     }
     .verticalLine{
+
         border-left: 0px solid lightgray;
+
         height: 36rem;
         position: absolute;
         left: 58%;
@@ -327,15 +407,77 @@ legend{
         font-size: 10pt;
 
 
+
     }
     .listTitle{
         font-size: 32pt;
 
         margin-top: -15%;
-        margin-left: -90%;
+        margin-left: -95%;
+
     }
+    .RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+    color: #f8ce0b;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+/*Star-selector stuff*/
+
+.star-selector {
+    margin-left: 2px;
+    padding-top: 2px;
+}
+
+.star-selector input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.star-selector label {
+    display: inline-block;
+    font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.star-selector label:before {
+    content: "\f005";
+
+}
+
+.star-selector input[type=radio]:checked ~ label:before {
+    content: "\f006";
+}
 
 
 
 </style>
+
 
