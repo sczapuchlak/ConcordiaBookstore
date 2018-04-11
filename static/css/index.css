@@ -81,6 +81,8 @@ h1 {
 	 box-shadow: #4c4c4c 2px 1px 1px;
 	background-color: #4844ff;
 	background: url(../images/concordia1.PNG);
+	border-top: black 2pt solid;
+	margin-top: -4px;
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
