@@ -79,7 +79,7 @@ $("#rateMeButton").click(function () {
                 <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>
                             <br><br>
                              <div class="wrapper">
-                             <div class="photoBox"><p> <img src="/{{ image }}" height="600pt" width="120%"></p>
+                             <div class="photoBox"><p> <img src="/{{ image }}" height="700pt" width="120%"></p>
 
                                  <div class="verticalLine"></div></div>
 
@@ -87,13 +87,13 @@ $("#rateMeButton").click(function () {
                              <div class="listTitle "><p>{{listtitle}}</p></div>
                                  <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
                                  <hr>
-                                 <div class="rightSide" style="margin-left: 90pt;">
+                                 <div class="rightSide" style="margin-left: 100pt;">
                                  <fieldset>
                                     <legend>Meet The Seller</legend>
                                  <div class="backgroundBox">
                                  <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
                                  <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                 <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
+                                <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
                                'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"> <p class="information">{{firstname}} {{lastname}}</p></a></div>
                                      <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4><div class="star-selector" style="display: inline">
                                     <label for="starSelector1"></label>
@@ -149,17 +149,17 @@ $("#rateMeButton").click(function () {
 
                                  <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
                                      <button class="button" onclick="window.external.AddFavorite(location.href, document.title);" ><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</button>
-                                     <button class="button" ><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+              <button class="button" ><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
                                'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
                                  </div>
                                  </div>
                             </div>
                          </div>
-                                    <div class="picturesSlide" style="margin-top: -2%; margin-left: 3.5%">
+                                    <div class="picturesSlide" style="margin-top: 3%; margin-left: 3.5%">
                                      <img class="leftArrow" src="/static/images/leftArrow.png">
                                      <img class="rightArrow" src="/static/images/right.ico">
                                     </div>
-<br><br><br><br><br>
+
 
 
               	</form>
@@ -171,8 +171,8 @@ $("#rateMeButton").click(function () {
                         </center>
 
 
-<div style="clear:both"></div>
-    <div style="clear:both"><h1>Comments:</h1>
+<div style="clear:both"></div><br><br>
+    <br><br><div style="clear:both"><h1>Comments:</h1>
             <br>
 {#            Add new comment#}
             <div class="comments" align="center">
@@ -413,7 +413,7 @@ legend{
         font-size: 32pt;
 
         margin-top: -15%;
-        margin-left: -90%;
+        margin-left: -95%;
 
     }
     .RatingForUser {
