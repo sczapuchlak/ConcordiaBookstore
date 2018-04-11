@@ -1,15 +1,19 @@
 /*Page Styles*/
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+
 
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
 	color: #4c4c4c;
 	padding-top: 4%;
-    font-weight: 300;
+    font-weight: 200;
 }
 a{
     !important;text-decoration: none;
-    font-weight: 300;
+    font-weight: 200;
+
+
 }
 .logo {
 	width: 48px;
@@ -364,12 +368,16 @@ a.links {
 /* This is the styling for the submit new listing page */
 
 #info {
-    max-width: 80%;
+    max-width: 100%;
     background-color: #f4f7f8;
     border-radius: 8px;
     padding: 5px 20px;
-    margin: 10px auto;
+    margin: 20px 50px 0px 10px;
     font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+#proLink {
+	text-color: blue;
 }
 
 .form-style-5 {
@@ -448,6 +456,9 @@ a.links {
 	border-width: 1px 1px 3px;
 	margin-bottom: 10px;
 }
+
+
+
 .form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
 	background: rgba(23, 0, 91, 0.63);
 }
@@ -477,4 +488,38 @@ a{
 }
 .labelPass{
 	font-size: 18pt;
+
 }
+
+/*Star Rating Stuff*/
+.RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+/*Not sure why, but wound up having to make inner and outer star classes plural so
+styling would repeat for the consecutive stars*/
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+

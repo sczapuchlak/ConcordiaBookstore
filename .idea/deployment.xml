@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="ConcordiaBookstore">
+  <component name="PublishConfigData" serverName="AWS-SFTP">
     <serverData>
-      <paths name="ConcordiaBookstore">
+      <paths name="AWS-SFTP">
         <serverdata>
           <mappings>
-            <mapping deploy="/home/glue/scripts/ConcordiaBookstore" local="$PROJECT_DIR$" web="/" />
-            <mapping local="$USER_HOME$/Desktop/PyGlue.zip" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

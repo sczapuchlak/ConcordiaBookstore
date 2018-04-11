@@ -16,35 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `student`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `student`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `student` (
-  `STU_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `STU_Address` varchar(45) DEFAULT NULL,
-  `STU_City` varchar(45) DEFAULT NULL,
-  `STU_State` varchar(45) DEFAULT NULL,
-  `STU_Zip` varchar(45) DEFAULT NULL,
-  `STU_Phone` varchar(45) DEFAULT NULL,
-  `USER_ID` int(11) NOT NULL,
-  PRIMARY KEY (`STU_ID`),
-  UNIQUE KEY `STU_ID_UNIQUE` (`STU_ID`),
-  KEY `USER_ID_idx` (`USER_ID`),
-  CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=374059 DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+  `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `USER_PW` varchar(100) DEFAULT NULL,
+  `USER_Email` varchar(25) DEFAULT NULL,
+  `USER_FName` varchar(20) DEFAULT NULL,
+  `USER_LName` varchar(30) DEFAULT NULL,
+  `USER_Cnfrm` tinyint(4) DEFAULT NULL,
+  `USER_Rating` int(11) DEFAULT NULL,
+  `USER_Num_Rating` int(11) DEFAULT NULL,
+  PRIMARY KEY (`USER_ID`),
+  UNIQUE KEY `USER_ID_UNIQUE` (`USER_ID`),
+  KEY `USER_Email` (`USER_ID`,`USER_PW`,`USER_Email`,`USER_FName`,`USER_LName`,`USER_Cnfrm`,`USER_Rating`,`USER_Num_Rating`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `student`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `student` WRITE;
-/*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (374058,'12210 Wise St.','Bear Lake','Michigan',NULL,'(123)456-7890',2);
-/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (2,'$5$rounds=535000$EFQBT0LGpuD/tvQ/$SEG.22DZECdz3QdqAav750X4tzg0cwmoUX321oPipHA','hallgary@csp.edu','Gary','Hall',1,NULL,NULL),(10,'$5$rounds=535000$Zo/TddMOJzpT2yC4$5sytmYncWlKOmgYbIpb1WpVwiX0amGd5wFGH/jU.T00','victoria@csp.edu','Victoria','Tori',1,NULL,NULL);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-04-07 16:23:45

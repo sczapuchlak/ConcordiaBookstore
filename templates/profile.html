@@ -7,26 +7,73 @@
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome
+/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 
 <body>
+
+
+
+    <script>
+    function StarsRating(totScore, totVotes) {
+
+        // To prevent code form breaking in case info does not get pulled for some reason
+        if (totScore === null) {
+            totScore = 0;
+        }
+        // preventing a divide by 0 error
+        if (totVotes === null || totVotes === 0) {
+            totVotes = 1;
+        }
+
+        // Wound up casting as object in order to make the needed link to the specific table row via querySelector.
+        // Handling as getClass or as getElement would not allow script to change CSS dynamically for some reason.
+        var ratings = {
+            RatingForUser: (totScore / totVotes)
+        };
+
+// total number of stars
+        const starTotal = 5;
+
+        for (var r in ratings) {
+            var starPercentage = (ratings[r] / starTotal) * 100;
+            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
+            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
+        }
+    }
+
+    </script>
+
+
+
 {% include "header.html" %}
 
-    <div style="width: 100%;" class="container">
-        <div class="homeLeft">
-            <div>
-            <h4>{% include "flash_message.html" %}</h4>
-	        </div>
-        <h1>{% include "sideNav.html" %}</h1>
+<div style="width: 100%;" class="container">
+   <div class="homeLeft">
+
+<div>
+		<h4>{% include "flash_message.html" %}</h4>
+	</div>
+			<h1>{% include "sideNav.html" %}</h1>
 		</div>
+	</div>
+
 
 
 	<div class="homeRight" style="float: left ;width:80%">
 		<div style="overflow-x:auto;">
 
 			<div id="info" align="left" style="overflow-x:auto;">
-                <h1 id="userInfo">User Information:</h1>
+
+
+            <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
+                <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
+                <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
+
+
                 <p>
                     <strong>Name: </strong><br />
                     &nbsp&nbsp&nbsp{% for d in data %}
@@ -57,14 +104,49 @@
                     {{ d[9] }}
                     {% endfor %}
                 </p>
+
+
+                <table>
+                    <p>
+                    <strong>User Rating: </strong>
+                    &nbsp&nbsp&nbsp{% for d in data %}
+                    {{ d[3] }} stars out of {{ d[11] }} votes;
+                    {% endfor %}
+                    <div class="RatingForUser" style="margin-top: -35px; " >
+                        <td>
+                            <div class="starRatings-outer">
+                                <div class="starRatings-inner"></div>
+                            </div>
+                        </td>
+                    </div>
+
+                    <tr>
+                     <td>
+                         <strong><p style="margin-left: -10px">Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p></strong>
+                     </td>
+                    </tr>
+
+                </p>
+
+                </table>
                 <p>
-                    <strong>Average User Rating: </strong><br />
+                    <strong>Total Reviews: </strong>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[3] }}
                     {% endfor %}
-                </p>
+                </p><br>
 
+        <form method="POST">
+            <button align="center" id="proLink" method="POST">
+                <a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a>
+            </button>
+        </form>
+
+      </div>
 			</div>
+
+
+
 {#
             <div class="form-style-5">
             <form method="POST" action="newpost.html" enctype="multipart/form-data">
@@ -78,16 +160,109 @@
                     <input name="field5" placeholder="State*" type="text">
                     <input name="field6" placeholder="Zip Code*" type="text">
                     <input name="field7" placeholder="Phone Number*" type="text">
-                </fieldset>
+
+
+                </fieldset><br>
+
+
 
                 <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
 
             </form>
 			</div> #}
+
 		</div>
 	</div>
     </div>
+
     </div>
-	<div style="clear:both"></div>
+
 </body>
+
+<style>
+    p{
+        font-size: 13pt;
+        font-family: 'Open Sans', sans-serif;
+        margin-left: 5pt;
+        margin-top: 20pt;
+        padding-top: 5pt;
+    }
+ button{
+
+    margin-right: 10pt;
+    display: inline-block;
+     font-size: 140%;
+    height: 100%;
+    width: 18%;
+    color: whitesmoke;
+    background: #0A2E50;
+    cursor: hand;
+     font-family: 'Open Sans', sans-serif;
+}
+    strong{
+        font-weight: 700;
+    }
+        .RatingForUser {
+    padding:0px;
+    text-decoration: none;
+}
+
+.starRatings-outer {
+  display: inline-block;
+  position: relative;
+  font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.starRatings-outer::before {
+  content: "\f006 \f006 \f006 \f006 \f006";
+}
+
+.starRatings-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+    color: #f8ce0b;
+}
+
+.starRatings-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  color: #f8ce0b;
+}
+
+/*Star-selector stuff*/
+
+.star-selector {
+    margin-left: 2px;
+    padding-top: 2px;
+}
+
+.star-selector input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.star-selector label {
+    display: inline-block;
+    font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.star-selector label:before {
+    content: "\f005";
+
+}
+
+.star-selector input[type=radio]:checked ~ label:before {
+    content: "\f006";
+}
+
+
+</style>
 </html>
+

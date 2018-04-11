@@ -16,28 +16,39 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `course`
+-- Table structure for table `listing`
 --
 
-DROP TABLE IF EXISTS `course`;
+DROP TABLE IF EXISTS `listing`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `course` (
-  `CRS_ID` varchar(20) NOT NULL,
-  `CRS_Name` varchar(60) DEFAULT NULL,
-  PRIMARY KEY (`CRS_ID`),
-  UNIQUE KEY `CRS_ID_UNIQUE` (`CRS_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `listing` (
+  `LST_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `LST_SellType` varchar(30) DEFAULT NULL,
+  `LST_Title` varchar(100) DEFAULT NULL,
+  `BK_ID` int(11) DEFAULT NULL,
+  `MSG_ID` int(11) DEFAULT NULL,
+  `LST_USER_ID` int(11) DEFAULT NULL,
+  `LST_Date` date DEFAULT NULL,
+  PRIMARY KEY (`LST_ID`),
+  UNIQUE KEY `LST_ID_UNIQUE` (`LST_ID`),
+  KEY `BK_ID_idx` (`BK_ID`),
+  KEY `MSG_ID_idx` (`MSG_ID`),
+  KEY `LST_USER_ID_idx` (`LST_USER_ID`),
+  CONSTRAINT `BK_ID` FOREIGN KEY (`BK_ID`) REFERENCES `book` (`BK_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `LST_USER_ID` FOREIGN KEY (`LST_USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `MSG_ID` FOREIGN KEY (`MSG_ID`) REFERENCES `message` (`MSG_ID`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `course`
+-- Dumping data for table `listing`
 --
 
-LOCK TABLES `course` WRITE;
-/*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('',''),('ABC 123','ABCs'),('FPR 100','Underwater Fire Prevention'),('HWK 125','Hawkanomics'),('MAT','Math 101');
-/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+LOCK TABLES `listing` WRITE;
+/*!40000 ALTER TABLE `listing` DISABLE KEYS */;
+INSERT INTO `listing` VALUES (6,'sell','Test Book',6,NULL,2,'2018-04-03'),(13,'sell','Third time\'s the charm!',13,NULL,2,'2018-04-06'),(14,'sell','Final',14,NULL,2,'2018-04-06'),(15,'sell','Testy testy!',15,NULL,2,'2018-04-07');
+/*!40000 ALTER TABLE `listing` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:44
+-- Dump completed on 2018-04-07 16:23:45

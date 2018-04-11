@@ -16,34 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `photo`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `photo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-  `USER_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `USER_PW` varchar(100) DEFAULT NULL,
-  `USER_Email` varchar(25) DEFAULT NULL,
-  `USER_FName` varchar(20) DEFAULT NULL,
-  `USER_LName` varchar(30) DEFAULT NULL,
-  `USER_Cnfrm` tinyint(4) DEFAULT NULL,
-  `USER_Rating` int(11) DEFAULT NULL,
-  `USER_Num_Rating` int(11) DEFAULT NULL,
-  PRIMARY KEY (`USER_ID`),
-  UNIQUE KEY `USER_ID_UNIQUE` (`USER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+CREATE TABLE `photo` (
+  `PHT_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `PHT_Path` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`PHT_ID`),
+  UNIQUE KEY `PHT_ID_UNIQUE` (`PHT_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
+-- Dumping data for table `photo`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'$5$rounds=535000$bmiUom.x8TT232Jo$urcCwZBrrEkQQVmuQwarNkooxCLMVT6fArwiebWbh05','hallg2@csp.edu','Gary','Hall',NULL,NULL,NULL),(2,'$5$rounds=535000$EFQBT0LGpuD/tvQ/$SEG.22DZECdz3QdqAav750X4tzg0cwmoUX321oPipHA','hallgary@csp.edu','Gary','Hall',NULL,NULL,NULL);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+LOCK TABLES `photo` WRITE;
+/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+INSERT INTO `photo` VALUES (6,NULL),(13,'static\\bookImage\\hawk.jpeg'),(14,'static\\bookImage\\jumpingSpider.png'),(15,'static\\bookImage\\hawk1.jpg');
+/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -55,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-04-07 16:23:45

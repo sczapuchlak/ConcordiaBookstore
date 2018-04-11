@@ -16,28 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `message`
+-- Table structure for table `student`
 --
 
-DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `student`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `message` (
-  `MSG_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `MSG_Date` date DEFAULT NULL,
-  `MSG_Body` varchar(500) DEFAULT NULL,
-  PRIMARY KEY (`MSG_ID`),
-  UNIQUE KEY `MSG_ID_UNIQUE` (`MSG_ID`)
+CREATE TABLE `student` (
+  `STU_ID` int(11) NOT NULL,
+  `STU_Address` varchar(45) DEFAULT NULL,
+  `STU_City` varchar(45) DEFAULT NULL,
+  `STU_State` varchar(45) DEFAULT NULL,
+  `STU_Zip` varchar(45) DEFAULT NULL,
+  `STU_Phone` varchar(45) DEFAULT NULL,
+  `USER_ID` int(11) NOT NULL,
+  PRIMARY KEY (`STU_ID`),
+  UNIQUE KEY `STU_ID_UNIQUE` (`STU_ID`),
+  KEY `USER_ID_idx` (`USER_ID`),
+  CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `message`
+-- Dumping data for table `student`
 --
 
-LOCK TABLES `message` WRITE;
-/*!40000 ALTER TABLE `message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `message` ENABLE KEYS */;
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (374058,'12210 Wise St.','Bear Lake','Michigan','49614','(123)456-7890',2),(34567890,'12210 Wise St.','Bear Lake','Mi','49614','(123)456-7890',10);
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -49,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-17 12:13:45
+-- Dump completed on 2018-04-07 16:23:45
