@@ -122,7 +122,7 @@
 
                     <tr>
                      <td>
-                         <strong><p style="margin-left: -10px">Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p></strong>
+                         <strong><p style="margin-left: -10px;">Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p></strong>
                      </td>
                     </tr>
 
@@ -183,22 +183,28 @@
     p{
         font-size: 13pt;
         font-family: 'Open Sans', sans-serif;
+        font-weight: 200;
         margin-left: 5pt;
         margin-top: 20pt;
         padding-top: 5pt;
     }
- button{
-
+ button {
     margin-right: 10pt;
     display: inline-block;
      font-size: 140%;
     height: 100%;
-    width: 18%;
+    width: 28%;
     color: whitesmoke;
     background: #0A2E50;
     cursor: hand;
      font-family: 'Open Sans', sans-serif;
+     margin-bottom: 20pt;
+
 }
+ button a:hover{
+     text-decoration:none;
+     color: white;
+ }
     strong{
         font-weight: 700;
     }
