@@ -15,6 +15,13 @@ a{
 
 
 }
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 300;
+    line-height: 1.2;
+    color: inherit;
+}
 .logo {
 	width: 48px;
 	height: 15%;
@@ -196,6 +203,7 @@ a {
 }
 .signInBack {
 	background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+	border-top: black 2pt solid;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -219,7 +227,7 @@ form[role=login] img {
 }
 form[role=login] input {
 	font-size: 18px;
-	width: 350px;
+	width:100% !important ;
 	margin: 16px 0;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -400,7 +408,7 @@ a.links {
 	margin-bottom: 8px;
 }
 .form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
-	font-family: Georgia, "Times New Roman", Times, serif;
+
 	background: rgba(255, 255, 255, .1);
 	border: none;
 	border-radius: 4px;
