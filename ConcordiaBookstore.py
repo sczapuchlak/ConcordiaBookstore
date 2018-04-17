@@ -1,9 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from flask_uploads import UploadSet, configure_uploads, IMAGES
 import codecs
-import image
 import io
 import base64
 from base64 import b64encode
@@ -13,16 +11,16 @@ import MySQLdb
 from datetime import datetime
 from threading import Thread
 import serial as serial
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, current_app
 from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
-from wtforms import Form, StringField, PasswordField, SelectField, validators
+from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
 from random import *
 from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 app = Flask(__name__)
 
@@ -65,9 +63,11 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="gikQr6kn",
+                           passwd="mysql",
 
-                           db="bookexchange")
+                           # passwd="gikQr6kn",
+
+                           db="bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
