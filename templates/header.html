@@ -23,17 +23,18 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
       {% if session.logged_in %}
+
 {#          <form class="form-inline">#}
 {#              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">#}
 {#              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>#}
 {#          </form>#}
-
-          <li class="nav-item active">
+          <li class="nav-item-loggedIn ">
             <a class="nav-link" href="{{ url_for('home') }}">Books <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item-loggedIn ">
             <a class="nav-link" href="{{ url_for('logout')}}">Sign Out</a>
           </li>
+
         {% else %}
            <li class="nav-item">
             <a class="nav-link" href="{{ url_for('index')}}">Home</a>
@@ -63,10 +64,14 @@
   .navbar-custom {
   background-color: #003055;
       box-shadow: #4c4c4c 2px 1px 1px;
-      height:6.5%;
+      height:
+              7.5%;
       border-bottom: 1.5px solid #d99322;
 
 }
+  .nav-item-loggedIn{
+      padding-top: 5pt;
+  }
 .navbar-custom .navbar-brand {
   color: #ecf0f1;
     font-size: 160%;
