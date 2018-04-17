@@ -10,7 +10,7 @@ body {
     font-weight: 200;
 }
 a{
-    !important;text-decoration: none;
+	text-decoration: none!important;
     font-weight: 200;
 
 
@@ -20,7 +20,7 @@ a{
     font-family: inherit;
     font-weight: 300;
     line-height: 1.2;
-    color: inherit;
+
 }
 .logo {
 	width: 48px;
@@ -129,6 +129,13 @@ h1 {
 	padding: 8pt 140pt 8pt 140pt;
 	margin-top: 15pt;
 	margin-left: 75px;
+	background-color: #1B3A56;
+	color: white!important;
+	text-decoration: none !important;
+
+}
+#btnSignUp:hover{
+	text-decoration: none !important;
 }
 .loginSignUp {
 	padding-left: 30px;
