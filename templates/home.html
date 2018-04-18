@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
 
 
+
 </head>
 <body>
 
@@ -91,17 +92,18 @@
    </div>
 
 
-   <div class="homeRight" id="listtt">
+   <div class="homeRight" id="listtt" style="margin-top: -12pt;">
        <div>
         <form>
-            <table class="listingHold">
+            <table class="listingHold" style="">
                 <thead>
-                    <tr>
-                        <th>Author of Post</th>
-                        <th>Title of Post</th>
-                        <th>Sell Type</th>
-                        <th>Date Listed</th>
-                        <th>ID</th>
+                    <tr height="40">
+                        <th onclick="sortTable(0)">Seller</th>
+                        <th onclick="sortTable(1)">Title of Post</th>
+                        <th onclick="sortTable(2)">Book Title</th>
+                        <th onclick="sortTable(3)">Date of Post</th>
+
+
 
 
                     </tr>
@@ -126,7 +128,7 @@
     <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
         <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
         <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
-        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[6] }}</a></td>
+
 
 </tr>
 {% endfor %}
@@ -148,14 +150,62 @@
 </body>
 </html>
 <script>
-     $(".listinghold tr").click(function(){
-       window.location = "example.html";
-     });
+
 </script>
 <style>
-    tr:hover {background-color: #f5f5f5;}
-    tr:nth-child(even) {background-color: rgba(17, 90, 255, 0.03);}
-
+table.listingHold {
+  border: 1px solid #0B1A4F;
+  background-color: #EEEEEE;
+  width: 99.9%;
+  text-align: left;
+  border-collapse: collapse;
+    font-family: 'Open Sans', sans-serif;
+}
+table.listingHold td, table.listingHold th {
+  border: 0px solid #AAAAAA;
+  padding: 5px 6px;
+}
+table.listingHold tbody td {
+  font-size: 13px;
+}
+table.listingHold tr:nth-child(even) {
+  background: #f5f3ea;
+}
+table.listingHold thead {
+  background: #D99322;
+  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  border-bottom: 2px solid #444444;
+}
+table.listingHold thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+table.listingHold tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D99322;
+  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  border-top: 2px solid #444444;
+}
+table.listingHold tfoot td {
+  font-size: 14px;
+}
+table.listingHold tfoot .links {
+  text-align: right;
+}
+table.listingHold tfoot .links a{
+  display: inline-block;
+  background: #0B1A4F;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
     h1, h2, h3, h4, h5, h6 {
     margin-bottom: .5rem !important;
     font-weight: 200!important;

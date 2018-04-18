@@ -292,11 +292,11 @@ a.links {
 /* this is for the homepage*/
 
 .homeLeft {
-	height: 103%;
-    width: 400px;
+	height: 100%;
+    width: 409px;
     position: fixed;
     z-index: 1;
-    top: 69px;
+    top: 60px;
     left: 0;
     background-color: #111;
     overflow-x: hidden;
