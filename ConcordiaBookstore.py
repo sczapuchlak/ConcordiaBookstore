@@ -587,7 +587,7 @@ def updateProfile():
                   (Fname, Lname, email,))
 
         conn.commit()
-
+        flash("Profile updated successfully.")
         return redirect("profile.html")
     return render_template("updateProfile.html")
 
@@ -679,6 +679,9 @@ def newpost():
                 VALUES(%s,%s,%s,%s,%s)''',
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
+
+        flash("Your post has been added successfully.")
+        return redirect("home.html")
 
     return render_template("newpost.html")
 
