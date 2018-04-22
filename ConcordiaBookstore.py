@@ -684,7 +684,7 @@ def newpost():
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
 
-        flash("Your post has been added successfully.")
+        flash("Post added successfully.")
         return redirect("home.html")
 
     return render_template("newpost.html")
