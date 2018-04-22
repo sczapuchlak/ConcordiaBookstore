@@ -65,7 +65,7 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="gikQr6kn",
+                           passwd="mysql",
 
                            db="bookexchange")
 
@@ -99,23 +99,33 @@ def signup():
         result = c.execute("SELECT * FROM user WHERE  USER_Email = %s", (email,))
 
         if int(result) > 0:
-            error = "Email exist. Please use a different email";
+            error = "Email exist. Please use a different email"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif len(request.form['studentnumber']) < 1:
-            error = "Your L number is less than 8 characters long";
+            error = "Your L number is less than 8 characters long"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif email[-8:] != test:
-            error = "Not a valid CSP email";
+            error = "Not a valid CSP email"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif len(request.form['password']) < 8:
-            error = "Password must be more than 8 characters";
+            error = "Password must be more than 8 characters"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif request.form['password'] != request.form['confirmpassword']:
             error = "Password doesn't match"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         else:
@@ -150,7 +160,7 @@ def signup():
             msg['From'] = fromaddr
             msg['To'] = email
             msg['Subject'] = 'Please confirm your email address'
-            body = render_template('/activate.html', confirm_url=link)
+            body = render_template('activate.html', confirm_url=link)
             msg.attach(MIMEText(body, 'html'))
 
             # open email server connection
@@ -170,8 +180,6 @@ def signup():
 
             flash("Thanks for registering! Please verify your account with the email we sent you before logging in",
                   'success')
-
-            conn.commit()
 
             flash("Thanks for registering!")
             flash("Please Sign in below")
@@ -226,7 +234,7 @@ def resend(email):
     msg['From'] = fromaddr
     msg['To'] = email
     msg['Subject'] = 'Please confirm your email address'
-    body = render_template('/activate.html', confirm_url=link)
+    body = render_template('activate.html', confirm_url=link)
     msg.attach(MIMEText(body, 'html'))
 
     # open email server connection
@@ -274,6 +282,8 @@ def login():
                         session['user_email'] = user_email
                 else:
                     flash("Unconfirmed registration. Please verify your email using the link sent to you", 'danger')
+                    c.close()
+                    conn.close()
                     return render_template(url_for("login", flash=flash))
 
                 c.execute("SELECT * FROM user WHERE  USER_Email = %s", (user_email,))
@@ -286,6 +296,8 @@ def login():
 
                 # flash("You are now logged in")
                 msg = "You are now logged in"
+                c.close()
+                conn.close()
                 # return render_template("home.html", msg=msg)
                 return redirect("home.html")
                 # return redirect(url_for("login"))
@@ -347,9 +359,13 @@ def home():
                 "WHERE user.USER_ID = listing.LST_USER_ID AND listing.LST_Title= %s", (search,))
             list1 = c.fetchall()
             if int(result) > 0:
+                c.close()
+                conn.close()
                 return render_template('home.html', data=list1)
             else:
                 error = "No Results found"
+                c.close()
+                conn.close()
                 return render_template('home.html', error=error)
 
         elif value == 'author':
@@ -360,9 +376,13 @@ def home():
                 (search,))
             list1 = c.fetchall()
             if int(result) > 0:
+                c.close()
+                conn.close()
                 return render_template('home.html', data=list1)
             else:
                 error = "No Results found"
+                c.close()
+                conn.close()
                 return render_template('home.html', error=error)
 
         elif value == 'course':
@@ -373,9 +393,13 @@ def home():
                 (search,))
             list1 = c.fetchall()
             if int(result) > 0:
+                c.close()
+                conn.close()
                 return render_template('home.html', data=list1)
             else:
                 error = "No Results found"
+                c.close()
+                conn.close()
                 return render_template('home.html', error=error)
 
         elif value == "ISBN":
@@ -386,15 +410,23 @@ def home():
                 (search,))
             list1 = c.fetchall()
             if int(result) > 0:
+                c.close()
+                conn.close()
                 return render_template('home.html', data=list1)
             else:
                 error = "No Results found"
+                c.close()
+                conn.close()
                 return render_template('home.html', error=error)
 
         else:
             error = "No Results found"
+            c.close()
+            conn.close()
             return render_template('home.html', error=error)
 
+    c.close()
+    conn.close()
     return render_template('home.html', data=list1)
 
 
@@ -429,6 +461,7 @@ def send_msg(target):
     body = "<p>Message sent from " + email + "<br /><br />" + message + "</p>"
     msg.attach(MIMEText(body, 'html'))
 
+    c.close()
     conn.close()
 
     # open email server connection
@@ -481,6 +514,8 @@ def profile():
     print(prof)
 
     conn.commit()
+    c.close()
+    conn.close()
 
     if request.method == "POST":
         return render_template("updateProfile.html")
@@ -587,6 +622,8 @@ def updateProfile():
                   (Fname, Lname, email,))
 
         conn.commit()
+        c.close()
+        conn.close()
 
         return redirect("profile.html")
     return render_template("updateProfile.html")
@@ -679,6 +716,8 @@ def newpost():
                 VALUES(%s,%s,%s,%s,%s)''',
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
+        c.close()
+        conn.close()
 
     return render_template("newpost.html")
 
@@ -722,6 +761,8 @@ def listing(list_id=None):
     # Pull comments from comments table for display related to selected listing
     c.execute("SELECT COM_Auth, COM_Date, COM_Body, COM_USER_ID FROM comments WHERE LST_ID = %s", [listID])
     rows = c.fetchall()
+    c.close()
+    conn.close()
 
     if request.method == "POST":
         return redirect(url_for("listing", list_id=list_id))
@@ -758,6 +799,7 @@ def submit_comment(list_id):
                           VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, id))
     conn.commit()
 
+    c.close()
     conn.close()
 
     return redirect(url_for("listing", list_id=list_id))
@@ -777,14 +819,20 @@ def changepassword():
 
         if len(newPassword) < 8:
             error = "Password must be more than 8 characters"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
 
         elif newPassword != confirmPassword:
             error = "Password doesn't match"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
 
         elif newPassword == oldPassword:
             error = "Old password cannot match new password"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
         else:
 
@@ -799,6 +847,8 @@ def changepassword():
                    """, (password, email))
 
             conn.commit()
+            c.close()
+            conn.close()
 
     return render_template("changepassword.html")
 
@@ -835,9 +885,13 @@ def reset():
                 mail.send(message)
 
                 msg = 'Please check your email for a password reset link.'
+                c.close()
+                conn.close()
                 return render_template('login.html', msg=msg)
             else:
                 error = 'Invalid Email Address'
+                c.close()
+                conn.close()
                 return render_template('login.html', error=error)
     except:
         error = "Account doesn't exist. Please Sign Up"
@@ -870,10 +924,14 @@ def reset_token(token):
         if user == email:
             if password1 != confirmpassword:
                 error = "Password doesn't match"
+                c.close()
+                conn.close()
                 return render_template("reset_token.html", error=error, token=token)
 
             elif len(password1) < 8:
-                error = "Password must be more than 8 characters";
+                error = "Password must be more than 8 characters"
+                c.close()
+                conn.close()
                 return render_template("reset_token.html", error=error, token=token)
 
             else:
@@ -886,15 +944,21 @@ def reset_token(token):
                                                      WHERE USER_Email=%s
                                                   """, (password, email))
                 conn.commit()
+                c.close()
+                conn.close()
                 # msg = 'Your password has been updated! '
                 return redirect(url_for('login'))
                 # return render_template('login.html', msg=msg)
 
         else:
             error = 'Invalid email address!'
+            c.close()
+            conn.close()
             render_template('reset.html', error=error)
 
     conn.commit()
+    c.close()
+    conn.close()
 
     return render_template('reset_token.html', token=token)
 

@@ -118,9 +118,11 @@
                </center>
 
 
+                {% set count = [0] %}
+                <script>var listing = 0;</script>
                 {% for d in data %}
 
-<tr style="border-bottom: 1px solid #ddd!important;">
+<tr style="border-bottom: 1px solid #ddd!important;" id="listing{{ count }}">
 
 
 
@@ -131,12 +133,18 @@
 
 
 </tr>
+                    {% if count.append(count.pop() + 1) %}{% endif %}
+                        <script>listing++</script>
 {% endfor %}
 
 
 
 </tbody>
             </table></form><br/>
+       <div id="buttonHolder">
+                <div id="prevBox" style="display: inline;"></div>
+                <div id="nextBox" style="display: inline;"></div>
+       </div>
 
 
 
@@ -146,7 +154,67 @@
 <div style="clear:both"></div>
 
 
-
+<script>
+    var min = 0;
+    var max = 50;
+    var elements = 0;
+    function displayListings(){
+        if (listing > max) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "table-row";
+            }
+        }
+        else {
+            for (var i = min; i < listing; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "table-row";
+            }
+            document.getElementById("nextButton").style.display = "none"
+        }
+    }
+    function nextListings() {
+        if (listing - max > 0) {
+            elements = listing - max;
+            for (var i = min; i < max+elements; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+            min += 50;
+            max += 50;
+            displayListings();
+            document.getElementById("prevButton").style.display = "inline";
+        }
+    }
+    function prevListings() {
+        if (elements >= 50) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+        }
+        else {
+            for (i = min; i < min+elements; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+            elements = 50;
+        }
+        if (min >= 50 && max >= 100) {
+            min -= 50;
+            max -= 50;
+        }
+        if (min < 50) {
+            document.getElementById("prevButton").style.display="none";
+        }
+        if ((document.getElementById("nextButton").style.display) === "none"){
+            document.getElementById("nextButton").style.display = "inline";
+        }
+        displayListings();
+    }
+    for (var i = min; i < listing; i++) {
+        document.getElementById("listing["+i+"]").style.display="none";
+    }
+    document.getElementById("prevBox").innerHTML="<input type=\"button\" value=\"Prev\" id=\"prevButton\" onclick=\"prevListings();\" />";
+    document.getElementById("nextBox").innerHTML="<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextListings();\" />"
+    document.getElementById("prevButton").style.display="none";
+    displayListings();
+</script>
 </body>
 </html>
 <script>
