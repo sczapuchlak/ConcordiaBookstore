@@ -606,7 +606,6 @@ def newpost():
 
         # file.save(file.filename)
 
-
         newFile = file.read
 
         f = os.path.join(UPLOAD_FOLDER, file.filename)
@@ -647,11 +646,16 @@ def newpost():
 
         conn.commit()
 
-        c.execute('''
-                  INSERT INTO course (CRS_ID, CRS_Name )
-                  VALUES(%s,%s)''',
-                  (course_Number, course_Title,))
+        c.execute('''SELECT COUNT(*) FROM course WHERE CRS_ID = %s''', (course_Number,))
+        result = c.fetchall()
         conn.commit()
+
+        if result == 0:
+            c.execute('''
+                INSERT INTO course (CRS_ID, CRS_Name )
+                VALUES(%s,%s)''',
+                      (course_Number, course_Title,))
+            conn.commit()
 
         c.execute('''
                  INSERT INTO photo (PHT_Path)
@@ -728,8 +732,6 @@ def listing(list_id=None):
 
     if request.method == "POST":
         return redirect(url_for("listing", list_id=list_id))
-
-
 
     return render_template('listing.html', data=data, firstname=firstname, lastname=lastname, listID=listID,
                            listtitle=listtitle, listDate=listDate, bookTitle=bookTitle, bookAuthor=bookAuthor,
