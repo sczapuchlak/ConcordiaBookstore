@@ -3,16 +3,24 @@
 
 
 body {
-
+	font-family: 'Open Sans', sans-serif;
 	font-size: 12px;
+	font-weight: 200;
 	color: #4c4c4c;
 	padding-top: 4%;
     font-weight: 200;
 }
 a{
-    !important;text-decoration: none;
+	text-decoration: none!important;
     font-weight: 200;
 
+
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem;
+    font-family: inherit;
+    font-weight: 300;
+    line-height: 1.2;
 
 }
 .logo {
@@ -122,6 +130,13 @@ h1 {
 	padding: 8pt 140pt 8pt 140pt;
 	margin-top: 15pt;
 	margin-left: 75px;
+	background-color: #1B3A56;
+	color: white!important;
+	text-decoration: none !important;
+
+}
+#btnSignUp:hover{
+	text-decoration: none !important;
 }
 .loginSignUp {
 	padding-left: 30px;
@@ -196,6 +211,7 @@ a {
 }
 .signInBack {
 	background: url(http://i.imgur.com/GHr12sH.jpg) no-repeat center center fixed;
+	border-top: black 2pt solid;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -219,7 +235,7 @@ form[role=login] img {
 }
 form[role=login] input {
 	font-size: 18px;
-	width: 350px;
+	width:100% !important ;
 	margin: 16px 0;
 	border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -277,10 +293,10 @@ a.links {
 
 .homeLeft {
 	height: 100%;
-    width: 400px;
+    width: 409px;
     position: fixed;
     z-index: 1;
-    top: 69px;
+    top: 60px;
     left: 0;
     background-color: #111;
     overflow-x: hidden;
@@ -400,7 +416,7 @@ a.links {
 	margin-bottom: 8px;
 }
 .form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
-	font-family: Georgia, "Times New Roman", Times, serif;
+
 	background: rgba(255, 255, 255, .1);
 	border: none;
 	border-radius: 4px;

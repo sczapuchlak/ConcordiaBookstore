@@ -7,11 +7,58 @@
 	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+
+
+
 </head>
 <body>
 
 
-{% include "header.html" %}
+<nav class="navbar navbar-expand-sm fixed-top navbar-custom ">
+    <li class="navbar-brand"><a href="{{ url_for('index')}}"><img class="logo" src="/static/images/concordia.png"></a></li>
+    <a class="navbar-brand" href="{{ url_for('index')}}">Concordia St.Paul Student Bookstore</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <div style="padding-top: 12pt;">
+
+      <ul class="navbar-nav">
+
+
+
+<form style="margin: 0; padding: 15px;" method="post" action="home.html">
+  <p>
+<select class="selectBox" name="value" style="padding-top: 2.2pt; padding-bottom: 1.9pt;">
+  <option value="title">Title</option>
+  <option value="author">Author</option>
+  <option value="course">Course</option>
+  <option value="ISBN">ISBN</option>
+</select>
+
+
+<input  class="selectBox" type="text" name="search" required value="search" onfocus="this.value=''" style="padding-left: 5pt; padding-top: 1pt">
+
+<button   style="padding-top: 1pt; background-color:forestgreen; color: white" class="selectBox" type="submit"><i class="fa fa-search"></i></button>
+{#           <input style="background-color: lightcyan" type=submit value="Search"></p>#}
+
+
+</form>
+
+          <li class="nav-item-loggedIn" style="font-weight: 200;">
+            <a class="nav-link" href="{{ url_for('home') }}">Books <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item-loggedIn ">
+            <a class="nav-link" href="{{ url_for('logout')}}">Sign Out</a>
+          </li>
+
+    </ul>
+        </div>
+  </div>
+</nav>
+
 
 <div style="width: 100%;" class="container">
    <div class="homeLeft">
@@ -19,24 +66,24 @@
 		<h4>{% include "flash_message.html" %}</h4>
 	</div>
 
-<h2>Search Books</h2>
-
-<form method="post" action="home.html">
-  <p>
-<select name="value">
-  <option value="title">Title</option>
-  <option value="author">Author</option>
-  <option value="course">Course</option>
-  <option value="ISBN">ISBN</option>
-</select>
-
-  </p>
-<input type="text" name="search" required value="search" onfocus="this.value=''" >
-  <p>
-
-  <p><input type=submit value=Search>
-
-</form>
+{#<h2>Search Books</h2>#}
+{##}
+{#<form method="post" action="home.html">#}
+{#  <p>#}
+{#<select name="value">#}
+{#  <option value="title">Title</option>#}
+{#  <option value="author">Author</option>#}
+{#  <option value="course">Course</option>#}
+{#  <option value="ISBN">ISBN</option>#}
+{#</select>#}
+{##}
+{#  </p>#}
+{#<input type="text" name="search" required value="search" onfocus="this.value=''" >#}
+{#  <p>#}
+{##}
+{#  <p><input type=submit value=Search>#}
+{##}
+{#</form>#}
 	<h1>{% include "sideNav.html" %}</h1>
 
 		</div>
@@ -45,17 +92,18 @@
    </div>
 
 
-   <div class="homeRight" id="listtt">
+   <div class="homeRight" id="listtt" style="margin-top: -12pt;">
        <div>
         <form>
-            <table class="listingHold">
+            <table class="listingHold" style="">
                 <thead>
-                    <tr>
-                        <th>Author of Post</th>
-                        <th>Title of Post</th>
-                        <th>Sell Type</th>
-                        <th>Date Listed</th>
-                        <th>ID</th>
+                    <tr height="40">
+                        <th onclick="sortTable(0)">Seller</th>
+                        <th onclick="sortTable(1)">Title of Post</th>
+                        <th onclick="sortTable(2)">Book Title</th>
+                        <th onclick="sortTable(3)">Date of Post</th>
+
+
 
 
                     </tr>
@@ -80,20 +128,21 @@
     <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
         <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
         <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
-        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[6] }}</a></td>
+
 
 </tr>
 {% endfor %}
 
 
-</a></p>
+
 </tbody>
             </table></form><br/>
 
 
+
 </div>
    </div>
-</div>
+
 <div style="clear:both"></div>
 
 
@@ -101,10 +150,210 @@
 </body>
 </html>
 <script>
-     $(".listinghold tr").click(function(){
-       window.location = "example.html";
-     });
+
 </script>
 <style>
-    tr:hover {background-color: #f5f5f5;}
-    tr:nth-child(even) {background-color: rgba(17, 90, 255, 0.03);}</style>
+table.listingHold {
+  border: 1px solid #0B1A4F;
+  background-color: #EEEEEE;
+  width: 99.9%;
+  text-align: left;
+  border-collapse: collapse;
+    font-family: 'Open Sans', sans-serif;
+}
+table.listingHold td, table.listingHold th {
+  border: 0px solid #AAAAAA;
+  padding: 5px 6px;
+}
+table.listingHold tbody td {
+  font-size: 13px;
+}
+table.listingHold tr:nth-child(even) {
+  background: #f5f3ea;
+}
+table.listingHold thead {
+  background: #D99322;
+  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  border-bottom: 2px solid #444444;
+}
+table.listingHold thead th {
+  font-size: 15px;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+table.listingHold tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background: #D99322;
+  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+  border-top: 2px solid #444444;
+}
+table.listingHold tfoot td {
+  font-size: 14px;
+}
+table.listingHold tfoot .links {
+  text-align: right;
+}
+table.listingHold tfoot .links a{
+  display: inline-block;
+  background: #0B1A4F;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+    h1, h2, h3, h4, h5, h6 {
+    margin-bottom: .5rem !important;
+    line-height: 1.2!important;
+    color: inherit!important;}
+.navbar-custom {
+  background-color: #003055;
+      box-shadow: #4c4c4c 2px 1px 1px;
+      height: 7.5%;
+      border-bottom: 1.5px solid #d99322;
+
+}
+  .nav-item-loggedIn{
+      padding-top: 5pt;
+  }
+.navbar-custom .navbar-brand {
+  color: #ecf0f1;
+    font-size: 160%;
+
+}
+.navbar-brand{
+    font-family: 'Playfair Display', serif;
+
+}
+.nav-link{
+    font-size: 125%;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:focus {
+  !important;color: #d99322;
+}
+.navbar-custom .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-custom .navbar-text a {
+  color: #d99322;
+}
+.navbar-custom .navbar-text a:hover,
+.navbar-custom .navbar-text a:focus {
+  color: #d99322;
+}
+.navbar-custom .navbar-nav .nav-link {
+  color: #ecf0f1;
+  border-radius: .25rem;
+  margin: 0 0.25em;
+}
+.navbar-custom .navbar-nav .nav-link:not(.disabled):hover,
+.navbar-custom .navbar-nav .nav-link:not(.disabled):focus {
+  color: #d99322;
+}
+.navbar-custom .navbar-nav .nav-item.active .nav-link,
+.navbar-custom .navbar-nav .nav-item.active .nav-link:hover,
+.navbar-custom .navbar-nav .nav-item.active .nav-link:focus,
+.navbar-custom .navbar-nav .nav-item.show .nav-link,
+.navbar-custom .navbar-nav .nav-item.show .nav-link:hover,
+.navbar-custom .navbar-nav .nav-item.show .nav-link:focus {
+  color: #d99322;
+  background-color: #012440;
+}
+.navbar-custom .navbar-toggle {
+  border-color: #012440;
+}
+.navbar-custom .navbar-toggle:hover,
+.navbar-custom .navbar-toggle:focus {
+  background-color: #012440;
+}
+.navbar-custom .navbar-toggle .navbar-toggler-icon {
+  color: #ecf0f1;
+}
+.navbar-custom .navbar-collapse,
+.navbar-custom .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-custom .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-custom .navbar-link:hover {
+  color: #d99322;
+}
+
+@media (max-width: 575px) {
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #d99322;
+  }
+  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #d99322;
+    background-color: #012440;
+  }
+}
+
+@media (max-width: 767px) {
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #d99322;
+  }
+  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #d99322;
+    background-color: #012440;
+  }
+}
+
+@media (max-width: 991px) {
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #d99322;
+  }
+  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #d99322;
+    background-color: #012440;
+  }
+}
+
+@media (max-width: 1199px) {
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+    color: #ecf0f1;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+    color: #d99322;
+  }
+  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+    color: #d99322;
+    background-color: #012440;
+  }
+}
+
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+  color: #ecf0f1;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+  color: #d99322;
+}
+.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+  color: #d99322;
+  background-color: #012440;
+}
+.selectBox{border-radius:4px;border:1px solid #AAAAAA;}
+
+</style>

@@ -17,12 +17,14 @@
 {#  <p><input type=submit value=Search>#}
 {#</form>#}
 
-			<div class="vertical-menu">
+			<div class="vertical-menu" style="align-content: left">
                 <a href="{{ url_for('profile')}}">Profile</a>
 
                 <a href="{{ url_for('newpost')}}">Create New Listing </a>
 
                 <a href="{{ url_for('changepassword')}}">Change Password </a>
+
+
 			</div>
 		</div>
 
@@ -30,8 +32,14 @@
 
 <style>
     .vertical-menu a{
-             font-family: 'Open Sans', sans-serif;
+            text-decoration:none;
             font-weight: 100;
+
+    }
+    .vertical-menu a:hover{
+        color: goldenrod;
+        font-weight: 300;
+        background-color: transparent;
     }
 </style>
 
