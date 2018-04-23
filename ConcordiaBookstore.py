@@ -1,9 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from flask_uploads import UploadSet, configure_uploads, IMAGES
 import codecs
-import image
 import io
 import base64
 from base64 import b64encode
@@ -13,16 +11,16 @@ import MySQLdb
 from datetime import datetime
 from threading import Thread
 import serial as serial
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, current_app
 from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
-from wtforms import Form, StringField, PasswordField, SelectField, validators
+from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
 from random import *
 from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 app = Flask(__name__)
 
@@ -67,7 +65,9 @@ def connection():
 
                            passwd="mysql",
 
-                           db="bookexchange")
+                           # passwd="gikQr6kn",
+
+                           db="bookexchange1")
 
     # Create a Cursor object to execute queries.
     c = conn.cursor()
@@ -622,8 +622,11 @@ def updateProfile():
                   (Fname, Lname, email,))
 
         conn.commit()
+
         c.close()
         conn.close()
+
+        flash("Profile updated successfully.")
 
         return redirect("profile.html")
     return render_template("updateProfile.html")
@@ -642,7 +645,6 @@ def newpost():
         # newFile = base64.b64encode(image_read)
 
         # file.save(file.filename)
-
 
         newFile = file.read
 
@@ -684,11 +686,16 @@ def newpost():
 
         conn.commit()
 
-        c.execute('''
-                  INSERT INTO course (CRS_ID, CRS_Name )
-                  VALUES(%s,%s)''',
-                  (course_Number, course_Title,))
+        c.execute('''SELECT COUNT(*) FROM course WHERE CRS_ID = %s''', (course_Number,))
+        result = c.fetchall()
         conn.commit()
+
+        if result == 0:
+            c.execute('''
+                INSERT INTO course (CRS_ID, CRS_Name )
+                VALUES(%s,%s)''',
+                      (course_Number, course_Title,))
+            conn.commit()
 
         c.execute('''
                  INSERT INTO photo (PHT_Path)
@@ -718,6 +725,9 @@ def newpost():
         conn.commit()
         c.close()
         conn.close()
+
+        flash("Post added successfully.")
+        return redirect("home.html")
 
     return render_template("newpost.html")
 
@@ -766,8 +776,6 @@ def listing(list_id=None):
 
     if request.method == "POST":
         return redirect(url_for("listing", list_id=list_id))
-
-
 
     return render_template('listing.html', data=data, firstname=firstname, lastname=lastname, listID=listID,
                            listtitle=listtitle, listDate=listDate, bookTitle=bookTitle, bookAuthor=bookAuthor,
