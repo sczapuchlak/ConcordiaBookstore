@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>CSP Student Bookstore Search</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+</head>
+<body>
+
+{% include "header.html" %}
+
+<div style="width: 100%;" class="container">
+   <div class="homeLeft">
+<div>
+
+	</div>
+			<h1>{% include "sideNav.html" %}</h1>
+		</div>
+
+
+   </div>
+
+
+   <div class="homeRight" id="listtt">
+       <div>
+
+
+
+{# This is the code to have the Search form display with the drop down menu#}
+{% from "_formhelpers.html" import render_field %}
+<form method=post id="searchBar" style="width: 500px; margin-top: 50px">
+  <dl  style="font-size: 14pt">
+    {{ render_field(form.select) }}
+    <p>
+    </dl><dl style="margin-top: 11.5px">
+    {{ render_field(form.search) }}
+  </dl>
+  <p><input type=submit value=Search style="margin-top: 90px; margin-left: -337px; width: 338px">
+</form>
+<h4>{% include "flash_message.html" %}</h4>
+   </div>
+{#This will be where the search stuff populates#}
+           {#        <form>#}
+{#            <table class="listingHold">#}
+{#                <thead>#}
+{#                    <tr>#}
+{#                        <th>Author of Post</th>#}
+{#                        <th>Title of Post</th>#}
+{#                        <th>Sell Type</th>#}
+{#                        <th>Date Listed</th>#}
+{#                        <th>ID</th>#}
+{##}
+{##}
+{#                    </tr>#}
+{#                </thead>#}
+{#            </table>#}
+{#                </form>#}
+
+
+
+   </div>
+<div style="clear:both"></div>
+
+
+
+</body>
+</html>
+<script>
+     $(".listinghold tr").click(function(){
+       window.location = "example.html";
+     });
+</script>
+<style>
+    tr:hover {background-color: #f5f5f5;}
+    tr:nth-child(even) {background-color: rgba(17, 90, 255, 0.03);}
+
+    form{
+        text-align: left;
+        display: inline-flex;
+        width: 100%;
+        height:100%;
+
+    }
+
+</style>
