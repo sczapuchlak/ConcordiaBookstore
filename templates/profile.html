@@ -1,153 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>CSP Student Bookstore Forum</title>
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome
-/4.7.0/css/font-awesome.min.css">
-
+    <meta charset="UTF-8">
+    <title>CSP Student Bookstore Forum</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 
 <body>
 
-
-
-    <script>
-    function StarsRating(totScore, totVotes) {
-
-        // To prevent code form breaking in case info does not get pulled for some reason
-        if (totScore === null) {
-            totScore = 0;
-        }
-        // preventing a divide by 0 error
-        if (totVotes === null || totVotes === 0) {
-            totVotes = 1;
-        }
-
-        // Wound up casting as object in order to make the needed link to the specific table row via querySelector.
-        // Handling as getClass or as getElement would not allow script to change CSS dynamically for some reason.
-        var ratings = {
-            RatingForUser: (totScore / totVotes)
-        };
-
-// total number of stars
-        const starTotal = 5;
-
-        for (var r in ratings) {
-            var starPercentage = (ratings[r] / starTotal) * 100;
-            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
-        }
-    }
-
-    </script>
-
-
-
 {% include "header.html" %}
 
 <div style="width: 100%;" class="container">
-   <div class="homeLeft">
+    <div class="homeLeft">
 
-<div>
-		<h4>{% include "flash_message.html" %}</h4>
-	</div>
-			<h1>{% include "sideNav.html" %}</h1>
-		</div>
-	</div>
-
-
-
-	<div class="homeRight" style="float: left ;width:80%">
-		<div style="overflow-x:auto;">
-
-			<div id="info" align="left" style="overflow-x:auto;">
+        <div>
+            <h4>{% include "flash_message.html" %}</h4>
+        </div>
+        <h1>{% include "sideNav.html" %}</h1>
+    </div>
+</div>
 
 
-            <center><img src="static/images/concordia.png" class="img-responsive" alt="" /></center>
-                <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
-                <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
+<div class="homeRight" style="float: left ;width:80%">
+    <div style="overflow-x:auto;">
+
+        <div id="info" align="left" style="overflow-x:auto;">
+
+
+            <center><img src="static/images/concordia.png" class="img-responsive" alt=""/></center>
+            <h1 id="userInfo" style="font-weight: 300; font-size: 22pt">User Information</h1>
+            <div class="background-box" style="background-color: #f2f2f2; padding-top: 5pt; padding-left: 5pt;">
 
 
                 <p>
-                    <strong>Name: </strong><br />
+                    <strong>Name: </strong><br/>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[0] }} {{ d[1] }}
-                    {% endfor %}
+                {% endfor %}
                 </p>
                 <p>
-                    <strong>Student ID: </strong><br />
+                    <strong>Student ID: </strong><br/>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[4] }}
-                    {% endfor %}
+                {% endfor %}
                 </p>
                 <p>
-                    <strong>Email Address: </strong><br />
+                    <strong>Email Address: </strong><br/>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[2] }}
-                    {% endfor %}
+                {% endfor %}
                 </p>
                 <p>
-                    <strong>Address: </strong><br />
+                    <strong>Address: </strong><br/>
                     &nbsp&nbsp&nbsp{% for d in data %}
-                    {{ d[5] + " " + d[6] + ", " + d[7] + " " + d[8]}}
-                    {% endfor %}
+                    {{ d[5] + " " + d[6] + ", " + d[7] + " " + d[8] }}
+                {% endfor %}
                 </p>
                 <p>
-                    <strong>Phone Number: </strong><br />
+                    <strong>Phone Number: </strong><br/>
                     &nbsp&nbsp&nbsp{% for d in data %}
                     {{ d[9] }}
-                    {% endfor %}
+                {% endfor %}
                 </p>
 
+                <script>
+                    $(document).ready(function () {
+                        document.getElementById("RatingForUser").style.display = "block";
+                        let ratings = {
+                            RatingForUser: parseFloat(document.getElementById("starBox").innerHTML)
+                        };
+                        // total number of stars
+                        const starTotal = 5;
 
-                <table>
-                    <p>
-                    <strong>User Rating: </strong>
-                    &nbsp&nbsp&nbsp{% for d in data %}
-                    {{ d[3] }} stars out of {{ d[11] }} votes;
-                    {% endfor %}
-                    <div class="RatingForUser" style="margin-top: -35px; " >
-                        <td>
-                            <div class="starRatings-outer">
-                                <div class="starRatings-inner"></div>
-                            </div>
-                        </td>
+                        // In order to get half stars, need to wind up with a percentage, in increments of 10%
+                        //outer div is actually a solid line, confined to the shape of the inner div, which are empty stars
+                        for (let r in ratings) {
+                            let starPercentage = (ratings[r] / starTotal) * 100;
+                            let starper2 = (Math.round(starPercentage / 10) * 10);
+                            let starPercentageRounded = starper2 + "%";
+                            let element = document.querySelector(".starRatings-inner");
+                            element.style.width = starPercentageRounded;
+                        }
+                        document.getElementById("starBox").style.display = "none";
+                    })
+                </script>
+
+                <strong>User Rating: </strong>
+                <div id="RatingForUser" class="RatingForUser"
+                     style="display: none">
+                    <div class="starRatings-outer">
+                        <div class="starRatings-inner"></div>
                     </div>
+                </div>
+            </div>
+            <div>
+                <div id="starBox">{{ proRating }} stars</div>
+                <div> out of {{ proNumRating }} votes</div>
+            </div>
+            <div>
+                <form method="POST">
+                    <button align="center" id="proLink" method="POST">
+                        <a href="{{ url_for('updateProfile') }}">Update Your Profile Information</a>
+                    </button>
+                </form>
+            </div>
 
-                    <tr>
-                     <td>
-                         <strong><p style="margin-left: -10px;">Total Votes: &nbsp&nbsp&nbsp{% for d in data %} {{ d[11] }}{% endfor %}</p></strong>
-                     </td>
-                    </tr>
-
-                </p>
-
-                </table>
-                <p>
-                    <strong>Total Reviews: </strong>
-                    &nbsp&nbsp&nbsp{% for d in data %}
-                    {{ d[3] }}
-                    {% endfor %}
-                </p><br>
-
-        <form method="POST">
-            <button align="center" id="proLink" method="POST">
-                <a href="{{ url_for('updateProfile')}}">Update Your Profile Information</a>
-            </button>
-        </form>
-
-      </div>
-			</div>
-
-
-
-{#
+            {#
             <div class="form-style-5">
             <form method="POST" action="newpost.html" enctype="multipart/form-data">
 
@@ -161,26 +125,21 @@
                     <input name="field6" placeholder="Zip Code*" type="text">
                     <input name="field7" placeholder="Phone Number*" type="text">
 
-
                 </fieldset><br>
-
-
 
                 <input class="submitchange" type="submit"  value="Apply Changes"> <a href="profile.html"> </a>
 
             </form>
 			</div> #}
 
-		</div>
-	</div>
+        </div>
     </div>
+</div>
 
-    </div>
-
-</body>
+</div>
 
 <style>
-    p{
+    p {
         font-size: 13pt;
         font-family: 'Open Sans', sans-serif;
         font-weight: 200;
@@ -188,87 +147,369 @@
         margin-top: 20pt;
         padding-top: 5pt;
     }
- button {
-    margin-right: 10pt;
-    display: inline-block;
-     font-size: 140%;
-    height: 100%;
-    width: 28%;
-    color: whitesmoke;
-    background: #0A2E50;
-    cursor: hand;
-     font-family: 'Open Sans', sans-serif;
-     margin-bottom: 20pt;
 
-}
- button a:hover{
-     text-decoration:none;
-     color: white;
- }
-    strong{
+    button {
+        margin-right: 10pt;
+        display: inline-block;
+        font-size: 140%;
+        height: 100%;
+        width: 28%;
+        color: whitesmoke;
+        background: #0A2E50;
+        cursor: hand;
+        font-family: 'Open Sans', sans-serif;
+        margin-bottom: 20pt;
+
+    }
+
+    button a:hover {
+        text-decoration: none;
+        color: white;
+    }
+
+    strong {
         font-weight: 700;
     }
-        .RatingForUser {
-    padding:0px;
-    text-decoration: none;
-}
 
-.starRatings-outer {
-  display: inline-block;
-  position: relative;
-  font-family: FontAwesome;
-    color: #f8ce0b;
-}
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 200;
+        color: #4c4c4c;
+        padding-top: 4%;
+        font-weight: 200;
+    }
 
-.starRatings-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
-}
+    a {
+        text-decoration: none !important;
+        font-weight: 200;
 
-.starRatings-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-    color: #f8ce0b;
-}
+    }
 
-.starRatings-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  color: #f8ce0b;
-}
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: .5rem;
+        font-family: inherit;
+        font-weight: 300;
+        line-height: 1.2;
 
-/*Star-selector stuff*/
+    }
 
-.star-selector {
-    margin-left: 2px;
-    padding-top: 2px;
-}
+    h1 {
+        font-size: 32px;
+        font-weight: 500;
+        color: #4c4c4c;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
 
-.star-selector input[type=radio] {
-    visibility: hidden;
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-}
+    a {
+        text-decoration: none;
+    }
 
-.star-selector label {
-    display: inline-block;
-    font-family: FontAwesome;
-    color: #f8ce0b;
-}
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+    }
 
-.star-selector label:before {
-    content: "\f005";
+    form[role=login] {
+        color: #5d5d5d;
+        background: #f2f2f2;
+        padding: 26px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+    }
 
-}
+    form[role=login] img {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 35px;
+    }
 
-.star-selector input[type=radio]:checked ~ label:before {
-    content: "\f006";
-}
+    form[role=login] input {
+        font-size: 18px;
+        width: 100% !important;
+        margin: 16px 0;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+    }
 
+    form[role=login] button {
+        font-size: 18px;
+        margin: 16px 0;
+        background: dodgerblue;
+        color: white;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        width: 345px;
+        height: 60px;
+    }
+
+    form[role=login] > div {
+        text-align: center;
+    }
+
+    /* this is for the homepage*/
+
+    .homeLeft {
+        height: 100%;
+        width: 250px; /* <-- */
+        position: fixed;
+        z-index: 1;
+        top: 60px;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+        color: white;
+        background: rgba(11, 45, 77, 1);
+        background: -moz-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(11, 45, 77, 1)), color-stop(16%, rgba(10, 46, 80, 0.99)), color-stop(42%, rgba(43, 66, 87, 0.98)), color-stop(87%, rgba(214, 214, 214, 0.96)), color-stop(100%, rgba(245, 247, 250, 0.95)));
+        background: -webkit-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -o-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: linear-gradient(135deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1);
+    }
+
+    .homeRight {
+        margin-left: 250px; /* Same as the width of the sidenav */ /* <-- */
+    }
+
+    .homeLeft a {
+        padding: 6px 6px 6px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .homeLeft a:hover {
+        color: #f1f1f1;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    .vertical-menu a {
+        color: #ffffff;
+        /* Black text color */
+        display: block;
+        /* Make the links appear below each other */
+        padding: 12px;
+        /* Add some padding */
+        text-decoration: none;
+        /* Remove underline from links */
+        font-weight: 100;
+    }
+
+    .vertical-menu a:hover {
+        background-color: #ccc;
+        /* Dark grey background on mouse-over */
+        color: goldenrod;
+        font-weight: 300;
+        background-color: transparent;
+    }
+
+    /* This is the styling for the submit new listing page */
+
+    #info {
+        max-width: 100%;
+        background-color: #f4f7f8;
+        border-radius: 8px;
+        padding: 5px 20px;
+        margin: 20px 50px 0px 10px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    #proLink {
+        text-color: blue;
+    }
+
+    .form-style-5 {
+        max-width: 80%;
+        padding: 10px 20px;
+        background: #f4f7f8;
+        margin: 10px auto;
+        padding: 20px;
+        background: #f4f7f8;
+        border-radius: 8px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+    }
+
+    .form-style-5 fieldset {
+        border: none;
+    }
+
+    .form-style-5 legend {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+
+    .form-style-5 label {
+        display: block;
+    !important;
+        font-size: 14pt;
+        margin-bottom: 8px;
+    }
+
+    .form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
+
+        background: rgba(255, 255, 255, .1);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 0;
+        outline: 0;
+        padding: 7px;
+        width: 60%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        background-color: #e8eeef;
+        color: #8a97a0;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        margin-bottom: 30px;
+    }
+
+    .form-style-5 input[type="text"]:focus, .form-style-5 input[type="date"]:focus, .form-style-5 input[type="datetime"]:focus, .form-style-5 input[type="email"]:focus, .form-style-5 input[type="number"]:focus, .form-style-5 input[type="search"]:focus, .form-style-5 input[type="time"]:focus, .form-style-5 input[type="url"]:focus, .form-style-5 textarea:focus, .form-style-5 select:focus {
+        background: #d2d9dd;
+    }
+
+    .form-style-5 select {
+        -webkit-appearance: menulist-button;
+        height: 35px;
+    }
+
+    .form-style-5 .number {
+        background: #1B3A56;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 0.8em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+
+    .form-style-5 input[class="submitlisting"], .form-style-5 input[type="button"] {
+        position: relative;
+        display: block;
+        padding: 19px 39px 18px 39px;
+        color: #FFF;
+        margin: 0 auto;
+        background: #17005b;
+        font-size: 18px;
+        text-align: center;
+        font-style: normal;
+        width: 100%;
+        border: 1px solid #17005b;
+        border-width: 1px 1px 3px;
+        margin-bottom: 10px;
+    }
+
+    .form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
+        background: rgba(23, 0, 91, 0.63);
+    }
+
+    th, td {
+        padding: 0 10px 0 15px;
+        text-decoration: none;
+
+    }
+
+    td {
+        font-size: 14pt;
+        text-decoration: none;
+
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .submitlisting:hover {
+        background-color: #164e16;
+    }
+
+    /*Star Rating Stuff*/
+    .RatingForUser {
+        padding: 0px;
+        text-decoration: none;
+    }
+
+    .starRatings-outer {
+        display: inline-block;
+        position: relative;
+        font-family: FontAwesome;
+    }
+
+    .starRatings-outer::before {
+        content: "\f006 \f006 \f006 \f006 \f006";
+        color: #f8ce0b;
+    }
+
+    .starRatings-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+    }
+
+    .starRatings-inner::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        color: #f8ce0b;
+    }
+
+    /*Star-selector stuff*/
+
+    .star-selector {
+        margin-left: 2px;
+        padding-top: 2px;
+    }
+
+    .star-selector input[type=radio] {
+        visibility: hidden;
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .star-selector label {
+        display: inline-block;
+        font-family: FontAwesome;
+        color: #f8ce0b;
+    }
+
+    .star-selector label:before {
+        content: " \f005 ";
+
+    }
+
+    .star-selector input[type=radio]:checked ~ label:before {
+        content: " \f006 ";
+    }
 
 </style>
+</body>
 </html>
 

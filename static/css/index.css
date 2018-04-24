@@ -27,7 +27,7 @@ a{
 	width: 48px;
 	height: 15%;
 }
-h
+
 .title {
 
 	font-size: 14px;
@@ -185,8 +185,8 @@ a {
 	background-color: midnightblue;
 }
 .textbooks {
-	width: 120%;
-	height: 120%;
+	width: 100%;
+	height: 100%;
 }
 .indexContent {
 	margin-top: 15px;
@@ -293,7 +293,7 @@ a.links {
 
 .homeLeft {
 	height: 100%;
-    width: 409px;
+    width: 250px;           /* <-- */
     position: fixed;
     z-index: 1;
     top: 60px;
@@ -312,7 +312,7 @@ a.links {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1);
 }
 .homeRight {
-    margin-left: 410px; /* Same as the width of the sidenav */
+    margin-left: 250px; /* Same as the width of the sidenav */  /* <-- */
 }
 .homeLeft a {
 	   padding: 6px 6px 6px 32px;
@@ -366,10 +366,14 @@ a.links {
 	/* Add some padding */
 	text-decoration: none;
 	/* Remove underline from links */
+    font-weight: 100;
 }
 .vertical-menu a:hover {
 	background-color: #ccc;
 	/* Dark grey background on mouse-over */
+    color: goldenrod;
+    font-weight: 300;
+    background-color: transparent;
 }
 .userFlash {
 	background-color: #bd8f13;
@@ -378,6 +382,7 @@ a.links {
 	padding-top: 10pt;
 	padding-bottom: 10pt;
 }
+
 /* This is the styling for the submit new listing page */
 
 #info {
@@ -471,7 +476,6 @@ a.links {
 }
 
 
-
 .form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
 	background: rgba(23, 0, 91, 0.63);
 }
@@ -504,14 +508,16 @@ a{
 
 }
 
+.submitlisting:hover {
+    background-color: #164e16;
+}
+
 /*Star Rating Stuff*/
 .RatingForUser {
     padding:0px;
     text-decoration: none;
 }
 
-/*Not sure why, but wound up having to make inner and outer star classes plural so
-styling would repeat for the consecutive stars*/
 .starRatings-outer {
   display: inline-block;
   position: relative;
@@ -519,7 +525,8 @@ styling would repeat for the consecutive stars*/
 }
 
 .starRatings-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
+  content: " \f006  \f006  \f006  \f006  \f006";
+  color: #f8ce0b;
 }
 
 .starRatings-inner {
@@ -532,7 +539,35 @@ styling would repeat for the consecutive stars*/
 }
 
 .starRatings-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
+  content: " \f005  \f005  \f005  \f005  \f005";
   color: #f8ce0b;
 }
 
+/*Star-selector stuff*/
+
+.star-selector {
+    margin-left: 2px;
+    padding-top: 2px;
+}
+
+.star-selector input[type=radio] {
+    visibility: hidden;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+
+.star-selector label {
+    display: inline-block;
+    font-family: FontAwesome;
+    color: #f8ce0b;
+}
+
+.star-selector label:before {
+    content: " \f005 ";
+
+}
+
+.star-selector input[type=radio]:checked ~ label:before {
+    content: " \f006 ";
+}

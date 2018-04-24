@@ -2,131 +2,93 @@
 <html lang="en">
 <head>
 
-	<meta charset="UTF-8">
-	<title>CSP Student Bookstore Listing</title>
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
-
-   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<script
-	src="http://code.jquery.com/jquery-2.2.4.min.js"
-	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
-	crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>CSP Student Bookstore Listing</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
 <script>
-$("#rateMeButton").click(function () {
-    {% for d in starData %}
-        var result = parseInt($("input[name=starSelector]:checked").val());
-        userRating = userRating + result;
-        userNumRating = userNumRating + 1;
-        listingID = id;
-        var starinfo = [listingID, userRating, userNumRating];
-        $.post(
-            '{{ url_for("listing", list_id=list_id) }}',
-            {share: starinfo},
-            function () {
-                $("#theResult").text("Success!").show().fadeOut(2000);
-                this.slideUp();
-
-            });
-         {% endfor %}
-    });
-
-    function StarsRating() {
-        {% for d in data %}
-            var totScore= userRating;
-            var totVotes= proNumRating;
-        // error prevention
-        if (totScore === null) {
-            totScore = 0;
+    function rudr_favorite(a) {
+        pageTitle = document.title;
+        pageURL = document.location;
+        try {
+            // Internet Explorer solution
+            eval("window.external.AddFa-vorite(pageURL, pageTitle)".replace(/-/g, ''));
         }
-        // preventing divide by 0 error
-        if (totVotes === null || totVotes === 0) {
-            totVotes = 1;
+        catch (e) {
+            try {
+                // Mozilla Firefox solution
+                window.sidebar.addPanel(pageTitle, pageURL, "");
+            }
+            catch (e) {
+                // Opera solution
+                if (typeof(opera) == "object") {
+                    a.rel = "sidebar";
+                    a.title = pageTitle;
+                    a.url = pageURL;
+                    return true;
+                } else {
+                    // The rest browsers (i.e Chrome, Safari)
+                    alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D to bookmark this page.');
+                }
+            }
         }
-        var ratings = {
-            RatingForUser: (totScore / totVotes)
-        };
-        // 5 = total number of stars
-        for (var r in ratings) {
-            var starPercentage = (ratings[r] / 5) * 100;
-            var starPercentageRounded = `${(Math.round(starPercentage / 10) * 10)}%`;
-            document.querySelector(`.${r} .starRatings-inner`).style.width = starPercentageRounded;
-        }
-        {% endfor %}
+        return false;
     }
 </script>
-<script>
-   function rudr_favorite(a) {
-	pageTitle=document.title;
-	pageURL=document.location;
-	try {
-		// Internet Explorer solution
-		eval("window.external.AddFa-vorite(pageURL, pageTitle)".replace(/-/g,''));
-	}
-	catch (e) {
-		try {
-			// Mozilla Firefox solution
-			window.sidebar.addPanel(pageTitle, pageURL, "");
-		}
-		catch (e) {
-			// Opera solution
-			if (typeof(opera)=="object") {
-				a.rel="sidebar";
-				a.title=pageTitle;
-				a.url=pageURL;
-				return true;
-			} else {
-				// The rest browsers (i.e Chrome, Safari)
-				alert('Press ' + (navigator.userAgent.toLowerCase().indexOf('mac') != -1 ? 'Cmd' : 'Ctrl') + '+D to bookmark this page.');
-			}
-		}
-	}
-	return false;
-}
-</script>
 
-	{% include "header.html" %}
-	<div>
-		<h4>{% include "flash_message.html" %}</h4>
-	</div>
-	<div  >
-        <div class="homeLeft" >
+{% include "header.html" %}
 
-			{% include "sideNav.html" %}
+<div style="width: 100%;" class="container">
+    <div class="homeLeft">
 
+        <div>
+            <h4>{% include "flash_message.html" %}</h4>
         </div>
+        <h1>{% include "sideNav.html" %}</h1>
     </div>
+</div>
 
-    <div class="homeRight" style="float: left">
-              	<form method="POST" action="/listing" enctype="multipart/form-data">
+<div class="homeRight" style="float: left">
+{#    <form method="POST" action="/listing" enctype="multipart/form-data">#}
 
 
+        {#                <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>#}
+        <br><br>
+        <div class="wrapper">
+            <div class="photoBox"><p><img src="/{{ image }}" height="600" width="350"></p>
 
-{#                <div class="breadcrumbs"> <a href="{{ url_for('home')}}">Available Books > </a> <a href="{{ url_for('listing',list_id = listID)}}">Listing</a> </div>#}
-                            <br><br>
-                             <div class="wrapper">
-                             <div class="photoBox"><p> <img src="/{{ image }}" height="700pt" width="120%"></p>
+                <div class="verticalLine"></div>
+            </div>
 
-                                 <div class="verticalLine"></div></div>
-
-                             <div class="infoHolder">
-                             <div class="listTitle "><p>{{listtitle}}</p></div>
-                                 <div class="listID "><h4 style="font-weight: 200">Item Number:  </h4><p class="information">{{listID}}</p></div>
-                                 <hr>
-                                 <div class="rightSide" style="margin-left: 100pt;">
-                                 <fieldset>
-                                    <legend>Meet The Seller</legend>
-                                 <div class="backgroundBox">
-                                 <div class="listDate"> <h4 style="font-weight: 600">Date Listing Was Posted: </h4> <p  class="information">{{listDate}}</p></div>
-                                 <div class="listSellTYpe"> <h4 style="font-weight: 600">Type of Sale: </h4><p class="information" >{{listSellType}}</p></div>
-                                <div class="sellerName"> <h4 style="font-weight: 600">Seller: </h4><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
-                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"> <p class="information">{{firstname}} {{lastname}}</p></a></div>
-                                     <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4><div class="star-selector" style="display: inline">
+            <div class="infoHolder">
+                <div class="listTitle "><p>{{ listtitle }}</p></div>
+                <div class="listID "><h4 style="font-weight: 200">Item Number: </h4>
+                    <p class="information">{{ listID }}</p></div>
+                <hr>
+                <div class="rightSide" style="margin-left: 100pt;">
+                    <fieldset>
+                        <legend>Meet The Seller</legend>
+                        <div class="backgroundBox">
+                            <div class="listDate"><h4 style="font-weight: 600">Date Listing Was Posted: </h4>
+                                <p class="information">{{ listDate }}</p></div>
+                            <div class="listSellTYpe"><h4 style="font-weight: 600">Type of Sale: </h4>
+                                <p class="information">{{ listSellType }}</p></div>
+                            <div class="sellerName"><h4 style="font-weight: 600">Seller: </h4><a
+                                    href="{{ url_for('mailto', target=id) }}"
+                                    onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+                                            'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">
+                                <p class="information">{{ firstname }} {{ lastname }}</p></a></div>
+                            <div class="rateUser"><h4 style="font-weight: 600">Rate the Seller: </h4>
+                                <br>
+                               <form action="{{ url_for('star_rating', list_id=listID, user_id=id) }}" method="POST">
+                                <div class="star-selector" style="display: inline">
                                     <label for="starSelector1"></label>
                                     <input type="radio" name="starSelector" id="starSelector1" value="1"/>
                                     <label for="starSelector2"></label>
@@ -138,113 +100,156 @@ $("#rateMeButton").click(function () {
                                     <input type="radio" name="starSelector" id="starSelector4" value="4"/>
                                     <label for="starSelector5"></label>
                                     <input type="radio" name="starSelector" id="starSelector5" value="5"/>
+                                    <input type="submit" id="submitStar" value="Rate Me!" />
+                                </div>
+                               </form>
+                                    <script>
+                                        $(document).ready(function () {
+                                            document.getElementById("RatingForUser").style.display = "block";
+                                            let ratings = {
+                                                RatingForUser: parseFloat(document.getElementById("starBox").innerHTML)
+                                            };
+                                            // total number of stars
+                                            const starTotal = 5;
 
-                                    <button class="RateMeButton">Rate Me!</button>
-                                    <p></p>
-                                    <span id="theResult"></span>
-                                     <h4 style="font-weight: 600;"> Seller's Rating: <p class="information">{{ userRating }} </p> </h4>
+                                            // In order to get half stars, need to wind up with a percentage, in increments of 10%
+                                            //outer div is actually a solid line, confined to the shape of the inner div, which are empty stars
+                                            for (let r in ratings) {
+                                                let starPercentage = (ratings[r] / starTotal) * 100;
+                                                let starper2 = (Math.round(starPercentage / 10) * 10);
+                                                let starPercentageRounded = starper2 + "%";
+                                                let element = document.querySelector(".starRatings-inner");
+                                                element.style.width = starPercentageRounded;
+                                            }
+                                            document.getElementById("starBox").style.display = "none";
+                                        })
+                                    </script>
 
+                                    <div class="sellerRating" style="display: inline-block">
+                                        <strong>Seller Rating: </strong>
+                                        <div id="RatingForUser" class="RatingForUser"
+                                             style="display: none">
+                                            <div class="starRatings-outer">
+                                                <div class="starRatings-inner"></div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <div id="starBox">{{ userRating }}</div>
 
-
-                                    <script>StarsRating();</script>
-
-                                    <p>
-                                        <strong>Total Reviews: </strong><br/>
-                                        &nbsp&nbsp&nbsp
-                                        {{ proNumRating }}
-
-                                    </p>
+                                    <div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </fieldset>
-                                 
-                                 <hr>
+
+                    <hr>
 
 
-                                 <fieldset>
-                             <legend>Book Information</legend>
-                                 <div class="backgroundBox">
-                             <div class="bookTitle"><h4 style="font-weight: 600">Book Title: </h4> <p>{{bookTitle}}</p></div>
-                             <div class="bookAuthor"><h4 style="font-weight: 600">Book Author: </h4> <p>{{bookAuthor}}</p></div>
-                             <div class="bookEdition"><h4 style="font-weight: 600">Book Edition: </h4> <p>{{bookEdition}}</p></div>
-                             <div class="bookISBN"><h4 style="font-weight: 600">Book ISBN: </h4> <p>{{bookISBN}}</p></div>
-                             <div class="bookPublisher"><h4 style="font-weight: 600">Book Publisher: </h4> <p>{{bookPublisher}}</p></div>
-                             <div class="bookDesc"><h4 style="font-weight: 600">Book Description: </h4> <p>{{bookDesc}}</p></div>
-                             <div class="courseInfo"><h4 style="font-weight: 600">Recommended Book For: </h4> <p class="information"> {{courseTitle}} {{ courseName }}</p></div>
-                                 </div>
-                                 </fieldset>
-                                 <hr>
-
-                                        <br>
-
-                                 <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
-                                    <button class="button"><a href="javascript:void(0)" onClick="return rudr_favorite(this);"><i class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this Page</a></button>
-              <button class="button" ><a href="{{ url_for('mailto', target=id) }}" onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
-                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email Seller</a></button>
-                                 </div>
-                                 </div>
-                            </div>
-                         </div>
-{#                                    <div class="picturesSlide" style="margin-top: 3%; margin-left: 3.5%">#}
-{#                                     <img class="leftArrow" src="/static/images/leftArrow.png">#}
-{#                                     <img class="rightArrow" src="/static/images/right.ico">#}
-{#                                    </div>#}
-
-
-
-              	</form>
-
-
+                    <fieldset>
+                        <legend>Book Information</legend>
+                        <div class="backgroundBox">
+                            <div class="bookTitle"><h4 style="font-weight: 600">Book Title: </h4>
+                                <p>{{ bookTitle }}</p></div>
+                            <div class="bookAuthor"><h4 style="font-weight: 600">Book Author: </h4>
+                                <p>{{ bookAuthor }}</p></div>
+                            <div class="bookEdition"><h4 style="font-weight: 600">Book Edition: </h4>
+                                <p>{{ bookEdition }}</p></div>
+                            <div class="bookISBN"><h4 style="font-weight: 600">Book ISBN: </h4>
+                                <p>{{ bookISBN }}</p></div>
+                            <div class="bookPublisher"><h4 style="font-weight: 600">Book Publisher: </h4>
+                                <p>{{ bookPublisher }}</p></div>
+                            <div class="bookDesc"><h4 style="font-weight: 600">Book Description: </h4>
+                                <p>{{ bookDesc }}</p></div>
+                            <div class="courseInfo"><h4 style="font-weight: 600">Recommended Book For: </h4>
+                                <p class="information"> {{ courseTitle }} {{ courseName }}</p></div>
                         </div>
+                    </fieldset>
+                    <hr>
 
+                    <br>
 
-                        </center>
-
-
-<div style="clear:both"></div><br><br>
-    <br><br><div style="clear:both"><h1>Comments:</h1>
-            <br>
-{#            Add new comment#}
-            <div class="comments" align="center">
-                <form action="{{ url_for('submit_comment', list_id=listID) }}" method="POST">
-                    <label for="message">Message</label><textarea rows="10" cols="75" max="2000"
-                                                              placeholder="Write your comment here"
-                                                              value="{request.form.message}" id="message" name="message" onfocus="value='';">
-                    </textarea><br /><br />
-                    <!--<a href="{ url_for('submit_comment', list_id=listID) }}"><input type="button" id="submit" value="Submit Comment" /><!--</a>-->
-                    <button type="submit" id="subBut" value="Submit Comment"><!--<a href="{ url_for('submit_comment', list_id=listID) }}">Submit Comment</a>-->Submit Comment</button> <br /><br />
-                </form>
-            {# Display comments for selected listing #}
-                <table class="comments" align="center">
-                    <tr>
-                        <th>User</th>
-                        <th>Comment Date</th>
-                        <th>Message</th>
-                    </tr>
-                    {% set count = [0] %}
-                    <script>var comments = 0;</script>
-                    {% for row in rows %}
-                        <tr style="" id="comment{{ count }}">
-                            <td><a href="{{ url_for('mailto', target=row[3]) }}" onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
-                               'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{row[0]}}</a></td>
-                            <td>{{row[1]}}</td>
-                            <td>{{row[2]}}</td>
-                        </tr>
-                        {% if count.append(count.pop() + 1) %}{% endif %}
-                        <script>comments++</script>
-                    {% endfor %}
-                </table>
-            <div id="buttonHolder">
-                <div id="prevBox" style="display: inline;"></div>
-                <div id="nextBox" style="display: inline;"></div>
+                    <div class="buttons" style="width:100%;text-align: center;font-size: 13pt">
+                        <button class="button"><a href="javascript:void(0)" onClick="return rudr_favorite(this);"><i
+                                class="fa fa-bookmark" style="margin-right:5pt;color: darkgoldenrod"></i>Bookmark this
+                            Page</a></button>
+                        <button class="button"><a href="{{ url_for('mailto', target=id) }}"
+                                                  onclick="window.open('{{ url_for('mailto', target=id) }}', 'newwindow',
+                                                          'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;"><i
+                                class="fa fa-envelope" style="margin-right:5pt;color: darkgoldenrod"></i>Email
+                            Seller</a></button>
+                    </div>
+                </div>
             </div>
-            </div><br /><br /></div>
+        </div>
+        {#                                    <div class="picturesSlide" style="margin-top: 3%; margin-left: 3.5%">#}
+        {#                                     <img class="leftArrow" src="/static/images/leftArrow.png">#}
+        {#                                     <img class="rightArrow" src="/static/images/right.ico">#}
+        {#                                    </div>#}
+
+
+{#    </form>#}
+
+
+</div>
+
+
+</center>
+
+
+<div style="clear:both"></div>
+<br><br>
+<br><br>
+<div style="clear:both"><h1>Comments:</h1>
+    <br>
+    {#            Add new comment#}
+    <div class="comments" align="center">
+        <form action="{{ url_for('submit_comment', list_id=listID) }}" method="POST">
+            <label for="message">Message</label><textarea rows="10" cols="50" max="2000"
+                                                          placeholder="Write your comment here"
+                                                          value="{request.form.message}" id="message" name="message"
+                                                          onfocus="value='';">
+                    </textarea><br/><br/>
+            <!--<a href="{ url_for('submit_comment', list_id=listID) }}"><input type="button" id="submit" value="Submit Comment" /><!--</a>-->
+            <button type="submit" id="subBut" value="Submit Comment">
+                <!--<a href="{ url_for('submit_comment', list_id=listID) }}">Submit Comment</a>-->Submit Comment
+            </button>
+            <br/><br/>
+        </form>
+        {# Display comments for selected listing #}
+        <table class="comments" align="center">
+            <tr>
+                <th>User</th>
+                <th>Comment Date</th>
+                <th>Message</th>
+            </tr>
+            {% set count = [0] %}
+            <script>var comments = 0;</script>
+            {% for row in rows %}
+                <tr style="" id="comment{{ count }}">
+                    <td><a href="{{ url_for('mailto', target=row[3]) }}"
+                           onclick="window.open('{{ url_for('mailto', target=row[3]) }}', 'newwindow',
+                                   'width=600, height=500,top=300, left=400, resizable=yes , scrollbars=yes');return false;">{{ row[0] }}</a>
+                    </td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>
+                {% if count.append(count.pop() + 1) %}{% endif %}
+                <script>comments++</script>
+            {% endfor %}
+        </table>
+        <div id="buttonHolder">
+            <div id="prevBox" style="display: inline;"></div>
+            <div id="nextBox" style="display: inline;"></div>
+        </div>
+    </div>
+    <br/><br/></div>
 <script>
     var min = 0;
     var max = 20;
     var elements = 0;
-    function displayComments(){
+
+    function displayComments() {
         if (comments > max) {
             for (var i = min; i < max; i++) {
                 document.getElementById("comment[" + i + "]").style.display = "table-row";
@@ -257,10 +262,11 @@ $("#rateMeButton").click(function () {
             document.getElementById("nextButton").style.display = "none"
         }
     }
+
     function nextComments() {
         if (comments - max > 0) {
             elements = comments - max;
-            for (var i = min; i < max+elements; i++) {
+            for (var i = min; i < max + elements; i++) {
                 document.getElementById("comment[" + i + "]").style.display = "none";
             }
             min += 20;
@@ -269,6 +275,7 @@ $("#rateMeButton").click(function () {
             document.getElementById("prevButton").style.display = "inline";
         }
     }
+
     function prevComments() { // fix comments not showing issue
         if (elements >= 20) {
             for (var i = min; i < max; i++) {
@@ -276,7 +283,7 @@ $("#rateMeButton").click(function () {
             }
         }
         else {
-            for (i = min; i < min+elements; i++) {
+            for (i = min; i < min + elements; i++) {
                 document.getElementById("comment[" + i + "]").style.display = "none";
             }
             elements = 20;
@@ -286,126 +293,101 @@ $("#rateMeButton").click(function () {
             max -= 20;
         }
         if (min < 20) {
-            document.getElementById("prevButton").style.display="none";
+            document.getElementById("prevButton").style.display = "none";
         }
-        if ((document.getElementById("nextButton").style.display) === "none"){
+        if ((document.getElementById("nextButton").style.display) === "none") {
             document.getElementById("nextButton").style.display = "inline";
         }
         displayComments();
     }
+
     for (var i = min; i < comments; i++) {
-        document.getElementById("comment["+i+"]").style.display="none";
+        document.getElementById("comment[" + i + "]").style.display = "none";
     }
-    document.getElementById("prevBox").innerHTML="<input type=\"button\" value=\"Prev\" id=\"prevButton\" onclick=\"prevComments();\" />";
-    document.getElementById("nextBox").innerHTML="<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextComments();\" />"
-    document.getElementById("prevButton").style.display="none";
+    document.getElementById("prevBox").innerHTML = "<input type=\"button\" value=\"Prev\" id=\"prevButton\" onclick=\"prevComments();\" />";
+    document.getElementById("nextBox").innerHTML = "<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextComments();\" />"
+    document.getElementById("prevButton").style.display = "none";
     displayComments();
 </script>
-</body>
-</html>
 <style>
-.tip {
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  background: transparent;
-  border: 10px solid #ccc;
-}
+    .tip {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        background: transparent;
+        border: 10px solid #ccc;
+    }
 
-.tip-up {
-  top: -25px; /* Same as body margin top + border */
-  left: 10px;
-  border-right-color: transparent;
-  border-left-color: transparent;
-  border-top-color: transparent;
-}
-.dialogbox .body {
-  position: relative;
-  max-width: 300px;
-  height: auto;
-  margin: 20px 10px;
-  padding: 5px;
-  background-color: #DADADA;
-  border-radius: 3px;
-  border: 5px solid #ccc;
-}
+    .tip-up {
+        top: -25px; /* Same as body margin top + border */
+        left: 10px;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-top-color: transparent;
+    }
 
-.body .message {
-  min-height: 30px;
-  border-radius: 3px;
-  font-family: Arial;
-  font-size: 14px;
-  line-height: 1.5;
-  color: #797979;
-}
+    .dialogbox .body {
+        position: relative;
+        max-width: 300px;
+        height: auto;
+        margin: 20px 10px;
+        padding: 5px;
+        background-color: #DADADA;
+        border-radius: 3px;
+        border: 5px solid #ccc;
+    }
+
+    .body .message {
+        min-height: 30px;
+        border-radius: 3px;
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #797979;
+    }
+
     fieldset {
 
-    border: 0;
+        border: 0;
 
-}
-legend{
-    font-size: 14pt;
-}
-    .buttons button{
+    }
 
-    margin-right: 10pt;
-    display: inline-block;
-    height: 100%;
-    width: 100%;
-    color: whitesmoke;
-    background: #0A2E50;
-    cursor: hand;
-}
+    legend {
+        font-size: 14pt;
+    }
 
-    .leftArrow{
-    width: 40px;
-    height: 41px;
+    .buttons button {
 
-    margin-left: 13%;
+        margin-right: 10pt;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        color: whitesmoke;
+        background: #0A2E50;
+        cursor: hand;
+    }
 
-    display:inline;
-}
-.rightArrow{
-    margin-top: 1px;
-    width: 42px;
-    height: 42px;
-    display:inline;
+    .listID {
+        padding-left: 60%;
+        margin-top: -14%;
+        padding-bottom: 10pt;
 
-    margin-left:40pt;
+    }
 
-
-
-}
- .listID{
-     padding-left: 60%;
-     margin-top: -14%;
-     padding-bottom: 10pt;
-
- }
-    .backgroundBox{
-     background-color: #f2f2f2;
-     width: 150%;
- }
-    hr{
+    .backgroundBox {
+        background-color: #f2f2f2;
         width: 150%;
-        margin-bottom: 10pt;
-        margin-top: 10pt;
- }
-    h4, .information{
-        display:inline;
-        vertical-align: top;
-        font-family: 'Open Sans', sans-serif;
-        font-size: 14px;
-        line-height: 25px;
-  }
-    .wrapper{
+    }
+
+    .wrapper {
         display: grid;
         grid-template-columns: .5fr 1fr 1fr 1fr;
-        grid-template-rows: .5fr .5fr  ;
-        width:98.5vw;
-        height:32vw;
+        grid-template-rows: .5fr .5fr;
+        width: 98.5vw;
+        height: 32vw;
     }
-    .verticalLine{
+
+    .verticalLine {
 
         border-left: 0px solid lightgray;
 
@@ -416,99 +398,134 @@ legend{
 
     }
 
+    .photoBox {
+        background-color: lightgrey;
+        display: inline-block;
+        float: left;
+        height: 600px;
+        width: 350px;
+        margin-top: 25px;
+        margin-left: 125px;
+    }
 
-    .photoBox{
-    background-color: lightgrey;
-       display: inline-block;
-       float: left;
-    height: 40rem;
-    width: 40rem;
-   margin-left: 7%;
-
-   }
-    .breadcrumbs{
+    .breadcrumbs {
         text-decoration: none;
         margin-right: 50%;
         margin-top: 15pt;
     }
-    .infoHolder{
+
+    .infoHolder {
         display: inline;
         float: right;
 
         font-size: 10pt;
 
-
-
     }
-    .listTitle{
+
+    .listTitle {
         font-size: 32pt;
 
         margin-top: -15%;
         margin-left: -95%;
 
     }
+
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 200;
+        color: #4c4c4c;
+        padding-top: 4%;
+        font-weight: 200;
+    }
+    a{
+        text-decoration: none!important;
+        font-weight: 200;
+
+
+    }
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: .5rem;
+        font-family: inherit;
+        font-weight: 300;
+        line-height: 1.2;
+
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 500;
+        color: #4c4c4c;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    /*Star Rating Stuff*/
     .RatingForUser {
-    padding:0px;
-    text-decoration: none;
-}
+        padding:0px;
+        text-decoration: none;
+    }
 
-.starRatings-outer {
-  display: inline-block;
-  position: relative;
-  font-family: FontAwesome;
-    color: #f8ce0b;
-}
+    .starRatings-outer {
+        display: inline-block;
+        position: relative;
+        font-family: FontAwesome;
+    }
 
-.starRatings-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
-}
+    .starRatings-outer::before {
+        content: "\f006 \f006 \f006 \f006 \f006";
+        color: #f8ce0b;
+    }
 
-.starRatings-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: 0;
-    color: #f8ce0b;
-}
+    .starRatings-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 0;
+    }
 
-.starRatings-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  color: #f8ce0b;
-}
+    .starRatings-inner::before {
+        content: "\f005 \f005 \f005 \f005 \f005";
+        color: #f8ce0b;
+    }
 
-/*Star-selector stuff*/
+    /*Star-selector stuff*/
+    .star-selector input[type=radio] {
+        visibility: hidden;
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
 
-.star-selector {
-    margin-left: 2px;
-    padding-top: 2px;
-}
+    .star-selector label {
+        display: inline-block;
+        font-family: FontAwesome;
+        color: #f8ce0b;
+    }
 
-.star-selector input[type=radio] {
-    visibility: hidden;
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-}
+    .star-selector label:before {
+        content: "\f005";
 
-.star-selector label {
-    display: inline-block;
-    font-family: FontAwesome;
-    color: #f8ce0b;
-}
+    }
 
-.star-selector label:before {
-    content: "\f005";
-
-}
-
-.star-selector input[type=radio]:checked ~ label:before {
-    content: "\f006";
-}
-
-
+    .star-selector input[type=radio]:checked ~ label:before {
+        content: "\f006";
+    }
 
 </style>
+</body>
+</html>
+
 
 

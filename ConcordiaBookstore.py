@@ -65,7 +65,7 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="gikQr6kn",
+                           passwd="31July2015",  # gikQr6kn
 
                            db="bookexchange")
 
@@ -119,11 +119,15 @@ def signup():
             return render_template("signup.html", error=error)
 
         else:
+            zero = 0
 
             c.execute('''
-                    INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName)
-                    VALUES(%s, %s, %s, %s)''',
-                      (password, email, firstname, lastname))
+
+        INSERT INTO user( USER_PW, USER_Email, USER_FName, USER_LName, USER_Rating, USER_Num_Rating)
+
+        VALUES(%s, %s, %s, %s, %s, %s)''',
+
+          (password, email, firstname, lastname, zero, zero))
             user_id = conn.insert_id()
             print(user_id)
 
@@ -164,14 +168,8 @@ def signup():
             # close email server connection
             s.quit()
 
-            # flash("Please Sign in below")
-            c.close()
-            conn.close()
-
             flash("Thanks for registering! Please verify your account with the email we sent you before logging in",
                   'success')
-
-            conn.commit()
 
             flash("Thanks for registering!")
             flash("Please Sign in below")
@@ -482,10 +480,18 @@ def profile():
 
     conn.commit()
 
+    if proNumRating == '' or proNumRating == 0:
+        proRating = 0
+        proNumRating = 0
+
+    else:
+        proRating = proRating/proNumRating
+        proRating = round(proRating, 2)
+
     if request.method == "POST":
         return render_template("updateProfile.html")
 
-    return render_template("profile.html", data=prof)
+    return render_template("profile.html", data=prof, proRating=proRating, proNumRating=proNumRating)
 
 
 @app.route('/updateProfile.html', methods=["GET", "POST"])
@@ -726,6 +732,13 @@ def listing(list_id=None):
     if request.method == "POST":
         return redirect(url_for("listing", list_id=list_id))
 
+    if proNumRating == '' or proNumRating == 0:
+        userRating = 0
+        proNumRating = 0
+
+    else:
+        userRating = userRating/proNumRating
+        userRating = round(userRating, 2)
 
 
     return render_template('listing.html', data=data, firstname=firstname, lastname=lastname, listID=listID,
@@ -897,6 +910,45 @@ def reset_token(token):
     conn.commit()
 
     return render_template('reset_token.html', token=token)
+
+
+@app.route('/star_rating/<list_id>/<user_id>', methods=["GET", "POST"])
+def star_rating(list_id, user_id):
+    # // grab value of element by "name" property of the HTML object
+    rating = int(request.form['starSelector'])
+
+    # //open connection
+    c, conn = connection()
+
+    # // grab the rating and number of ratings from db
+    c.execute('''SELECT USER_Rating, USER_Num_Rating FROM user WHERE USER_ID = %s''', [user_id])
+
+    result = c.fetchall()
+
+    for data in result:
+
+        rate = data[0]
+        num = data[1]
+
+    # // add new rating to the total value of ratings
+    rate = rating + rate
+
+    # // add 1 to the total number of ratings
+    num = num + 1
+
+    # // update the new info to the db
+    c.execute('''UPDATE user SET USER_Rating = %s, USER_Num_Rating = %s WHERE USER_ID = %s''', [rate, num, user_id])
+
+    conn.commit()
+
+    # // close the connection
+    c.close()
+
+    conn.close()
+
+    # // tell the Python code to start the listing route, and pass the list_id so it can run properly,
+    # returning the user to the correct listing page
+    return redirect(url_for("listing", list_id=list_id))
 
 
 if __name__ == '__main__':

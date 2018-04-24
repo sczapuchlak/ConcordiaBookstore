@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>CSP Student Bookstore Forum</title>
-	<meta content="width=device-width, initial-scale=1" name="viewport">
-	<link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>CSP Student Bookstore Forum</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display" rel="stylesheet">
 
 
 
@@ -19,341 +19,638 @@
 <nav class="navbar navbar-expand-sm fixed-top navbar-custom ">
     <li class="navbar-brand"><a href="{{ url_for('index')}}"><img class="logo" src="/static/images/concordia.png"></a></li>
     <a class="navbar-brand" href="{{ url_for('index')}}">Concordia St.Paul Student Bookstore</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-    <div style="padding-top: 12pt;">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div style="padding-top: 12pt;">
 
-      <ul class="navbar-nav">
-
-
-
-<form style="margin: 0; padding: 15px;" method="post" action="home.html">
-  <p>
-<select class="selectBox" name="value" style="padding-top: 2.2pt; padding-bottom: 1.9pt;">
-  <option value="title">Title</option>
-  <option value="author">Author</option>
-  <option value="course">Course</option>
-  <option value="ISBN">ISBN</option>
-</select>
+            <ul class="navbar-nav">
 
 
-<input  class="selectBox" type="text" name="search" required value="search" onfocus="this.value=''" style="padding-left: 5pt; padding-top: 1pt">
 
-<button   style="padding-top: 1pt; background-color:forestgreen; color: white" class="selectBox" type="submit"><i class="fa fa-search"></i></button>
-{#           <input style="background-color: lightcyan" type=submit value="Search"></p>#}
+                <form style="margin: 0; padding: 15px;" method="post" action="home.html">
+                    <p>
+                        <select class="selectBox" name="value" style="padding-top: 2.2pt; padding-bottom: 1.9pt;">
+                            <option value="title">Title</option>
+                            <option value="author">Author</option>
+                            <option value="course">Course</option>
+                            <option value="ISBN">ISBN</option>
+                        </select>
 
 
-</form>
+                        <input  class="selectBox" type="text" name="search" required value="search" onfocus="this.value=''" style="padding-left: 5pt; padding-top: 1pt">
 
-          <li class="nav-item-loggedIn" style="font-weight: 200;">
-            <a class="nav-link" href="{{ url_for('home') }}">Books <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item-loggedIn ">
-            <a class="nav-link" href="{{ url_for('logout')}}">Sign Out</a>
-          </li>
+                        <button   style="padding-top: 1pt; background-color:forestgreen; color: white" class="selectBox" type="submit"><i class="fa fa-search"></i></button>
+                        {#           <input style="background-color: lightcyan" type=submit value="Search"></p>#}
 
-    </ul>
+
+                </form>
+
+                <li class="nav-item-loggedIn" style="font-weight: 200;">
+                    <a class="nav-link" href="{{ url_for('home') }}">Books <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item-loggedIn ">
+                    <a class="nav-link" href="{{ url_for('logout')}}">Sign Out</a>
+                </li>
+
+            </ul>
         </div>
-  </div>
+    </div>
 </nav>
 
 
+
+
+
 <div style="width: 100%;" class="container">
-   <div class="homeLeft">
-<div>
-		<h4>{% include "flash_message.html" %}</h4>
-	</div>
+    <div class="homeLeft">
 
-{#<h2>Search Books</h2>#}
-{##}
-{#<form method="post" action="home.html">#}
-{#  <p>#}
-{#<select name="value">#}
-{#  <option value="title">Title</option>#}
-{#  <option value="author">Author</option>#}
-{#  <option value="course">Course</option>#}
-{#  <option value="ISBN">ISBN</option>#}
-{#</select>#}
-{##}
-{#  </p>#}
-{#<input type="text" name="search" required value="search" onfocus="this.value=''" >#}
-{#  <p>#}
-{##}
-{#  <p><input type=submit value=Search>#}
-{##}
-{#</form>#}
-	<h1>{% include "sideNav.html" %}</h1>
-
-		</div>
+        <div>
+            <h4>{% include "flash_message.html" %}</h4>
+        </div>
+        <h1>{% include "sideNav.html" %}</h1>
+    </div>
+</div>
 
 
-   </div>
+</div>
 
 
-   <div class="homeRight" id="listtt" style="margin-top: -12pt;">
-       <div>
+<div class="homeRight" id="listtt" style="margin-top: -12pt;">
+    <div>
         <form>
             <table class="listingHold" style="">
                 <thead>
-                    <tr height="40">
-                        <th onclick="sortTable(0)">Seller</th>
-                        <th onclick="sortTable(1)">Title of Post</th>
-                        <th onclick="sortTable(2)">Book Title</th>
-                        <th onclick="sortTable(3)">Date of Post</th>
+                <tr height="40">
+                    <th onclick="sortTable(0)">Seller</th>
+                    <th onclick="sortTable(1)">Title of Post</th>
+                    <th onclick="sortTable(2)">Transaction Type</th>
+                    <th onclick="sortTable(3)">Date of Post</th>
 
 
 
 
-                    </tr>
+                </tr>
                 </thead>
                 <tbody>
 
 
                 <center>
-                				<div>
-                					<h4>{% include "flash_message.html" %}</h4>
-                				</div>
-               </center>
+                    <div>
+                        <h4>{% include "flash_message.html" %}</h4>
+                    </div>
+                </center>
 
 
+                {% set count = [0] %}
+                <script>var listing = 0;</script>
                 {% for d in data %}
 
-<tr style="border-bottom: 1px solid #ddd!important;">
+                    <tr style="border-bottom: 1px solid #ddd!important;" id="listing{{ count }}">
 
 
 
-    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[0] }} {{ d[1]}}</a></td>
-    <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
-        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
-        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
+                        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[0] }} {{ d[1]}}</a></td>
+                        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[3] }}</a></td>
+                        <td ><a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">    {{ d[4] }}</a></td>
+                        <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
 
 
-</tr>
-{% endfor %}
+                    </tr>
+                    {% if count.append(count.pop() + 1) %}{% endif %}
+                    <script>listing++</script>
+                {% endfor %}
 
 
 
-</tbody>
+                </tbody>
             </table></form><br/>
+        <div id="buttonHolder">
+            <div id="prevBox" style="display: inline;"></div>
+            <div id="nextBox" style="display: inline;"></div>
+        </div>
 
 
 
+    </div>
 </div>
-   </div>
 
 <div style="clear:both"></div>
 
 
-
+<script>
+    var min = 0;
+    var max = 50;
+    var elements = 0;
+    function displayListings(){
+        if (listing > max) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "table-row";
+            }
+        }
+        else {
+            for (var i = min; i < listing; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "table-row";
+            }
+            document.getElementById("nextButton").style.display = "none"
+        }
+    }
+    function nextListings() {
+        if (listing - max > 0) {
+            elements = listing - max;
+            for (var i = min; i < max+elements; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+            min += 50;
+            max += 50;
+            displayListings();
+            document.getElementById("prevButton").style.display = "inline";
+        }
+    }
+    function prevListings() {
+        if (elements >= 50) {
+            for (var i = min; i < max; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+        }
+        else {
+            for (i = min; i < min+elements; i++) {
+                document.getElementById("listing[" + i + "]").style.display = "none";
+            }
+            elements = 50;
+        }
+        if (min >= 50 && max >= 100) {
+            min -= 50;
+            max -= 50;
+        }
+        if (min < 50) {
+            document.getElementById("prevButton").style.display="none";
+        }
+        if ((document.getElementById("nextButton").style.display) === "none"){
+            document.getElementById("nextButton").style.display = "inline";
+        }
+        displayListings();
+    }
+    for (var i = min; i < listing; i++) {
+        document.getElementById("listing["+i+"]").style.display="none";
+    }
+    document.getElementById("prevBox").innerHTML="<input type=\"button\" value=\"Prev\" id=\"prevButton\" onclick=\"prevListings();\" />";
+    document.getElementById("nextBox").innerHTML="<input type=\"button\" value=\"Next\" id=\"nextButton\" onclick=\"nextListings();\" />"
+    document.getElementById("prevButton").style.display="none";
+    displayListings();
+</script>
 </body>
 </html>
 <script>
 
 </script>
 <style>
-table.listingHold {
-  border: 1px solid #0B1A4F;
-  background-color: #EEEEEE;
-  width: 99.9%;
-  text-align: left;
-  border-collapse: collapse;
-    font-family: 'Open Sans', sans-serif;
-}
-table.listingHold td, table.listingHold th {
-  border: 0px solid #AAAAAA;
-  padding: 5px 6px;
-}
-table.listingHold tbody td {
-  font-size: 13px;
-}
-table.listingHold tr:nth-child(even) {
-  background: #f5f3ea;
-}
-table.listingHold thead {
-  background: #D99322;
-  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  border-bottom: 2px solid #444444;
-}
-table.listingHold thead th {
-  font-size: 15px;
-  font-weight: bold;
-  color: #FFFFFF;
-}
-table.listingHold tfoot {
-  font-size: 14px;
-  font-weight: bold;
-  color: #FFFFFF;
-  background: #D99322;
-  background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
-  border-top: 2px solid #444444;
-}
-table.listingHold tfoot td {
-  font-size: 14px;
-}
-table.listingHold tfoot .links {
-  text-align: right;
-}
-table.listingHold tfoot .links a{
-  display: inline-block;
-  background: #0B1A4F;
-  color: #FFFFFF;
-  padding: 2px 6px;
-  border-radius: 5px;
-}
+    table.listingHold {
+        border: 1px solid #0B1A4F;
+        background-color: #EEEEEE;
+        width: 99.9%;
+        text-align: left;
+        border-collapse: collapse;
+        font-family: 'Open Sans', sans-serif;
+    }
+    table.listingHold td, table.listingHold th {
+        border: 0px solid #AAAAAA;
+        padding: 5px 6px;
+    }
+    table.listingHold tbody td {
+        font-size: 13px;
+    }
+    table.listingHold tr:nth-child(even) {
+        background: #f5f3ea;
+    }
+    table.listingHold thead {
+        background: #D99322;
+        background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        border-bottom: 2px solid #444444;
+    }
+    table.listingHold thead th {
+        font-size: 15px;
+        font-weight: bold;
+        color: #FFFFFF;
+    }
+    table.listingHold tfoot {
+        font-size: 14px;
+        font-weight: bold;
+        color: #FFFFFF;
+        background: #D99322;
+        background: -moz-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        background: -webkit-linear-gradient(top, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        background: linear-gradient(to bottom, #e2ae59 0%, #dc9d38 66%, #D99322 100%);
+        border-top: 2px solid #444444;
+    }
+    table.listingHold tfoot td {
+        font-size: 14px;
+    }
+    table.listingHold tfoot .links {
+        text-align: right;
+    }
+    table.listingHold tfoot .links a{
+        display: inline-block;
+        background: #0B1A4F;
+        color: #FFFFFF;
+        padding: 2px 6px;
+        border-radius: 5px;
+    }
     h1, h2, h3, h4, h5, h6 {
-    margin-bottom: .5rem !important;
-    line-height: 1.2!important;
-    color: inherit!important;}
-.navbar-custom {
-  background-color: #003055;
-      box-shadow: #4c4c4c 2px 1px 1px;
-      height: 7.5%;
-      border-bottom: 1.5px solid #d99322;
+        margin-bottom: .5rem !important;
+        line-height: 1.2!important;
+        color: inherit!important;}
+    .navbar-custom {
+        background-color: #003055;
+        box-shadow: #4c4c4c 2px 1px 1px;
+        height: 7.5%;
+        border-bottom: 1.5px solid #d99322;
 
-}
-  .nav-item-loggedIn{
-      padding-top: 5pt;
-  }
-.navbar-custom .navbar-brand {
-  color: #ecf0f1;
-    font-size: 160%;
+    }
+    .nav-item-loggedIn{
+        padding-top: 5pt;
+    }
+    .navbar-custom .navbar-brand {
+        color: #ecf0f1;
+        font-size: 160%;
 
-}
-.navbar-brand{
-    font-family: 'Playfair Display', serif;
+    }
+    .navbar-brand{
+        font-family: 'Playfair Display', serif;
 
-}
-.nav-link{
-    font-size: 125%;
-    font-family: 'Open Sans', sans-serif;
+    }
+    .nav-link{
+        font-size: 125%;
+        font-family: 'Open Sans', sans-serif;
 
-}
-.navbar-custom .navbar-brand:hover,
-.navbar-custom .navbar-brand:focus {
-  !important;color: #d99322;
-}
-.navbar-custom .navbar-text {
-  color: #ecf0f1;
-}
-.navbar-custom .navbar-text a {
-  color: #d99322;
-}
-.navbar-custom .navbar-text a:hover,
-.navbar-custom .navbar-text a:focus {
-  color: #d99322;
-}
-.navbar-custom .navbar-nav .nav-link {
-  color: #ecf0f1;
-  border-radius: .25rem;
-  margin: 0 0.25em;
-}
-.navbar-custom .navbar-nav .nav-link:not(.disabled):hover,
-.navbar-custom .navbar-nav .nav-link:not(.disabled):focus {
-  color: #d99322;
-}
-.navbar-custom .navbar-nav .nav-item.active .nav-link,
-.navbar-custom .navbar-nav .nav-item.active .nav-link:hover,
-.navbar-custom .navbar-nav .nav-item.active .nav-link:focus,
-.navbar-custom .navbar-nav .nav-item.show .nav-link,
-.navbar-custom .navbar-nav .nav-item.show .nav-link:hover,
-.navbar-custom .navbar-nav .nav-item.show .nav-link:focus {
-  color: #d99322;
-  background-color: #012440;
-}
-.navbar-custom .navbar-toggle {
-  border-color: #012440;
-}
-.navbar-custom .navbar-toggle:hover,
-.navbar-custom .navbar-toggle:focus {
-  background-color: #012440;
-}
-.navbar-custom .navbar-toggle .navbar-toggler-icon {
-  color: #ecf0f1;
-}
-.navbar-custom .navbar-collapse,
-.navbar-custom .navbar-form {
-  border-color: #ecf0f1;
-}
-.navbar-custom .navbar-link {
-  color: #ecf0f1;
-}
-.navbar-custom .navbar-link:hover {
-  color: #d99322;
-}
+    }
+    .navbar-custom .navbar-brand:hover,
+    .navbar-custom .navbar-brand:focus {
+    !important;color: #d99322;
+    }
+    .navbar-custom .navbar-text {
+        color: #ecf0f1;
+    }
+    .navbar-custom .navbar-text a {
+        color: #d99322;
+    }
+    .navbar-custom .navbar-text a:hover,
+    .navbar-custom .navbar-text a:focus {
+        color: #d99322;
+    }
+    .navbar-custom .navbar-nav .nav-link {
+        color: #ecf0f1;
+        border-radius: .25rem;
+        margin: 0 0.25em;
+    }
+    .navbar-custom .navbar-nav .nav-link:not(.disabled):hover,
+    .navbar-custom .navbar-nav .nav-link:not(.disabled):focus {
+        color: #d99322;
+    }
+    .navbar-custom .navbar-nav .nav-item.active .nav-link,
+    .navbar-custom .navbar-nav .nav-item.active .nav-link:hover,
+    .navbar-custom .navbar-nav .nav-item.active .nav-link:focus,
+    .navbar-custom .navbar-nav .nav-item.show .nav-link,
+    .navbar-custom .navbar-nav .nav-item.show .nav-link:hover,
+    .navbar-custom .navbar-nav .nav-item.show .nav-link:focus {
+        color: #d99322;
+        background-color: #012440;
+    }
+    .navbar-custom .navbar-toggle {
+        border-color: #012440;
+    }
+    .navbar-custom .navbar-toggle:hover,
+    .navbar-custom .navbar-toggle:focus {
+        background-color: #012440;
+    }
+    .navbar-custom .navbar-toggle .navbar-toggler-icon {
+        color: #ecf0f1;
+    }
+    .navbar-custom .navbar-collapse,
+    .navbar-custom .navbar-form {
+        border-color: #ecf0f1;
+    }
+    .navbar-custom .navbar-link {
+        color: #ecf0f1;
+    }
+    .navbar-custom .navbar-link:hover {
+        color: #d99322;
+    }
 
-@media (max-width: 575px) {
-  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #ecf0f1;
-  }
-  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
-  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-    color: #d99322;
-  }
-  .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
-    color: #d99322;
-    background-color: #012440;
-  }
-}
+    @media (max-width: 575px) {
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item {
+            color: #ecf0f1;
+        }
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #d99322;
+        }
+        .navbar-expand-sm .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #d99322;
+            background-color: #012440;
+        }
+    }
 
-@media (max-width: 767px) {
-  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #ecf0f1;
-  }
-  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
-  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-    color: #d99322;
-  }
-  .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
-    color: #d99322;
-    background-color: #012440;
-  }
-}
+    @media (max-width: 767px) {
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item {
+            color: #ecf0f1;
+        }
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #d99322;
+        }
+        .navbar-expand-md .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #d99322;
+            background-color: #012440;
+        }
+    }
 
-@media (max-width: 991px) {
-  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #ecf0f1;
-  }
-  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
-  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-    color: #d99322;
-  }
-  .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
-    color: #d99322;
-    background-color: #012440;
-  }
-}
+    @media (max-width: 991px) {
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item {
+            color: #ecf0f1;
+        }
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #d99322;
+        }
+        .navbar-expand-lg .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #d99322;
+            background-color: #012440;
+        }
+    }
 
-@media (max-width: 1199px) {
-  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
-    color: #ecf0f1;
-  }
-  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
-  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-    color: #d99322;
-  }
-  .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
-    color: #d99322;
-    background-color: #012440;
-  }
-}
+    @media (max-width: 1199px) {
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item {
+            color: #ecf0f1;
+        }
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+            color: #d99322;
+        }
+        .navbar-expand-xl .navbar-nav .show .dropdown-menu .dropdown-item.active {
+            color: #d99322;
+            background-color: #012440;
+        }
+    }
 
-.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
-  color: #ecf0f1;
-}
-.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
-.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
-  color: #d99322;
-}
-.navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
-  color: #d99322;
-  background-color: #012440;
-}
-.selectBox{border-radius:4px;border:1px solid #AAAAAA;}
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item {
+        color: #ecf0f1;
+    }
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:hover,
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item:focus {
+        color: #d99322;
+    }
+    .navbar-expand .navbar-nav .show .dropdown-menu .dropdown-item.active {
+        color: #d99322;
+        background-color: #012440;
+    }
+    .selectBox{border-radius:4px;border:1px solid #AAAAAA;}
+    /*Page Styles*/
+    @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css);
+
+
+    body {
+        font-family: 'Open Sans', sans-serif;
+        font-size: 12px;
+        font-weight: 200;
+        color: #4c4c4c;
+        padding-top: 4%;
+        font-weight: 200;
+    }
+    a{
+        text-decoration: none!important;
+        font-weight: 200;
+
+
+    }
+    .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+        margin-bottom: .5rem;
+        font-family: inherit;
+        font-weight: 300;
+        line-height: 1.2;
+
+    }
+    .logo {
+        width: 48px;
+        height: 15%;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-weight: 500;
+        color: #4c4c4c;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    * {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    form[role=login] {
+        color: #5d5d5d;
+        background: #f2f2f2;
+        padding: 26px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+    }
+    form[role=login] img {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 35px;
+    }
+    form[role=login] input {
+        font-size: 18px;
+        width:100% !important ;
+        margin: 16px 0;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+    }
+    form[role=login] button {
+        font-size: 18px;
+        margin: 16px 0;
+        background: dodgerblue;
+        color: white;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        width: 345px;
+        height: 60px;
+    }
+    form[role=login]>div {
+        text-align: center;
+
+    /* this is for the homepage*/
+
+    .homeLeft {
+        height: 100%;
+        width: 250px;           /* <-- */
+        position: fixed;
+        z-index: 1;
+        top: 60px;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+        color: white;
+        background: rgba(11, 45, 77, 1);
+        background: -moz-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(11, 45, 77, 1)), color-stop(16%, rgba(10, 46, 80, 0.99)), color-stop(42%, rgba(43, 66, 87, 0.98)), color-stop(87%, rgba(214, 214, 214, 0.96)), color-stop(100%, rgba(245, 247, 250, 0.95)));
+        background: -webkit-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -o-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: -ms-linear-gradient(-45deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        background: linear-gradient(135deg, rgba(11, 45, 77, 1) 0%, rgba(10, 46, 80, 0.99) 16%, rgba(43, 66, 87, 0.98) 42%, rgba(214, 214, 214, 0.96) 87%, rgba(245, 247, 250, 0.95) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0b2d4d', endColorstr='#f5f7fa', GradientType=1);
+    }
+    .homeRight {
+        margin-left: 250px; /* Same as the width of the sidenav */  /* <-- */
+    }
+    .homeLeft a {
+        padding: 6px 6px 6px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+    .homeLeft a:hover {
+        color: #f1f1f1;
+    }
+    @media screen and (max-height: 450px) {
+        .sidenav {
+            padding-top: 15px;
+        }
+        .sidenav a {
+            font-size: 18px;
+        }
+    }
+
+    .vertical-menu a {
+        color: #ffffff;
+        /* Black text color */
+        display: block;
+        /* Make the links appear below each other */
+        padding: 12px;
+        /* Add some padding */
+        text-decoration: none;
+        /* Remove underline from links */
+        font-weight: 100;
+    }
+    .vertical-menu a:hover {
+        background-color: #ccc;
+        /* Dark grey background on mouse-over */
+        color: goldenrod;
+        font-weight: 300;
+        background-color: transparent;
+    }
+
+    .form-style-5 fieldset {
+        border: none;
+    }
+    .form-style-5 legend {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    .form-style-5 label {
+        display: block;
+    !important;font-size: 14pt;
+        margin-bottom: 8px;
+    }
+    .form-style-5 input[type="text"], .form-style-5 input[type="date"], .form-style-5 input[type="datetime"], .form-style-5 input[type="email"], .form-style-5 input[type="number"], .form-style-5 input[type="search"], .form-style-5 input[type="time"], .form-style-5 input[type="url"], .form-style-5 textarea, .form-style-5 select {
+
+        background: rgba(255, 255, 255, .1);
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        margin: 0;
+        outline: 0;
+        padding: 7px;
+        width: 60%;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        background-color: #e8eeef;
+        color: #8a97a0;
+        -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03) inset;
+        margin-bottom: 30px;
+    }
+    .form-style-5 input[type="text"]:focus, .form-style-5 input[type="date"]:focus, .form-style-5 input[type="datetime"]:focus, .form-style-5 input[type="email"]:focus, .form-style-5 input[type="number"]:focus, .form-style-5 input[type="search"]:focus, .form-style-5 input[type="time"]:focus, .form-style-5 input[type="url"]:focus, .form-style-5 textarea:focus, .form-style-5 select:focus {
+        background: #d2d9dd;
+    }
+    .form-style-5 select {
+        -webkit-appearance: menulist-button;
+        height: 35px;
+    }
+    .form-style-5 .number {
+        background: #1B3A56;
+        color: #fff;
+        height: 30px;
+        width: 30px;
+        display: inline-block;
+        font-size: 0.8em;
+        margin-right: 4px;
+        line-height: 30px;
+        text-align: center;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+        border-radius: 15px 15px 15px 0px;
+    }
+    .form-style-5 input[class="submitlisting"], .form-style-5 input[type="button"] {
+        position: relative;
+        display: block;
+        padding: 19px 39px 18px 39px;
+        color: #FFF;
+        margin: 0 auto;
+        background: #17005b;
+        font-size: 18px;
+        text-align: center;
+        font-style: normal;
+        width: 100%;
+        border: 1px solid #17005b;
+        border-width: 1px 1px 3px;
+        margin-bottom: 10px;
+    }
+
+
+    .form-style-5 input[type="submit"]:hover, .form-style-5 input[type="button"]:hover {
+        background: rgba(23, 0, 91, 0.63);
+    }
+
+    th, td
+    {
+        padding:0 10px 0 15px;
+        text-decoration: none;
+
+    }
+    td{
+        font-size: 14pt;
+        text-decoration: none;
+
+    }
+    .listingHold {
+
+        width: 1100px;
+        text-decoration: none;
+    }
+    a{
+        text-decoration: none;
+    }
+
+    .submitlisting:hover {
+        background-color: #164e16;
+    }
 
 </style>
