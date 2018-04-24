@@ -60,9 +60,6 @@
 </nav>
 
 
-
-
-
 <div style="width: 100%;" class="container">
     <div class="homeLeft">
 
@@ -107,7 +104,7 @@
                 <script>var listing = 0;</script>
                 {% for d in data %}
 
-                    <tr style="border-bottom: 1px solid #ddd!important;" id="listing{{ count }}">
+<tr style="border-bottom: 1px solid #ddd!important;" id="listing{{ count }}">
 
 
 
@@ -117,24 +114,24 @@
                         <td > <a href="{{ url_for('listing',list_id = d[2])}}" style="display:block;text-decoration: none;height: 50pt; padding-top: 15pt;">   {{ d[5] }}</a></td>
 
 
-                    </tr>
+</tr>
                     {% if count.append(count.pop() + 1) %}{% endif %}
-                    <script>listing++</script>
-                {% endfor %}
+                        <script>listing++</script>
+{% endfor %}
 
 
 
                 </tbody>
             </table></form><br/>
-        <div id="buttonHolder">
-            <div id="prevBox" style="display: inline;"></div>
-            <div id="nextBox" style="display: inline;"></div>
-        </div>
+       <div id="buttonHolder">
+                <div id="prevBox" style="display: inline;"></div>
+                <div id="nextBox" style="display: inline;"></div>
+       </div>
 
 
 
-    </div>
 </div>
+   </div>
 
 <div style="clear:both"></div>
 

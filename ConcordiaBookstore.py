@@ -1,9 +1,7 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from flask_uploads import UploadSet, configure_uploads, IMAGES
 import codecs
-import image
 import io
 import base64
 from base64 import b64encode
@@ -13,16 +11,16 @@ import MySQLdb
 from datetime import datetime
 from threading import Thread
 import serial as serial
-from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, abort, current_app
+from flask import Flask, render_template, flash, redirect, url_for, session, logging, request, current_app
 from future.backports.email.mime.text import MIMEText
 from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
-from wtforms import Form, StringField, PasswordField, SelectField, validators
+from wtforms import Form, StringField, PasswordField, validators
 from functools import wraps
 from random import *
 from wtforms.validators import DataRequired, Email
 from form import EmailForm, PasswordForm, BookSearchForm
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, URLSafeTimedSerializer, SignatureExpired
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 app = Flask(__name__)
 
@@ -65,7 +63,7 @@ def connection():
     conn = MySQLdb.connect(host="localhost",
                            user="root",
 
-                           passwd="31July2015",  # gikQr6kn
+                           passwd="gikQr6kn",
 
                            db="bookexchange")
 
@@ -107,15 +105,21 @@ def signup():
             return render_template("signup.html", error=error)
 
         elif email[-8:] != test:
-            error = "Not a valid CSP email";
+            error = "Not a valid CSP email"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif len(request.form['password']) < 8:
-            error = "Password must be more than 8 characters";
+            error = "Password must be more than 8 characters"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         elif request.form['password'] != request.form['confirmpassword']:
             error = "Password doesn't match"
+            c.close()
+            conn.close()
             return render_template("signup.html", error=error)
 
         else:
@@ -167,6 +171,10 @@ def signup():
 
             # close email server connection
             s.quit()
+
+            # flash("Please Sign in below")
+            c.close()
+            conn.close()
 
             flash("Thanks for registering! Please verify your account with the email we sent you before logging in",
                   'success')
@@ -479,6 +487,8 @@ def profile():
     print(prof)
 
     conn.commit()
+    c.close()
+    conn.close()
 
     if proNumRating == '' or proNumRating == 0:
         proRating = 0
@@ -685,6 +695,11 @@ def newpost():
                 VALUES(%s,%s,%s,%s,%s)''',
                   (sale_type, listing_title, [course_id], user_id, now))
         conn.commit()
+        c.close()
+        conn.close()
+
+        flash("Post added successfully.")
+        return redirect("home.html")
 
     return render_template("newpost.html")
 
@@ -728,6 +743,8 @@ def listing(list_id=None):
     # Pull comments from comments table for display related to selected listing
     c.execute("SELECT COM_Auth, COM_Date, COM_Body, COM_USER_ID FROM comments WHERE LST_ID = %s", [listID])
     rows = c.fetchall()
+    c.close()
+    conn.close()
 
     if request.method == "POST":
         return redirect(url_for("listing", list_id=list_id))
@@ -771,6 +788,7 @@ def submit_comment(list_id):
                           VALUES (%s, %s, %s, %s, %s)''', (list_id, auth, date, msg, id))
     conn.commit()
 
+    c.close()
     conn.close()
 
     return redirect(url_for("listing", list_id=list_id))
@@ -790,14 +808,20 @@ def changepassword():
 
         if len(newPassword) < 8:
             error = "Password must be more than 8 characters"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
 
         elif newPassword != confirmPassword:
             error = "Password doesn't match"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
 
         elif newPassword == oldPassword:
             error = "Old password cannot match new password"
+            c.close()
+            conn.close()
             return render_template("changepassword.html", error=error)
         else:
 
@@ -812,6 +836,8 @@ def changepassword():
                    """, (password, email))
 
             conn.commit()
+            c.close()
+            conn.close()
 
     return render_template("changepassword.html")
 
@@ -848,9 +874,13 @@ def reset():
                 mail.send(message)
 
                 msg = 'Please check your email for a password reset link.'
+                c.close()
+                conn.close()
                 return render_template('login.html', msg=msg)
             else:
                 error = 'Invalid Email Address'
+                c.close()
+                conn.close()
                 return render_template('login.html', error=error)
     except:
         error = "Account doesn't exist. Please Sign Up"
@@ -883,10 +913,14 @@ def reset_token(token):
         if user == email:
             if password1 != confirmpassword:
                 error = "Password doesn't match"
+                c.close()
+                conn.close()
                 return render_template("reset_token.html", error=error, token=token)
 
             elif len(password1) < 8:
-                error = "Password must be more than 8 characters";
+                error = "Password must be more than 8 characters"
+                c.close()
+                conn.close()
                 return render_template("reset_token.html", error=error, token=token)
 
             else:
@@ -899,15 +933,21 @@ def reset_token(token):
                                                      WHERE USER_Email=%s
                                                   """, (password, email))
                 conn.commit()
+                c.close()
+                conn.close()
                 # msg = 'Your password has been updated! '
                 return redirect(url_for('login'))
                 # return render_template('login.html', msg=msg)
 
         else:
             error = 'Invalid email address!'
+            c.close()
+            conn.close()
             render_template('reset.html', error=error)
 
     conn.commit()
+    c.close()
+    conn.close()
 
     return render_template('reset_token.html', token=token)
 
